@@ -17,7 +17,7 @@ const AppBar: React.FC<AppBarProps> = ({ drawerWidth }) => (
   >
     <Toolbar>
       <Typography variant="h6" noWrap>
-        My App
+        My App Bar
       </Typography>
     </Toolbar>
   </MuiAppBar>
