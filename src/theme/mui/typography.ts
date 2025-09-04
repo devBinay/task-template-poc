@@ -2,6 +2,7 @@
 
 const typography = {
     fontFamily: `'Roboto', 'Helvetica', 'Arial', sans-serif`,
+    htmlFontSize:"10",
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,
@@ -26,8 +27,8 @@ const typography = {
         fontSize: '0.75rem',
         fontWeight: 600,
       },
-    body1: {
-      fontSize: '1rem',
+    body: {
+      fontSize: '1.5rem',
     },
   };
   

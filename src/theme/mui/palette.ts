@@ -3,14 +3,14 @@
 const lightPalette = {
     mode: 'light' as const,
     primary: {
-      main: '#1976d2',
+      main: '#0A68DB',
     },
     secondary: {
       main: '#9c27b0',
     },
     background: {
-      default: '#f5f5f5',
-      paper: '#ffffff',
+      default: '#ffffff',
+      secondary: '#F6F6F6'
     },
     text: {
       primary: '#000000',

@@ -3,24 +3,45 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { defaultConstants } from '../core/constants';
-
+import clientLogo from "../assets/Logile Logo.svg"
+import { Box, Stack } from '@mui/material';
+import Searchbar from './ui/Searchbar';
 interface AppBarProps {
   drawerWidth: number;
 }
 
 const topBarHeight = defaultConstants.topBarHeight;
 
-const AppBar: React.FC<AppBarProps> = ({ drawerWidth }) => (
-  <MuiAppBar
+const AppBar: React.FC<AppBarProps> = ({ drawerWidth }) => {
+const handleSearch = (value:string)=>{
+  console.log(value)
+}
+return <MuiAppBar
     position="fixed"
-    sx={{ height: topBarHeight }}
+    elevation={0}
+    sx={{ height: topBarHeight, backgroundColor:(theme)=> theme.palette.background.secondary }}
   >
     <Toolbar>
-      <Typography variant="h6" noWrap>
-        My App Bar
-      </Typography>
+      <Stack direction={"row"} sx={{
+        height:"fit-content",
+        alignItems:"flex-end"
+      }}>
+
+      <img src={clientLogo}/>
+      <Typography variant='h6' sx={(theme)=>({
+        color:theme.palette.primary.main,
+        marginLeft:".5rem",
+        fontWeight:800,
+        lineHeight:1
+      })}>
+        {defaultConstants.appAbbr}
+        </Typography>
+      </Stack>
+      <Stack>
+        <Searchbar placeholder='Search...' onSearch={handleSearch} iconPosition='start'/>
+      </Stack>
     </Toolbar>
   </MuiAppBar>
-);
+};
 
 export default AppBar;
