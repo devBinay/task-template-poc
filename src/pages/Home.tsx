@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import Icon from '../core/components/Icon';
+import Icon from '@/core/components/Icon';
 import { Button } from '@mui/material';
 
 const Home: React.FC = () => (
