@@ -1,12 +1,16 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import Icon from '@/core/components/Icon';
 import { Button } from '@mui/material';
+import SvgIcon from '../core/components/Icon';
 
 const Home: React.FC = () => (
   <>
   <Typography variant="h4">Home</Typography>
-  <Button startIcon={<Icon name="search" />} variant='outlined' >
+  <Button startIcon={
+    <SvgIcon 
+       component="search"
+       size={18} fill="#888888" />
+    } variant='outlined' >
   
 
           Search
