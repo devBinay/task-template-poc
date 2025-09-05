@@ -15,7 +15,8 @@ const SvgIcon: React.FC<SvgIconProps> = ({
   size = 24,
   className,
   fill = "currentColor",
-  stroke
+  stroke,
+  ...props
 }) => {
     const Component: any = icons[component as keyof typeof icons];
   return (
@@ -25,6 +26,7 @@ const SvgIcon: React.FC<SvgIconProps> = ({
       className={className}
       fill={fill}
       stroke={stroke}
+      {...props}
     />
   );
 };
