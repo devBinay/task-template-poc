@@ -1,0 +1,27 @@
+.appShell__container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--background-secondary);
+  
+    .appShell__sideNavAndbody {
+      display: flex;
+      flex-grow: 1;
+      max-height: calc(100vh - var(--topBarHeight, 0px));
+      overflow: hidden;
+    }
+  
+    & .appShell__body {
+      flex-grow: 1;
+      padding: 1rem; 
+      overflow-y: auto;
+      overflow-x: hidden;
+      background-color: var(--background-default); 
+      border-start-start-radius: var(--space-md);
+      border-end-start-radius: var(--space-md);
+      margin-bottom: var(--space-2xl);
+    
+    }
+  }
+  

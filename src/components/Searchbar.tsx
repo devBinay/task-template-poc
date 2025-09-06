@@ -2,7 +2,8 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 
 import InputBase from '@mui/material/InputBase';
-import Icon from '../../core/components/Icon';
+import Icon from '../core/components/Icon';
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -20,6 +21,7 @@ const Search = styled('div')(({ theme }) => ({
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
+    width: theme.custom.borderRadiusSm,
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -30,7 +32,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
+    color: theme.palette.text.primary,
     width: '100%',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -57,13 +59,14 @@ const Searchbar = (props: props) => {
         
     }
     return <Search>
-        <SearchIconWrapper>
-        </SearchIconWrapper>
         <StyledInputBase
             onKeyDown={handleOnKeyPress}
             placeholder={placeholder}
             inputProps={{ 'aria-label': 'search' }}
         />
+        <SearchIconWrapper>
+            <Icon name="search" color='black'/>
+        </SearchIconWrapper>
     </Search>
 }
 export default Searchbar

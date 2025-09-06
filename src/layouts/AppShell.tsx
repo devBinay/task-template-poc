@@ -1,24 +1,28 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+
+import { Outlet, useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
-import AppBar from '../components/AppBar';
-import Sidebar from '../components/Sidebar';
+import AppBar from './appBar/AppBar';
+import Sidebar from './sidebar/Sidebar';
 import { defaultConstants } from '../core/constants';
 
-const drawerWidth = defaultConstants.sidebarWidth;
+import './appshell.style.scss'
+const sideDrawerWidth = defaultConstants.sidebarWidth;
 const topBarHeight = defaultConstants.topBarHeight;
 
 export default function AppShell() {
+  const location = useLocation();
+  const activePath = location.pathname;
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar drawerWidth={drawerWidth} />
-      <Sidebar drawerWidth={drawerWidth} topBarHeight={topBarHeight}/>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, marginTop: '60px' }}
+    <div className='appShell__container'>
+      <AppBar drawerHeight={topBarHeight} />
+      <div className='appShell__sideNavAndbody'>
+      <Sidebar drawerWidth={sideDrawerWidth} activePath={activePath}/>
+      <main
+        className='appShell__body'
       >
         <Outlet />
-      </Box>
-    </Box>
+      </main>
+      </div>
+    </div>
   );
 }
