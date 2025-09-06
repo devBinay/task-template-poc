@@ -8,7 +8,7 @@ import { ThemeProvider } from './theme/mui/ThemeProvider';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider>
-    <App/>
+      <App/>
     </ThemeProvider>
   </React.StrictMode>
 );

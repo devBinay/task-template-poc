@@ -3,6 +3,7 @@ import AppShell from '@/layouts/AppShell';
 import Home from '@/pages/Home';
 import About from '@/pages/About';
 import React from 'react';
+import TemplateLibrary from '@/pages/TemplateLibrary';
 
 const children = [
   { index: true, element: <Home /> },
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <AppShell />,
-    children,
+    children: [
+      { index: true, element: <Home /> },
+      { path: 'about', element: <About /> },
+      { path: 'template-library', element: <TemplateLibrary /> },
+    ],
   },
 ]);
 
