@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
-import { useGetViewPortSize } from '@/utils/GetViewPortSize';
+import { useGetViewPortSize } from '@/utils/getViewPortSize';
 import SvgIcon from '@/core/components/Icon';
 
 const Home: React.FC = () => {
