@@ -9,7 +9,7 @@ const Home: React.FC = () => (
   <Button startIcon={<Icon name="search" />} variant='outlined' >
   
 
-          Search
+          Search template
 
   </Button>
   
