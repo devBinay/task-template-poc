@@ -1,13 +1,9 @@
-import SearchIcon from "../../assets/images/icons/search.svg?react";
-import CheckIcon from "../../assets/images/icons/check.svg?react";
-import CloseIcon from "../../assets/images/icons/close.svg?react";
-import CopyIcon from "../../assets/images/icons/copy.svg?react";
-import ThumbsUp from "../../assets/images/icons/thumbs-up.svg?react";
+import React from "react";
 
 export const icons =  { 
-    search: SearchIcon,
-    check: CheckIcon,
-    close: CloseIcon,
-    copy: CopyIcon,
-    thumbsUp: ThumbsUp
+    search: React.lazy(()=>import ('../../assets/images/icons/search.svg?react')),
+    check: React.lazy(()=>import ('../../assets/images/icons/check.svg?react')),
+    close: React.lazy(()=>import ('../../assets/images/icons/close.svg?react')),
+    copy: React.lazy(()=>import ('../../assets/images/icons/copy.svg?react')),
+    thumbsUp: React.lazy(()=>import ('../../assets/images/icons/thumbs-up.svg?react')),
 };

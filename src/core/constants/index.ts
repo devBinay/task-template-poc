@@ -1,5 +1,5 @@
 export const defaultConstants = {
-    sidebarWidth: 240,
+    sidebarWidth: 90,
     topBarHeight: 60,
     appAbbr: "WFM"
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { icons } from "../constants/Icons";
+
+import { general } from "../../assets/icons";
 
 interface SvgIconProps {
   component: keyof typeof icons;

@@ -5,10 +5,12 @@ import About from '@/pages/About';
 import React from 'react';
 import { IconsDemo } from '@/component-library/Icons';
 import { ComponentLibraryLandingPage } from '@/component-library/LandingPage';
+import NoPageFound from '../pages/NoPageFound';
 
 const children: RouteObject[] = [
   { index: true, element: <Home /> },
   { path: 'about', element: <About /> },
+  { path: '*', element: <NoPageFound /> },
 ];
 
 if (import.meta.env.DEV) {
