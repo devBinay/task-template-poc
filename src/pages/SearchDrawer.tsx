@@ -11,7 +11,7 @@ const SearchDrawer = () => {
         >
             <Box className="template-library-search-drawer-main">
                 <Box display="flex" alignItems="center">
-                <Button startIcon={<SvgIcon component='check' fill='#000' size="18px"/>}></Button>
+                <Button startIcon={<SvgIcon component='chevronLeft' fill='#000' size="18px"/>}></Button>
                 </Box>
             </Box>
         </Drawer>
