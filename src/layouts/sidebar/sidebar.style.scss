@@ -6,6 +6,7 @@
     align-items: start;
     overflow-y: auto;
     padding-right: var(--space-lg);
+    scrollbar-width: none;
     &::after {
         content: "";
         display: table;
