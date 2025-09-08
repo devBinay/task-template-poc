@@ -110,7 +110,7 @@ const TemplateLibrary: React.FC = () => {
                 <DirectoryTree data={folderData} />
             </Box>
             <Box width={"80%"}>
-                <LibraryTable/>
+                <LibraryTable />
             </Box>
         </Box>
 
@@ -122,7 +122,7 @@ const TemplateLibrary: React.FC = () => {
             <Box margin='80px 20px' display='flex' justifyContent='space-between' alignItems='center'>
                 <h4>Template Advanced Filter</h4>
             </Box>
-      </Drawer>
+        </Drawer>
     </Box>
     ;
 };

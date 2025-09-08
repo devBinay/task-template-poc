@@ -45,7 +45,6 @@ const StyledMenu = styled((props: MenuProps) => (
     marginTop: theme.spacing(1),
     minWidth: 180,
     color: 'rgb(55, 65, 81)',
-    border: '1px solid #0471ddff',
     paddingTop: '6px',
     paddingBottom: '6px',
     boxShadow: 'none',
@@ -123,8 +122,8 @@ const LibraryTable : React.FC = () => {
     const renderTemplateIconCell = ({cell}) => {
         const data = cell.getValue();
         return (
-               <Box minWidth="400px" display="flex" alignItems="center" gap="10px">
-                    <IconOutlined height="36px" width="36px" sx={{ pointerEvents: 'none' }} startIcon={
+               <Box>
+                    <IconOutlined height="36px" width="16px" sx={{ pointerEvents: 'none' }} startIcon={
                         data?.type === "Checklist" ?
                         <SvgIcon 
                             component="checkedList"
@@ -176,6 +175,7 @@ const LibraryTable : React.FC = () => {
         header: "",
         Cell: renderTemplateIconCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
+        muiTableBodyCellProps: () => ({className: "template-body-text" })
      },
       {
         accessorKey: "template_name",
