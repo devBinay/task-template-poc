@@ -1,6 +1,7 @@
 import { InputBase, styled } from "@mui/material";
 import React from "react";
-import Icon from "../../../../core/components/Icon";
+
+import SvgIcon from "../../../../core/components/Icon";
 
 interface navSearchBarProps {
     placeholder: string;
@@ -73,7 +74,7 @@ interface navSearchBarProps {
       onKeyDown={checkForEnter}
       />
        <SearchIconWrapper>
-      <Icon name={props.icon} size={"1.8rem"}/>
+      <SvgIcon component={props.icon} size={"1.8rem"}/>
       </SearchIconWrapper>
       </Search>
   }

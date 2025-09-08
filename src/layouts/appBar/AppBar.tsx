@@ -8,6 +8,7 @@ import IconButton from '../../components/IconButton';
 import UserProfileInfoCard from './components/userProfile/UserProfileInfoCard';
 import navAvatarPng from '../../assets/navbarAvatar.png'
 import NavSearchBar from './components/searchBar/SearchBar';
+import SvgIcon from '../../core/components/Icon';
 interface AppBarProps {
   drawerHeight: number;
 }
@@ -40,24 +41,24 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight }) => {
 
       {/* Search Bar */}
       <Stack sx={{ marginLeft: "auto" }}>
-        <NavSearchBar placeholder='Search...' onSearch={handleSearch} iconPosition='left' icon='magnifineGlass' />
+        <NavSearchBar placeholder='Search...' onSearch={handleSearch} iconPosition='left' icon='search' />
       </Stack>
       {/* Icons Section */}
       <Stack sx={{ marginLeft: "var(--space-4xl)", gap: ".5rem", flexDirection: "row" }}>
         <IconButton variant="primary">
-          <Icon name="calenderBlank" size={20} />
+          <SvgIcon component="calendarBlank" size={20} />
         </IconButton>
         <IconButton variant="primary">
-          <Icon name="taskList" size={20} />
+          <SvgIcon component="clipboardToDo" size={20} />
         </IconButton>
         <IconButton variant="primary">
-          <Icon name="envelope" size={20} />
+          <SvgIcon component="envelope" size={20} />
         </IconButton>
         <IconButton variant="primary">
-          <Icon name="comment" size={20} />
+          <SvgIcon component="comment" size={20} />
         </IconButton>
         <IconButton variant="primary">
-          <Icon name="alertBell" size={20} />
+          <SvgIcon component="notification" size={20} />
         </IconButton>
       </Stack>
       {/* User Profile Section */}

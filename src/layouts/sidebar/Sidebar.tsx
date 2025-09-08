@@ -3,15 +3,21 @@ import { Link } from 'react-router-dom';
 import Icon from '../../core/components/Icon';
 import { alpha, ListItemButton, Stack, styled, Typography } from '@mui/material';
 import './sidebar.style.scss'
+import SvgIcon from '../../core/components/Icon';
+import type { icons } from '../../core/constants/Icons';
 interface SidebarProps {
   drawerWidth: number;
   activePath: string;
 }
 
-const menuItems = [
-  { text: 'Home', path: '/', icon: 'storeIcon' },
-  { text: 'Quick Links', path: '/quickLinks', icon: 'starIcon' },
-  { text: 'ESS', path: '/ess', icon: 'exchange' },
+const menuItems: {
+  text: string;
+  path:string;
+  icon: keyof typeof icons
+}[] = [
+  { text: 'Home', path: '/', icon: 'home' },
+  { text: 'Quick Links', path: '/quickLinks', icon: 'quickLink' },
+  { text: 'ESS', path: '/ess', icon: 'calendar' },
   { text: 'Communication', path: '/communication', icon: 'communication' },
   { text: 'Standards', path: '/standards', icon: 'standards' },
   { text: 'Labour Model', path: '/labourModel', icon: 'labourModel' },
@@ -65,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => (
   width:drawerWidth
  })}>
   <Stack className='sidebar__switch'>
-    <Icon name='exchange' size={20} color={'currentColor'}/>
+    <SvgIcon component='exchange' size={20} color={'currentColor'}/>
     <Typography sx={()=>({
       textAlign:'center',
       fontSize:"1.4rem",
@@ -78,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => (
       {menuItems.map((item) => {
         const isActive = activePath === item.path;  
           return <StyledListItemButton component={Link} to={item.path} activePath={isActive}>
-            <Icon name={item.icon} size={24} color={isActive ? 'currentColor' : 'inherit'}/>
+            <SvgIcon component={item.icon} size={24} color={isActive ? 'currentColor' : 'inherit'}/>
                 <Typography sx={()=>({
                   textAlign:'center',
                   fontSize:"1.2rem",
