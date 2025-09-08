@@ -6,3 +6,7 @@ import { buttonConfig } from "./ButtonConfig";
 export const PrimaryButton = styled(Button)<ButtonProps>(
   ({ theme }) => buttonConfig(theme).primary
 );
+
+export const IconOutlined = styled(Button)<ButtonProps>(
+  ({ theme }) => buttonConfig(theme).iconOutlined
+);

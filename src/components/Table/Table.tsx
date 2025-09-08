@@ -15,10 +15,10 @@ const Table = ({
 }: TableProps) => {
     const table = useMaterialReactTable(tableProps);
   return (
-            <MaterialReactTable 
+          <MaterialReactTable 
             table={table} 
             {...props}
-            />
+          />
         );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import DirectoryTree from "../../components/DirectoryTree";
+import DirectoryTree from "@/components/DirectoryTree";
 import { Button, Divider } from '@mui/material';
-import { PrimaryButton } from '../../components/Button/Button';
+import { PrimaryButton } from '@/components/Button/Button';
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
@@ -44,7 +44,7 @@ const folderData = [
 const SearchField = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
-    fontSize: "12px",
+    // fontSize: "12px",
     fontWeight: "400",
     "& fieldset": {
       border: "1px solid lightgray",
@@ -77,7 +77,7 @@ const TemplateLibrary: React.FC = () => {
             <Box width="20%" fontSize={'19px'} fontWeight={500} padding={"7px 16px"}>Folder Tree</Box>
             
             <Box width="80%" display="flex" alignItems="center">
-                <Box fontSize={'19px'} marginRight={'100px'} fontWeight={500} padding={"2px 0px"}>
+                <Box fontSize={'19px'} marginRight={'100px'} fontWeight={500} padding={'2px 0px'}>
                     Template Library
                 </Box>
                 <SearchField
@@ -91,9 +91,9 @@ const TemplateLibrary: React.FC = () => {
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                            <IconButton edge="end">
-                                <SearchIcon />
-                            </IconButton>
+                                <IconButton edge="end">
+                                    <SearchIcon />
+                                </IconButton>
                             </InputAdornment>
                         ),
                     }}
@@ -109,7 +109,7 @@ const TemplateLibrary: React.FC = () => {
             <Box width={'20%'}>
                 <DirectoryTree data={folderData} />
             </Box>
-            <Box width={"79.5%"}>
+            <Box width={"80%"}>
                 <LibraryTable/>
             </Box>
         </Box>
@@ -119,7 +119,9 @@ const TemplateLibrary: React.FC = () => {
             open={searchDrawer.status}
             onClose={closeSearchDrawer}
         >
-        <h2>Template Filter</h2>
+            <Box margin='80px 20px' display='flex' justifyContent='space-between' alignItems='center'>
+                <h4>Template Advanced Filter</h4>
+            </Box>
       </Drawer>
     </Box>
     ;

@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
 import AppBar from './appBar/AppBar';
 import Sidebar from './sidebar/Sidebar';
-import { defaultConstants } from '../core/constants';
+import { defaultConstants } from '@/core/constants';
 import './AppShell.scss';
 
 import './appshell.style.scss'

@@ -1,0 +1,26 @@
+.template-library-table-main-container {
+
+    .MuiPaper-root {
+        box-shadow: none;
+        border-radius: 0px;
+    }
+    .template-head-text {
+        font-size: 15px;
+        font-weight: 500;
+        color: #333333;
+        background-color: #F4F5FA;
+    }
+    .template-body-text {
+        font-size: 15px;
+        font-weight: 400;
+        color: #333333;
+    }
+    .template-title-text {
+         font-size: 13px;
+        font-weight: 400;
+        color: #5C5C5C;
+    }
+    .cursor-pointer {
+        cursor: pointer;
+    }
+}

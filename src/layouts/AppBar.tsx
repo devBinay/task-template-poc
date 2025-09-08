@@ -2,10 +2,10 @@ import React from 'react';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { defaultConstants } from '../core/constants';
-import clientLogo from "../assets/Logile Logo.svg"
+import { defaultConstants } from '@/core/constants';
+import clientLogo from "@/assets/Logile Logo.svg"
 import { Box, Stack } from '@mui/material';
-import Searchbar from './ui/Searchbar';
+import Searchbar from '@/components/ui/Searchbar';
 interface AppBarProps {
   drawerWidth: number;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { SimpleTreeView, TreeItem, treeItemClasses } from "@mui/x-tree-view";
 import { ExpandMore, ChevronRight } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-
+import "./style.scss";
 
 type TreeNode = {
   id: string;
@@ -15,12 +15,18 @@ interface DirectoryTreeProps {
 }
 
 const StyledTreeItem = styled(TreeItem)(() => ({
-  [`& .${treeItemClasses.content}.Mui-selected`]: {
-    backgroundColor: "transparent !important",
-  },
-  [`& .${treeItemClasses.content}.Mui-selected:hover`]: {
-    backgroundColor: "transparent !important",
-  },
+    ['& .MuiTreeItem-label'] : {
+        fontSize: '15px',
+        fontWeight: 400,
+        color: '#333333',
+        borderRadius:'0px',
+    },
+    ['& .MuiTreeItem-content'] : {
+        padding:'6px',
+    },
+    ['& .MuiTreeItem-root'] : {
+        padding:'0px',
+    },
 }));
 
 const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data }) => {
@@ -34,13 +40,15 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data }) => {
   );
 
   return (
+    <div className="template-directory-tree-main-container">
     <SimpleTreeView
       aria-label="directory tree"
       slots={{ expandIcon: ChevronRight, collapseIcon: ExpandMore }}
-      sx={{ flexGrow: 1, overflowY: "auto",  borderRight: '1px solid lightgray', height:'100vh' }}
+      sx={{ flexGrow: 1, overflowY: "auto",  borderRight: '1px solid lightgray', height:'100%' }}
     >
       {data.map((tree) => renderTree(tree))}
     </SimpleTreeView>
+    </div>
   );
 };
 
