@@ -9,7 +9,7 @@ import NoPageFound from '@/pages/NoPageFound';
 import TemplateLibrary from '@/pages/TemplateLibrary';
 
 const children: RouteObject[] = [
-  { index: true, element: <Home /> },
+  { index: true, element: <TemplateLibrary /> },
   { path: 'about', element: <About /> },
   { path: '*', element: <NoPageFound /> },
 ];
@@ -19,7 +19,7 @@ if (import.meta.env.DEV) {
   const ComponentLibrary = React.lazy(() =>
     import('@/component-library').then(module => ({ default: module.ComponentLibrary }))
   );
-  children.push({ 
+  children.unshift({ 
     path: 'component-library', 
     element: <ComponentLibrary />,
     children: [
