@@ -29,7 +29,6 @@ const lightPalette = {
     background: {
       default: '#121212',
       paper: '#1e1e1e',
-      secondary: '#1e1e1e',
     },
     text: {
       primary: '#ffffff',
