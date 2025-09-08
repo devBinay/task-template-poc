@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import { useGetViewPortSize } from '@/utils/getViewPortSize';
 import SvgIcon from '@/core/components/Icon';
+import SearchDrawer from './SearchDrawer';
 
 const Home: React.FC = () => {
   const viewportSize = useGetViewPortSize();
@@ -23,7 +24,7 @@ const Home: React.FC = () => {
       Search
 
     </Button>
-
+<SearchDrawer/>
   </>;
 }
 
