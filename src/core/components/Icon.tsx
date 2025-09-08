@@ -1,34 +1,21 @@
-import React from "react";
-import { icons } from "../constants/Icons";
 
-interface SvgIconProps {
-  component: keyof typeof icons;
-  size?: number;
-  className?: string;
-  fill?: string;
-  stroke?: string;
+import { general } from "../../assets/icons";
+
+interface IconProps {
+    name: keyof typeof general;
+    color?: string
+    size?:number|string
+}
+const fillColor = (svgString:string,color: string,size:number|string)=>{
+
+    return svgString?.replace('<svg', `<svg fill="${color}" height="${size}" width="${size}"`)
 }
 
-
-const SvgIcon: React.FC<SvgIconProps> = ({
-  component,
-  size = 24,
-  className,
-  fill = "currentColor",
-  stroke,
-  ...props
-}) => {
-    const Component: any = icons[component as keyof typeof icons];
-  return (
-    <Component
-      width={size}
-      height={size}
-      className={className}
-      fill={fill}
-      stroke={stroke}
-      {...props}
-    />
-  );
-};
-
-export default SvgIcon;
+const Icon = (props:IconProps)=>{
+    let color = props.color || 'currentColor'
+    let size = props.size || 10
+    let svg = general[props.name]
+    let coloredSvg = fillColor(svg,color,size)
+    return <span style={{width:size,height:size, display:"flex",alignItems:"center",justifyContent:"center"}} dangerouslySetInnerHTML={{__html:coloredSvg}}/>
+}
+export default Icon;
