@@ -1,6 +1,5 @@
-
-import { general } from "../../assets/icons";
-
+import { icons } from "../constants/Icons";
+import Box from "@mui/material/Box";
 interface SvgIconProps {
   component: keyof typeof icons;
   size?: number;
@@ -19,6 +18,9 @@ const SvgIcon: React.FC<SvgIconProps> = ({
   ...props
 }) => {
     const Component: any = icons[component as keyof typeof icons];
+    if (!Component) {
+       return <Box sx={{width:size, height: size, bgcolor:"lightgray", borderRadius:"50%"}}></Box>
+    }
   return (
     <Component
       width={size}
