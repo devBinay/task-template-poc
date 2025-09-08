@@ -14,7 +14,6 @@ interface SidebarProps {
 const menuItems = [
   { text: 'Home', path: '/' },
   { text: 'About', path: '/about' },
-  // ...existing code...
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, topBarHeight }) => (
