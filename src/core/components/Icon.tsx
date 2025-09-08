@@ -8,7 +8,6 @@ interface SvgIconProps {
   stroke?: string;
 }
 
-
 const SvgIcon: React.FC<SvgIconProps> = ({
   component,
   size = 24,
