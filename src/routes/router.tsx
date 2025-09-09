@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
 import AppShell from '@/layouts/AppShell';
 import Home from '@/pages/Home';
@@ -8,31 +8,25 @@ import { ComponentLibraryLandingPage } from '@/component-library/LandingPage';
 import NoPageFound from '@/pages/NoPageFound';
 import TemplateLibrary from '@/pages/TemplateLibrary';
 
-const children: RouteObject[] = [
-  { index: true, element: <TemplateLibrary /> },
-  { path: 'about', element: <About /> },
-  { path: '*', element: <NoPageFound /> },
-];
 
-if (import.meta.env.DEV) {
-  // Only add this route in local development
-  const ComponentLibrary = React.lazy(() =>
-    import('@/component-library').then(module => ({ default: module.ComponentLibrary }))
-  );
-  children.unshift({ 
-    path: 'component-library', 
-    element: <ComponentLibrary />,
-    children: [
-      {
-        index: true,
-        element: <ComponentLibraryLandingPage />,
-      },
-      {
-        path: 'icons',
-        element: <IconsDemo />,
-      }
-    ]
-  });
+const getDevRoutes = ()=>{
+if(import.meta.env.DEV){
+    return { 
+      path: '/dev', 
+      element: <AppShell />,
+      children: [
+        {
+          index: true,
+          element: <ComponentLibraryLandingPage />,
+        },
+        {
+          path: '/dev/component-library/icons',
+          element: <IconsDemo />,
+        }
+      ]
+    }
+}
+return {}
 }
 
 const router = createBrowserRouter([
@@ -40,11 +34,13 @@ const router = createBrowserRouter([
     path: '/',
     element: <AppShell />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <TemplateLibrary /> },
       { path: 'about', element: <About /> },
-      { path: 'template-library', element: <TemplateLibrary /> },
+       { path: '*', element: <NoPageFound /> }
     ],
   },
+ getDevRoutes()
 ]);
+
 
 export default router;

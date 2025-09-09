@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Icon from '../../core/components/Icon';
 import { alpha, ListItemButton, Stack, styled, Typography } from '@mui/material';
 import './sidebar.style.scss'
-import SvgIcon from '../../core/components/Icon';
-import type { icons } from '../../core/constants/Icons';
+import SvgIcon from '@/core/components/Icon';
+import type { icons } from '@/core/constants/Icons';
 interface SidebarProps {
   drawerWidth: number;
   activePath: string;
@@ -66,8 +65,8 @@ const StyledListItemButton = styled(ListItemButton,{
 }));
 
 const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => (
- <Stack className='sidebar__container' sx={(theme)=>({
-  backgroundColor:'var(--background-secondary)',
+ <Stack className='sidebar__container' sx={()=>({
+  backgroundColor:'var(--bg-secondary)',
   width:drawerWidth
  })}>
   <Stack className='sidebar__switch'>

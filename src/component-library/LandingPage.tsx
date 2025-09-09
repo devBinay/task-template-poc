@@ -22,7 +22,7 @@ export const ComponentLibraryLandingPage: React.FC = () => {
                     flexWrap: "wrap",
                 }}
                 onClick={() => {
-                    navigate("/component-library/icons");
+                    navigate("/dev/component-library/icons");
                 }}
             >
                 Icon

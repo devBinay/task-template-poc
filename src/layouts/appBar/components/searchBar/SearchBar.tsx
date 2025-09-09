@@ -1,7 +1,7 @@
 import { InputBase, styled } from "@mui/material";
 import React from "react";
 
-import SvgIcon from "../../../../core/components/Icon";
+import SvgIcon from "@/core/components/Icon";
 
 interface navSearchBarProps {
     placeholder: string;
@@ -12,7 +12,7 @@ interface navSearchBarProps {
   
   const SearchIconWrapper = styled('div',{
     shouldForwardProp: (prop) => prop !== 'iconPosition',
-  })(({ theme }) => ({
+  })(() => ({
       width:"fit-content",
       backgroundColor:"transparent",
       padding: "0 var(--space-sm)",
@@ -42,7 +42,7 @@ interface navSearchBarProps {
     flexGrow:1,
       borderRadius: theme.shape.borderRadius,
       backgroundColor:theme.palette.background.default,
-     border:"var(--border-tertiary)",
+     border:"1px solid var(--border-color-tertiary)",
       marginLeft: 0,
       overflow:"hidden",
       ...(iconPosition === 'left' && {
