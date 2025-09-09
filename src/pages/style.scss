@@ -46,10 +46,10 @@
     flex-direction: column;
     gap:12px;
     padding: 20px 12px;
-    .advance-search-group-1 {
+    .advance-search-group {
         display: flex;
-        justify-content: space-between;
-        gap:12px;
+        align-items: center;
+        gap:24px;
     }
     .text-label {
         font-size: 13px;
@@ -66,6 +66,9 @@
             color: #333333;
         }
     }
+    .days-text-field {
+        width:81px;
+    }
     .dropdown-select {
         width: 100%;
         .MuiSelect-select {
@@ -76,5 +79,14 @@
             color: #333333;
         }
     }
+ }
+ .clear-btn {
+    color: #0A68DB;
+    font-size: 15px;
+    font-weight: 400;
+ }
+ .search-btn {
+    width: 87px;
+    height: 40px;;
  }
 }

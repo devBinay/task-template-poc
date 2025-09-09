@@ -8,11 +8,12 @@ import Tab from '@mui/material/Tab';
 import { styled } from "@mui/material/styles";
 import './style.scss';
 import { Divider, TextField, Typography } from '@mui/material';
-import { TEMPLATE_SEARCH_TABS } from './constant';
+import { TEMPLATE_SEARCH_TABS, TEMPLATE_TASK_TYPE_OPTIONS, TEMPLATE_STATUS_OPTIONS } from './constant';
 import { useState } from 'react';
 import { PrimaryButton } from '../components/Button/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import StyledAutocomplete from '../components/Autocomplete/Autocomplete';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -36,7 +37,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
         fontWeight:400,
         color:'#5C5C5C',
     }
-}))
+}));
 
 function TabPanel(props: TabPanelProps) {
   const { children, value } = props;
@@ -47,28 +48,30 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
-function StyledTextField({label="",}) {
+function StyledTextField({label="", width="100%"}) {
     return (
-      <Box width="100%">
+      <Box width={width}>
             <Typography className='text-label'>{label}</Typography>
             <TextField className='text-field-input' fullWidth variant='outlined'/>
       </Box>
     )
 }
 
-function StyledDropdown ({label="",handleChange=()=>{},value=""}) {
+function StyledDropdown ({label="",handleChange=()=>{},value="", width="100%", options=[]}) {
     return (
-      <Box width="100%">
+      <Box width={width}>
          <Typography className='text-label'>{label}</Typography>
          <Select
          className='dropdown-select'
+         onChange={handleChange}
+         IconComponent={()=><Box sx={{transform: `rotate(-90deg)`}}><SvgIcon component='chevronLeft' size={18} fill='red' /></Box>}
         >
-            <MenuItem value="">Select Task Type</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {
+               options && options?.length > 0 && options.map((option)=><MenuItem key={option?.value} value={option?.value}>{option?.label}</MenuItem>)
+            }
         </Select>
       </Box>  
-    )}
+)}
 const SearchDrawer = () => {
     const {RECENT, ADVANCE} = TEMPLATE_SEARCH_TABS;
     const [currentTab, setCurrentTab] = useState(ADVANCE.value);
@@ -126,20 +129,48 @@ const SearchDrawer = () => {
                     </TabPanel>
                     <TabPanel value={currentTab === ADVANCE.value}>
                         <Box className="advance-tab-content">
-                            <Box className="advance-search-group-1">
+                            <Box className="advance-search-group">
                                 <StyledTextField
                                 label='Question Text'
+                                width="70%"
                                 />
 
                                 <StyledDropdown
                                 label='Task Type'
+                                width="15%"
+                                options={TEMPLATE_TASK_TYPE_OPTIONS}
+                                />
+
+                                 <StyledDropdown
+                                label='Status'
+                                width="15%"
+                                options={TEMPLATE_STATUS_OPTIONS}
                                 />
                             </Box>
-                            <Box>
-                                
+                            <Box className="advance-search-group">
+                                <Box display="flex" alignItems="center" gap="8px" mt="25px">
+                                    <Typography className='text-label'>Show tasks modified in last:</Typography>
+                                    <Box>
+                                        <TextField type='number' className='text-field-input days-text-field' fullWidth variant='outlined'/>
+                                    </Box>
+                                    <Typography className='text-label'>days</Typography>
+                                </Box>
+
+                                <StyledAutocomplete
+                                options={TEMPLATE_STATUS_OPTIONS}
+                                getOptionLabel={(option) => option.label}
+                                placeholder="Select Task Tags"
+                                />
+
+                                <StyledAutocomplete
+                                options={TEMPLATE_STATUS_OPTIONS}
+                                getOptionLabel={(option) => option.label}
+                                placeholder="Search Question Tags"
+                                />
                             </Box>
-                            <Box>
-                                <PrimaryButton sx={{width:"87px"}}>Search</PrimaryButton>
+                            <Box mt="25px" width="100%" display="flex" justifyContent="center" alignItems="center" gap="20px">
+                                <Button className='clear-btn'>Clear All</Button>
+                                <PrimaryButton className='search-btn'>Search</PrimaryButton>
                             </Box>
                         </Box>
                     </TabPanel>
