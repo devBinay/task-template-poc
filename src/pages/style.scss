@@ -61,6 +61,19 @@
         input {
             padding: 4px 8px;
             border-radius: 8px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #333333;
+        }
+    }
+    .dropdown-select {
+        width: 100%;
+        .MuiSelect-select {
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #333333;
         }
     }
  }

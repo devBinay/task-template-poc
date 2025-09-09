@@ -11,6 +11,8 @@ import { Divider, TextField, Typography } from '@mui/material';
 import { TEMPLATE_SEARCH_TABS } from './constant';
 import { useState } from 'react';
 import { PrimaryButton } from '../components/Button/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,6 +47,28 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
+function StyledTextField({label="",}) {
+    return (
+      <Box width="100%">
+            <Typography className='text-label'>{label}</Typography>
+            <TextField className='text-field-input' fullWidth variant='outlined'/>
+      </Box>
+    )
+}
+
+function StyledDropdown ({label="",handleChange=()=>{},value=""}) {
+    return (
+      <Box width="100%">
+         <Typography className='text-label'>{label}</Typography>
+         <Select
+         className='dropdown-select'
+        >
+            <MenuItem value="">Select Task Type</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </Box>  
+    )}
 const SearchDrawer = () => {
     const {RECENT, ADVANCE} = TEMPLATE_SEARCH_TABS;
     const [currentTab, setCurrentTab] = useState(ADVANCE.value);
@@ -103,13 +127,16 @@ const SearchDrawer = () => {
                     <TabPanel value={currentTab === ADVANCE.value}>
                         <Box className="advance-tab-content">
                             <Box className="advance-search-group-1">
-                                <Box width="100%">
-                                    <Typography className='text-label'>Question Text</Typography>
-                                    <TextField className='text-field-input' fullWidth variant='outlined'/>
-                                </Box>
+                                <StyledTextField
+                                label='Question Text'
+                                />
+
+                                <StyledDropdown
+                                label='Task Type'
+                                />
                             </Box>
                             <Box>
-
+                                
                             </Box>
                             <Box>
                                 <PrimaryButton sx={{width:"87px"}}>Search</PrimaryButton>
