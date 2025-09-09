@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DirectoryTree from "@/components/DirectoryTree";
-import { Button, Divider } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import { PrimaryButton } from '@/components/Button/Button';
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -8,9 +8,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
+
 import LibraryTable from './LibraryTable';
 import "./style.scss";
+import PageTemplate from '../../components/pageTemplate/PageTemplate';
+import SvgIcon from '@/core/components/Icon';
+import IconButton from '@/components/IconButton';
 
 const folderData = [
   {
@@ -72,7 +75,20 @@ const TemplateLibrary: React.FC = () => {
         setSearchDrawer((prev) => ({ ...prev, status: false, text: "" }));
     };
 
-    return <Box>
+    return <PageTemplate>
+        <PageTemplate.Header>
+        <Stack direction={"row"} alignItems={'center'}>
+          <IconButton variant="outline" disableHover={true} sx={{
+               marginRight:'var(--space-lg)',
+          }}>
+          <SvgIcon component={"chevronLeft"} size={"20"}/>
+          </IconButton>
+          <Typography variant='h2'>
+          Template
+          </Typography>
+        </Stack>
+        </PageTemplate.Header>
+      <PageTemplate.Content>
         <Box display="flex">
             <Box width="20%" fontSize={'19px'} fontWeight={500} padding={"7px 16px"}>Folder Tree</Box>
             
@@ -123,7 +139,10 @@ const TemplateLibrary: React.FC = () => {
                 <h4>Template Advanced Filter</h4>
             </Box>
         </Drawer>
-    </Box>
+      </PageTemplate.Content>
+
+          </PageTemplate>
+   
     ;
 };
 

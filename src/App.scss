@@ -16,6 +16,7 @@
     --space-10xl:5.28rem;
     --space-11xl:5.6rem;
  
+    --border-radius-md: .8rem;
     --topBarHeight: 6rem;
 
     --bg-secondary: #F6F6F6;
@@ -27,8 +28,9 @@
     --primary-color: #0A68DB;
     --primary-color-hover: #0a68dbf5;
     --secondary-color: #1E1E1E;
+
     --text-primary: #1E1E1E;
-    --text-secondary: #1E1E1E;
+    --text-secondary: #5C5C5C;
  
     --border-color-tertiary: #E7E7E7;
     --border-color-secondary: #DCDCDC;
@@ -42,6 +44,6 @@
     box-sizing: border-box;
 }
 html{
-    font-size: 62.5%;
+    font-size: 10px;
 }
  

@@ -23,14 +23,16 @@
         display:flex;
         flex-direction:column;
         justify-content:center;
-        align-items:center;
+        align-items:start;
      
         & .userInfo-name{
             font-size:1.5rem;
             font-weight:500;
+
         }
         & .userInfo-role{
             font-size:1.5rem;
+            color: var(--text-secondary);
             
         }
     }

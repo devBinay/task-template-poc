@@ -9,6 +9,7 @@ export const icons = {
     check: React.lazy(() => import(pathInitial + '/check.svg?react')),
     checkedDoc: React.lazy(() => import(pathInitial + '/checked-doc.svg?react')),
     checkedList: React.lazy(() => import(pathInitial + '/checked-list.svg?react')),
+    chevronLeft: React.lazy(() => import(pathInitial + '/chevron-left.svg?react')),
     clipboardToDo: React.lazy(() => import(pathInitial + '/clipboard-to-do.svg?react')),
     close: React.lazy(() => import(pathInitial + '/close.svg?react')),
     comment: React.lazy(() => import(pathInitial + '/comment.svg?react')),

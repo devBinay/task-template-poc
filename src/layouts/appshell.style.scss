@@ -14,12 +14,11 @@
   
     & .appShell__body {
       flex-grow: 1;
-      padding: 1rem; 
       overflow-y: auto;
       overflow-x: hidden;
-      background-color: var(--bg-default); 
-      border-start-start-radius: var(--space-md);
-      border-end-start-radius: var(--space-md);
+      background-color: var(--bg-secondary); 
+      border-start-start-radius: var(--border-radius-md);
+      border-end-start-radius: var(--border-radius-md);
       margin-bottom: var(--space-2xl);
     
     }
