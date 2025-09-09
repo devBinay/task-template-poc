@@ -17,6 +17,7 @@
     "@mui/material": "^7.3.2",
     "@mui/x-date-pickers": "^8.11.1",
     "@mui/x-tree-view": "^8.11.0",
+    "axios": "^1.11.0",
     "material-react-table": "^3.2.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
