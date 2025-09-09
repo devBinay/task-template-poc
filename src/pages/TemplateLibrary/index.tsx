@@ -14,6 +14,7 @@ import SvgIcon from '@/core/components/Icon';
 import { folderTreeData } from './tableData';
 import EmptyState from '../../components/EmptyList/EmptyList';
 import "./style.scss";
+import SearchDrawer from '../SearchDrawer.js';
 
 const SearchField = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
@@ -121,20 +122,15 @@ const TemplateLibrary: React.FC = () => {
             </Box>
         </Box>
 
-         <Drawer
-            anchor="top"
+        <SearchDrawer
             open={searchDrawer.status}
             onClose={closeSearchDrawer}
-        >
-            <Box margin='80px 20px' display='flex' justifyContent='space-between' alignItems='center'>
-                <h4>Template Advanced Filter</h4>
-            </Box>
-        </Drawer>
+        />
+
        </Box>
       </PageTemplate.Content>
 
     </PageTemplate>
-   
     ;
 };
 
