@@ -1,50 +1,40 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { DirectResponse, PaginatedResponse } from '../types/pagination.type';
+import axios, { type AxiosRequestConfig, type AxiosResponse, type AxiosInstance } from 'axios';
+import type { DirectResponse, PaginatedResponse } from '@/core/types/pagination.type';
+import { setInterceptor } from '@/core/services/api-interceptor';
 
-const axiosInstance = axios.create({
+const axiosInstance: AxiosInstance = axios.create({
   // baseURL: 'https://your-api-url.com', // Optionally set a base URL
   // ...other default configs
 });
 
-// Request interceptor to add headers (e.g., Authorization)
-axiosInstance.interceptors.request.use(
-  (config) => {
-    // Example: Add Authorization header if token exists
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers = config.headers || {};
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    // Add other headers as needed
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+setInterceptor(axiosInstance);
 
-// Response interceptor to handle errors globally
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    // Example: Handle 401 Unauthorized globally
-    if (error.response && error.response.status === 401) {
-      // Optionally redirect to login or show a message
-      // window.location.href = '/login';
-    }
-    // Handle other status codes or log errors as needed
-    return Promise.reject(error);
-  }
-);
+function get<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T> | PaginatedResponse<T>>> {
+  return axiosInstance.get<DirectResponse<T> | PaginatedResponse<T>>(url, config);
+}
 
-export const httpBaseService = {
-  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T> | PaginatedResponse<T>>> {
-    return axiosInstance.get<DirectResponse<T> | PaginatedResponse<T>>(url, config);
-  },
+function post<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
+  return axiosInstance.post<DirectResponse<T>>(url, data, config);
+}
 
-  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
-    return axiosInstance.post<DirectResponse<T>>(url, data, config);
-  },
+function put<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
+  return axiosInstance.put<DirectResponse<T>>(url, data, config);
+}
 
-  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
-    return axiosInstance.put<DirectResponse<T>>(url, data, config);
-  }
+function patch<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
+  return axiosInstance.patch<DirectResponse<T>>(url, data, config);
+}
+
+function del<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
+  return axiosInstance.delete<DirectResponse<T>>(url, config);
+}
+
+const httpBaseService = {
+  get,
+  post,
+  put,
+  patch,
+  del
 };
+
+export default httpBaseService;
