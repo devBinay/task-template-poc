@@ -1,12 +1,28 @@
-.template-library-table-main-container {
-
+.template-library-container {
+    .MuiOutlinedInput-root {
+        height: 36px;
+    }
+    .MuiButton-startIcon {
+        margin: 0;
+    }
+    .more-options-button{
+        padding: 6px;
+        min-width: auto;
+    }
+}
+.template-library-table-container {
     .MuiPaper-root {
         box-shadow: none;
         border-radius: 0px;
     }
+    .MuiTableCell-root {
+        padding: 8px 16px;
+        width: auto;
+    }
     .template-head-text {
         font-size: 15px;
         font-weight: 500;
+        padding: 12px 16px;
         color: #333333;
         min-width: fit-content;
         background-color: #F4F5FA;

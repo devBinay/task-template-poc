@@ -15,11 +15,11 @@ const Table = ({
 }: TableProps) => {
     const table = useMaterialReactTable(tableProps);
   return (
-          <MaterialReactTable 
-            table={table} 
-            {...props}
-          />
-        );
+    <MaterialReactTable 
+      table={table} 
+      {...props}
+    />
+  );
 };
 
 export default Table;
