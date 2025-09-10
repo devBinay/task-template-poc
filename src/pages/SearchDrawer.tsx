@@ -72,7 +72,16 @@ function StyledDropdown ({label="",handleChange=()=>{},value="", width="100%", o
         </Select>
       </Box>  
 )}
-const SearchDrawer = () => {
+
+interface SearchDrawerProps {
+    open: boolean;
+    onClose: () => void;
+}
+
+const SearchDrawer = ({
+    open,
+    onClose
+}: SearchDrawerProps) => {
     const {RECENT, ADVANCE} = TEMPLATE_SEARCH_TABS;
     const [currentTab, setCurrentTab] = useState(ADVANCE.value);
     const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -81,7 +90,8 @@ const SearchDrawer = () => {
     return (
         <StyledDrawer
            anchor='top'
-           open={true}
+           open={open}
+           onClose={onClose}
         >
             <Box className="template-library-search-drawer-main">
                 <Box display="flex" alignItems="center" padding="12px 12px 4px 12px">

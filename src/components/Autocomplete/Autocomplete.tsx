@@ -31,7 +31,9 @@ const InputWrapper = styled("div")(({ theme }) => ({
   borderRadius: "4px",
   padding: "1px",
   display: "flex",
-  flexWrap: "wrap",
+  flexWrap: "nowrap",
+  overflowX: "auto",
+  whiteSpace: "nowrap",
   ...theme.applyStyles?.("dark", {
     borderColor: "#434343",
     backgroundColor: "#141414",
