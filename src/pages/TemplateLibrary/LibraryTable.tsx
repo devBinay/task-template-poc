@@ -1,13 +1,13 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Menu from '@mui/material/Menu';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import type { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Table from "@/components/Table/Table";
-import { useCallback, useMemo, useRef, useState } from "react";
-import {  type MRT_ColumnDef} from "material-react-table";
 import { demoTableData } from "./tableData";
 import SvgIcon from "@/core/components/Icon";
 import { IconOutlined } from "@/components/Button/Button";
@@ -82,6 +82,8 @@ const LibraryTable : React.FC = () => {
     });
     const [previewModal, setPreviewModal] = useState({status: false, data: ''});
     const [tooltipId, setTooltipId] = useState<number[]>([]);
+    const [showCheckbox, setShowCheckbox] = useState(false);
+    const [selectedTemplate, setSelectedTemplate] = useState<number[]>([]);
     const [selectedSort, setSelectedSort] = useState<{[key in keyof typeof tableActionMenu]: string | null}>({
       name: null,
       created: null,
@@ -131,8 +133,8 @@ const LibraryTable : React.FC = () => {
           <Box>{column.columnDef.header}</Box>
 
           {selected && <Box>
-            {isAscending ? <SvgIcon component="arrowDown" size={18} fill="#0A68DB" /> :
-              <SvgIcon component="arrowUp" size={18} fill="#0A68DB" />}
+            {isAscending ? <SvgIcon component="arrowDown" size={18} fill="#5C5C5C" /> :
+              <SvgIcon component="arrowUp" size={18} fill="#5C5C5C" />}
           </Box>}
 
           <Box
@@ -190,22 +192,66 @@ const LibraryTable : React.FC = () => {
       );
     };
 
-
-
     const renderTemplateNameHeader = ({ column }) => renderHeaderWithMenu(column, "name", ["Sort A -> Z", "Sort Z -> A"]);
     const renderTemplateCreatedHeader = ({ column }) => renderHeaderWithMenu(column, "created", ["Sort Ascending", "Sort Descending"]);
     const renderTemplateModifiedHeader = ({ column }) => renderHeaderWithMenu(column, "modified", ["Sort Ascending", "Sort Descending"]);
+
+    const renderTemplateIconHeader = ({cell}) => {
+      return <Box>
+          <FormControlLabel
+              sx={{
+                '& .MuiCheckbox-root' : { padding: 0 },
+                '& .MuiFormControlLabel-label': { m: 0, ml:'6px'  }
+              }}  
+              control={
+                <Checkbox
+                  size="small"
+                  sx={{
+                    '& .MuiSvgIcon-root': { fontSize: 20, ml:'16px' },
+                      color: '#5C5C5C',
+                    '&.Mui-checked': {
+                      color: '#0A68DB',
+                    },
+                  }}
+                  indeterminate={showCheckbox}
+                />
+              }
+              label=""
+            /> 
+      </Box>
+    }
 
     const renderTemplateIconCell = ({cell}) => {
         const data = cell.getValue();
         return (
                <Box display='flex' justifyContent='center'>
-                    <IconOutlined height="36px" width="16px" sx={{ pointerEvents: 'none' }} startIcon={
+                { showCheckbox ?
+                    <FormControlLabel
+                      sx={{
+                          '& .MuiCheckbox-root' : { padding: 0 },
+                          '& .MuiFormControlLabel-label': { m: 0, ml:'6px'  }
+                        }}  
+                        control={
+                            <Checkbox
+                              size="small"
+                              sx={{
+                                '& .MuiSvgIcon-root': { fontSize: 20, ml:'16px' },
+                                  color: '#5C5C5C',
+                                '&.Mui-checked': {
+                                    color: '#0A68DB',
+                                  },
+                                }}
+                            />
+                        }
+                        label=""
+                    /> :
+                    <Box onClick={() => setShowCheckbox(true)} className="cursor-pointer">
+                      <IconOutlined height="36px" width="16px" sx={{ pointerEvents: 'none' }} startIcon={
                         data?.type === "Checklist" ?
                         <SvgIcon 
                             component="checkedList"
                             size={18}
-                            fill="#5C5C5C"
+                            fill="#0A68DB"
                             sx={{ pointerEvents: 'none' }}
                          /> :
                         <SvgIcon 
@@ -215,7 +261,9 @@ const LibraryTable : React.FC = () => {
                          />
                         }
                         variant='outlined'
-                    />
+                      />
+                    </Box>
+                }
                </Box>
             )
     }
@@ -283,6 +331,7 @@ const LibraryTable : React.FC = () => {
       {
         accessorKey: "template_icon",
         header: "",
+        Header: renderTemplateIconHeader,
         Cell: renderTemplateIconCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
@@ -290,8 +339,8 @@ const LibraryTable : React.FC = () => {
       {
         accessorKey: "template_name",
         header: "Name",
-        Cell: renderTemplateNameCell,
         Header: renderTemplateNameHeader,
+        Cell: renderTemplateNameCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
       },
       {
@@ -312,8 +361,8 @@ const LibraryTable : React.FC = () => {
      {
         accessorKey: "actions",
         header: "Actions",
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
         Cell: renderActionsCell,
+        muiTableHeadCellProps: () => ({className: "template-head-text" }),
       },
     ]
 
