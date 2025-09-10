@@ -135,6 +135,21 @@ const SearchDrawer = ({
                                     Last Modified: <span className='black-fg'>11/29/2022</span>
                                 </Typography>
                             </Box>
+
+                             <Box className="recent-search-main">
+                                <Box className="recent-search-item">
+                                    <Box height="24px">
+                                        <SvgIcon component='history' size={24} fill='#5C5C5C' />
+                                    </Box>
+                                    <Box>
+                                        <Typography className='template-name'>Bakery Annual Safety Training 2021 <span className='template-code'>(TT-59142)</span></Typography>
+                                        <Typography className='template-code'>EG &gt; 5S Audits &gt; 5S Simplicity Leads</Typography>
+                                    </Box>
+                                </Box>
+                                <Typography className='template-code'>
+                                    Last Modified: <span className='black-fg'>11/29/2022</span>
+                                </Typography>
+                            </Box>
                         </Box>
                     </TabPanel>
                     <TabPanel value={currentTab === ADVANCE.value}>
@@ -170,12 +185,14 @@ const SearchDrawer = ({
                                 options={TEMPLATE_STATUS_OPTIONS}
                                 getOptionLabel={(option) => option.label}
                                 placeholder="Select Task Tags"
+                                label='Task Tags'
                                 />
 
                                 <StyledAutocomplete
                                 options={TEMPLATE_STATUS_OPTIONS}
                                 getOptionLabel={(option) => option.label}
                                 placeholder="Search Question Tags"
+                                label='Question Tags'
                                 />
                             </Box>
                             <Box mt="25px" width="100%" display="flex" justifyContent="center" alignItems="center" gap="20px">
