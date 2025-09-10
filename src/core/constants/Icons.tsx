@@ -23,6 +23,7 @@ export const icons = {
     employeeManagement: React.lazy(() => import('@/assets/images/icons/employee-management.svg?react')),
     envelope: React.lazy(() => import('@/assets/images/icons/envelope.svg?react')),
     exchange: React.lazy(() => import('@/assets/images/icons/exchange.svg?react')),
+    folderInput: React.lazy(() => import('@/assets/images/icons/folder-input.svg?react')),
     foodSafety: React.lazy(() => import('@/assets/images/icons/food-safety.svg?react')),
     forecast: React.lazy(() => import('@/assets/images/icons/forecast.svg?react')),
     history: React.lazy(()=>import ('@/assets/images/time/history.svg?react')),

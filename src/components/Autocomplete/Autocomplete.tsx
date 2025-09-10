@@ -22,6 +22,9 @@ const Label = styled("label")`
   padding: 0 0 4px;
   line-height: 1.5;
   display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: #5C5C5C;
 `;
 
 const InputWrapper = styled("div")(({ theme }) => ({
@@ -69,7 +72,7 @@ const InputWrapper = styled("div")(({ theme }) => ({
 /* ---------- Tag Item ---------- */
 interface ItemProps {
   label: string;
-  onDelete?: () => void;
+  onDelete?: (event?: any) => void;
   [key: string]: any;
 }
 
@@ -79,7 +82,7 @@ function Item(props: ItemProps) {
     <Box display="flex" alignItems="center" gap="6px" {...other} >
         <Typography fontSize="13px" fontWeight={400}>{label}</Typography>
         <Box height="16px">
-            <SvgIcon component="close" size="16px" fill="#000" />
+            <SvgIcon component="close" size={16} fill="#000" />
         </Box>
     </Box>
   );
@@ -171,7 +174,7 @@ export default function StyledAutocomplete<T>(props: StyledAutocompleteProps<T>)
     focused,
     setAnchorEl,
     anchorEl,
-  } = useAutocomplete<T>({
+  } = useAutocomplete<T, true, false, false>({
     multiple: true,
     ...props,
   });
@@ -185,7 +188,6 @@ export default function StyledAutocomplete<T>(props: StyledAutocompleteProps<T>)
             const tagProps = getTagProps({ index });
             return (
               <StyledItem
-                key={index}
                 {...tagProps}
                 label={props.getOptionLabel(option)}
               />
@@ -203,7 +205,7 @@ export default function StyledAutocomplete<T>(props: StyledAutocompleteProps<T>)
         return (
           <li key={key} {...optionProps}>
             <span>{props.getOptionLabel(option)}</span>
-            <SvgIcon component="check" size="16px" fill="#000" />
+            <SvgIcon component="check" size={16} fill="#000" />
           </li>
         );
       })}
