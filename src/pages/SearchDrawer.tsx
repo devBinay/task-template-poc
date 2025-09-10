@@ -64,7 +64,7 @@ function StyledDropdown ({label="",handleChange=()=>{},value="", width="100%", o
          <Select
          className='dropdown-select'
          onChange={handleChange}
-         IconComponent={()=><Box sx={{transform: `rotate(-90deg)`}}><SvgIcon component='chevronLeft' size={18} fill='red' /></Box>}
+         IconComponent={()=><Box sx={{transform: `rotate(-90deg)`}}><SvgIcon component='chevronLeft' size={18} fill='#5C5C5C' /></Box>}
         >
             {
                options && options?.length > 0 && options.map((option)=><MenuItem key={option?.value} value={option?.value}>{option?.label}</MenuItem>)
@@ -83,7 +83,7 @@ const SearchDrawer = ({
     onClose
 }: SearchDrawerProps) => {
     const {RECENT, ADVANCE} = TEMPLATE_SEARCH_TABS;
-    const [currentTab, setCurrentTab] = useState(ADVANCE.value);
+    const [currentTab, setCurrentTab] = useState(RECENT.value);
     const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
         setCurrentTab(newValue);
     }
