@@ -23,7 +23,6 @@ const Home: React.FC = () => {
       Search
 
     </Button>
-
   </>;
 }
 

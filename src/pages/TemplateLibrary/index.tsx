@@ -1,50 +1,24 @@
 import React, { useState } from 'react';
 import DirectoryTree from "@/components/DirectoryTree";
-import { Button, Divider } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import { PrimaryButton } from '@/components/Button/Button';
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
 import LibraryTable from './LibraryTable';
+import PageTemplate from '../../components/pageTemplate/PageTemplate';
+import IconButton from '@/components/IconButton';
+import SvgIcon from '@/core/components/Icon';
+import { folderTreeData } from './tableData';
+import EmptyState from '../../components/EmptyList/EmptyList';
 import "./style.scss";
-
-const folderData = [
-  {
-    id: "1",
-    name: "Templates",
-    children: [
-      { id: "2", name: "EG", children: [
-        { id: "2-1", name: "Subfolder 1" },
-        { id: "2-2", name: "Subfolder 2" },
-        { id: "2-3", name: "Subfolder 3" },
-      ] },
-      { id: "3", name: "GMC" },
-      { id: "4", name: "RPI" },
-      { id: "5", name: "Standard Templates" },
-      { id: "6", name: "VSI" },
-      { id: "7", name: "Vallarta Demo Tasks" },
-      { id: "8", name: "Deleted Items" },
-    ],
-  },
-  {
-    id: "9",
-    name: "Report Task",
-    children: [
-      { id: "91", name: "GMC" },
-      { id: "92", name: "RPI" },
-      { id: "93", name: "Standard Templates" },
-    ],
-  },
-];
+import SearchDrawer from '../SearchDrawer.js';
 
 const SearchField = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
-    // fontSize: "12px",
     fontWeight: "400",
     "& fieldset": {
       border: "1px solid lightgray",
@@ -60,10 +34,8 @@ const SearchField = styled(TextField)(({ theme }) => ({
 
 const TemplateLibrary: React.FC = () => {
 
-    const [searchDrawer, setSearchDrawer] = useState({
-        status: false,
-        text: "",
-    });
+    const [searchDrawer, setSearchDrawer] = useState({status: false, text: ""});
+    const [selectedDirectoryId, setSelectedDirectoryId] = useState<string | null>(null);
 
     const openSearchDrawer = () => {
         setSearchDrawer((prev) => ({ ...prev, status: true }));
@@ -72,34 +44,62 @@ const TemplateLibrary: React.FC = () => {
         setSearchDrawer((prev) => ({ ...prev, status: false, text: "" }));
     };
 
-    return <Box>
-        <Box display="flex">
-            <Box width="20%" fontSize={'19px'} fontWeight={500} padding={"7px 16px"}>Folder Tree</Box>
+    return <PageTemplate>
+        <PageTemplate.Header>
+        <Stack direction={"row"} alignItems={'center'}>
+          <IconButton variant="outline" disableHover={true} sx={{
+               marginRight:'var(--space-lg)',
+          }}>
+          <SvgIcon component={"chevronLeft"} size={"20"}/>
+          </IconButton>
+          <Typography variant='h2'>
+          Template
+          </Typography>
+        </Stack>
+        </PageTemplate.Header>
+      <PageTemplate.Content>
+      <Box className="template-library-container">
+         <Box display="flex" padding={"8px 16px"} alignItems="center">
+            <Box width="20%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
             
-            <Box width="80%" display="flex" alignItems="center">
-                <Box fontSize={'19px'} marginRight={'100px'} fontWeight={500} padding={'2px 0px'}>
+            <Box width="80%" display="flex" alignItems="center" gap='12px' justifyContent={"space-between"} flexGrow={1}>
+                <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="16px">
                     Template Library
                 </Box>
-                <SearchField
-                    className="search-bar"
-                    variant="outlined"
-                    placeholder="Search by template name"
-                    size="small"
-                    fullWidth
-                    sx={{ width:"500px" }}
-                    onClick={openSearchDrawer}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton edge="end">
-                                    <SearchIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                &nbsp; &nbsp;
-                <PrimaryButton>Create Template</PrimaryButton>
+                <Box flexGrow={1}>
+                    <SearchField
+                        className="search-bar"
+                        variant="outlined"
+                        placeholder="Search by template name"
+                        size="small"
+                        fullWidth
+                        onClick={openSearchDrawer}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton edge="end">
+                                        <SvgIcon component="search" size={20} />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </Box>
+                <Box whiteSpace="nowrap"><PrimaryButton>Create Template</PrimaryButton></Box>
+                 <Button 
+                  startIcon={
+                    <SvgIcon component="upload" size={20} fill="#5C5C5C" />
+                  }
+                  variant='outlined' 
+                  className='more-options-button'
+                ></Button>
+                <Button 
+                  startIcon={
+                    <SvgIcon component="moreOption" size={20} fill="#5C5C5C" />
+                  }
+                  variant='outlined' 
+                  className='more-options-button'
+                ></Button>
             </Box>
 
         </Box>
@@ -107,23 +107,30 @@ const TemplateLibrary: React.FC = () => {
 
         <Box display="flex" >
             <Box width={'20%'}>
-                <DirectoryTree data={folderData} />
+                <DirectoryTree data={folderTreeData?.data} setSelectedData={setSelectedDirectoryId} />
             </Box>
             <Box width={"80%"}>
-                <LibraryTable />
+                {!selectedDirectoryId ?  
+                    <EmptyState
+                        title="To view task templates, select a folder on the left or search above"
+                        description="Nothing is selected"
+                        imageSrcName="emptyState"
+                        imageWidth={90}
+                    /> :
+                    <LibraryTable />
+                }
             </Box>
         </Box>
 
-         <Drawer
-            anchor="top"
+        <SearchDrawer
             open={searchDrawer.status}
             onClose={closeSearchDrawer}
-        >
-            <Box margin='80px 20px' display='flex' justifyContent='space-between' alignItems='center'>
-                <h4>Template Advanced Filter</h4>
-            </Box>
-        </Drawer>
-    </Box>
+        />
+
+       </Box>
+      </PageTemplate.Content>
+
+    </PageTemplate>
     ;
 };
 

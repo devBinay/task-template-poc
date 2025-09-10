@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { icons } from "../constants/Icons";
 import Box from "@mui/material/Box";
 interface SvgIconProps {
@@ -17,12 +17,7 @@ const SvgIcon: React.FC<SvgIconProps> = ({
   stroke,
   ...props
 }) => {
-    const Component: any = useMemo(()=>{
-      let icon = icons[component]
-      // let icon = React.lazy(()=>import ('../../assets/images/icons/search.svg?react'))
-      console.log(icon)
-      return icon
-},[component]);
+    const Component = icons[component]
     if (!Component) {
        return <Box sx={{width:size, height: size, bgcolor:"lightgray", borderRadius:"50%"}}></Box>
     }

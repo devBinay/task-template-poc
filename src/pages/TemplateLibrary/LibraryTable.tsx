@@ -1,12 +1,13 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import { styled, alpha } from '@mui/material/styles';
+import Tooltip from "@mui/material/Tooltip";
+import { styled } from '@mui/material/styles';
 import Menu from '@mui/material/Menu';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import type { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Table from "@/components/Table/Table";
-import { useCallback, useMemo, useRef, useState } from "react";
-import {  type MRT_ColumnDef} from "material-react-table";
 import { demoTableData } from "./tableData";
 import SvgIcon from "@/core/components/Icon";
 import { IconOutlined } from "@/components/Button/Button";
@@ -44,6 +45,7 @@ const StyledMenu = styled((props: MenuProps) => (
     borderRadius: 6,
     marginTop: theme.spacing(1),
     minWidth: 180,
+    border: '1px solid #0A68DB',
     color: 'rgb(55, 65, 81)',
     paddingTop: '6px',
     paddingBottom: '6px',
@@ -78,57 +80,178 @@ const LibraryTable : React.FC = () => {
         created: { status: false, anchorEl: null },
         modified: { status: false, anchorEl: null },
     });
+    const [previewModal, setPreviewModal] = useState({status: false, data: ''});
+    const [tooltipId, setTooltipId] = useState<number[]>([]);
+    const [showCheckbox, setShowCheckbox] = useState(false);
+    const [selectedTemplate, setSelectedTemplate] = useState<number[]>([]);
+    const [selectedSort, setSelectedSort] = useState<{[key in keyof typeof tableActionMenu]: string | null}>({
+      name: null,
+      created: null,
+      modified: null,
+    });
+
+    const handleTooltip = (id: number) => setTooltipId((prev) => prev.includes(id) ? 
+      prev.filter((item) => item !== id) : [...prev, id]);
 
     const handleMenuClick = (event: React.MouseEvent<HTMLElement>, type: keyof typeof tableActionMenu) => {
-        event.stopPropagation();
-        const copyTableActionMenu = { ...tableActionMenu };
-        copyTableActionMenu[type] = { status: true, anchorEl: event.currentTarget };
-        setTableActionMenu(copyTableActionMenu);
-    }
+      event.stopPropagation();
+      const isOpen = tableActionMenu[type].status;
+      setTableActionMenu({
+        name: { status: false, anchorEl: null },
+        created: { status: false, anchorEl: null },
+        modified: { status: false, anchorEl: null },
+        [type]: {
+          status: !isOpen,
+          anchorEl: isOpen ? null : event.currentTarget,
+        },
+      });
+    };
 
     const handleMenuClose = (type?: keyof typeof tableActionMenu) => {
-        setTableActionMenu({
-            name: { status: false, anchorEl: null },
-            created: { status: false, anchorEl: null },
-            modified: { status: false, anchorEl: null }
-        });
+      setTableActionMenu({
+        name: { status: false, anchorEl: null },
+        created: { status: false, anchorEl: null },
+        modified: { status: false, anchorEl: null },
+      });
+    };
+
+    const handleSortSelect = (type: keyof typeof tableActionMenu, item: string) => {
+      setSelectedSort((prev) => ({ ...prev, [type]: item }));
+    };
+
+
+    const handlePreviewModalOpen = (cellData: any[]) => {
+      setPreviewModal({status: true, data: cellData});
     }
 
-    const renderHeaderWithMenu = (column: any, type: keyof typeof tableActionMenu, menuItems: string[]) => (
-        <Box display="flex" alignItems="center" gap="4px">
-            <Box>{column.columnDef.header}</Box>
-            <Box height="18px" className="cursor-pointer" onClick={(e) => handleMenuClick(e, type)}>
-                <SvgIcon component="arrowDown" size={16} fill="#5C5C5C" />
-            </Box>
-            <StyledMenu
-                key={`${type}-menu-${tableActionMenu[type].status ? 'open' : 'closed'}`}
-                anchorEl={tableActionMenu[type].anchorEl}
-                open={tableActionMenu[type].status}
-                onClose={() => handleMenuClose(type)}
-            >
-                {menuItems.map((item, index) => (
-                    <MenuItem key={index} disableRipple>
-                        {item}
-                    </MenuItem>
-                ))}
-            </StyledMenu>
+    const renderHeaderWithMenu = (column: any, type: keyof typeof tableActionMenu, menuItems: string[]) => {
+      const selected = selectedSort[type];
+      const isAscending = selected?.toLowerCase().includes("a → z");
+
+      return (
+        <Box display="flex" alignItems="center" gap="6px">
+          <Box>{column.columnDef.header}</Box>
+
+          {selected && <Box>
+            {isAscending ? <SvgIcon component="arrowDown" size={18} fill="#5C5C5C" /> :
+              <SvgIcon component="arrowUp" size={18} fill="#5C5C5C" />}
+          </Box>}
+
+          <Box
+            height="18px"
+            className="cursor-pointer"
+            onClick={(e) => handleMenuClick(e, type)}
+          >
+            {tableActionMenu[type].status ? (
+              <SvgIcon component="arrowUpFill" size={20} fill="#5C5C5C" />
+            ) : (
+              <SvgIcon component="arrowDownFill" size={20} fill="#5C5C5C" />
+            )}
+          </Box>
+
+          <StyledMenu
+            key={`${type}-menu-${tableActionMenu[type].status ? "open" : "closed"}`}
+            anchorEl={tableActionMenu[type].anchorEl}
+            open={tableActionMenu[type].status}
+            onClose={() => handleMenuClose(type)}
+          >
+            {menuItems.map((item, index) => {
+              const isSelected = selected === item;
+              return (
+                <MenuItem
+                  key={index}
+                  disableRipple
+                  selected={isSelected} 
+                  onClick={() => handleSortSelect(type, item)}
+                  sx={{
+                    color: isSelected ? "#0A68DB" : "#333333",
+                    fontWeight: isSelected ? 500 : 400,
+                    "&:hover": { backgroundColor: "transparent" },
+                    "&.Mui-selected": {
+                      backgroundColor: "transparent",
+                      color: "#0A68DB",
+                    },
+                  }}
+                >
+                  <Box display="flex" alignItems="center" width="100%" justifyContent="space-between">
+                    {item}
+                    {isSelected && (
+                      <SvgIcon
+                        component="check"
+                        size={20}
+                        fill="#0A68DB"
+                        style={{ marginLeft: "auto" }}
+                      />
+                    )}
+                  </Box>
+                </MenuItem>
+              );
+            })}
+          </StyledMenu>
         </Box>
-    );
+      );
+    };
 
     const renderTemplateNameHeader = ({ column }) => renderHeaderWithMenu(column, "name", ["Sort A -> Z", "Sort Z -> A"]);
     const renderTemplateCreatedHeader = ({ column }) => renderHeaderWithMenu(column, "created", ["Sort Ascending", "Sort Descending"]);
     const renderTemplateModifiedHeader = ({ column }) => renderHeaderWithMenu(column, "modified", ["Sort Ascending", "Sort Descending"]);
 
+    const renderTemplateIconHeader = ({cell}) => {
+      return <Box>
+          <FormControlLabel
+              sx={{
+                '& .MuiCheckbox-root' : { padding: 0 },
+                '& .MuiFormControlLabel-label': { m: 0, ml:'6px'  }
+              }}  
+              control={
+                <Checkbox
+                  size="small"
+                  sx={{
+                    '& .MuiSvgIcon-root': { fontSize: 20, ml:'16px' },
+                      color: '#5C5C5C',
+                    '&.Mui-checked': {
+                      color: '#0A68DB',
+                    },
+                  }}
+                  indeterminate={showCheckbox}
+                />
+              }
+              label=""
+            /> 
+      </Box>
+    }
+
     const renderTemplateIconCell = ({cell}) => {
         const data = cell.getValue();
         return (
-               <Box>
-                    <IconOutlined height="36px" width="16px" sx={{ pointerEvents: 'none' }} startIcon={
+               <Box display='flex' justifyContent='center'>
+                { showCheckbox ?
+                    <FormControlLabel
+                      sx={{
+                          '& .MuiCheckbox-root' : { padding: 0 },
+                          '& .MuiFormControlLabel-label': { m: 0, ml:'6px'  }
+                        }}  
+                        control={
+                            <Checkbox
+                              size="small"
+                              sx={{
+                                '& .MuiSvgIcon-root': { fontSize: 20, ml:'16px' },
+                                  color: '#5C5C5C',
+                                '&.Mui-checked': {
+                                    color: '#0A68DB',
+                                  },
+                                }}
+                            />
+                        }
+                        label=""
+                    /> :
+                    <Box onClick={() => setShowCheckbox(true)} className="cursor-pointer">
+                      <IconOutlined height="36px" width="16px" sx={{ pointerEvents: 'none' }} startIcon={
                         data?.type === "Checklist" ?
                         <SvgIcon 
                             component="checkedList"
                             size={18}
-                            fill="#5C5C5C"
+                            fill="#0A68DB"
                             sx={{ pointerEvents: 'none' }}
                          /> :
                         <SvgIcon 
@@ -138,7 +261,9 @@ const LibraryTable : React.FC = () => {
                          />
                         }
                         variant='outlined'
-                    />
+                      />
+                    </Box>
+                }
                </Box>
             )
     }
@@ -146,9 +271,9 @@ const LibraryTable : React.FC = () => {
     const renderTemplateNameCell = ({cell}) => {
         const data = cell.getValue();
         return (
-               <Box minWidth="400px" display="flex" alignItems="center" gap="10px">
+               <Box minWidth="300px" display="flex" alignItems="center" gap="10px">
                    <Box display="flex" flexDirection="column" gap="6px">
-                        <Box className="template-body-text">{data?.name}</Box>
+                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.name}</Box>
                           <Box display="flex" gap="24px">
                             <Box className="template-body-text"><span className="template-title-text">Type:</span> {data?.type}</Box>
                             <Box className="template-body-text"><span className="template-title-text">Status:</span> {data?.status}</Box>
@@ -158,12 +283,45 @@ const LibraryTable : React.FC = () => {
             )
     }
 
+    const renderTemplateCreatedCell = ({cell}) => {
+        const data = cell.getValue();
+        const templateData = cell.row.original;
+        return (
+               <Box display="flex" gap="4px" alignItems='center'>
+                <Box>{data}</Box>
+                <Tooltip 
+                  key={templateData.template_id}
+                  title={templateData.template_id}
+                  arrow
+                  slotProps={{
+                    tooltip: {
+                      sx: {
+                        fontSize: "12px",
+                        padding: "4px 8px",
+                      },
+                    },
+                  }}
+                  PopperProps={{
+                    sx: { zIndex: 1000 },
+                  }}
+                  open={tooltipId.includes(templateData.template_id)}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                >
+                  <Box display='flex' className="cursor-pointer" onClick={()=>handleTooltip(templateData?.template_id)}><SvgIcon component="infoCircle" size={18} fill="#5C5C5C"/></Box>
+                </Tooltip>
+                </Box>
+            )
+    }
+
     const renderActionsCell = ({cell}) => {
         return (
-            <Box display="flex" alignItems="center" gap="6px">
+            <Box display="flex" alignItems="center">
                 <Box><SvgIcon component="send" size={36} fill="#5C5C5C"/></Box>
                 <Box><SvgIcon component="copy" size={36} fill="#5C5C5C"/></Box>
                 <Box><SvgIcon component="edit" size={36} fill="#5C5C5C"/></Box>
+                <Box><SvgIcon component="download" size={20} fill="#5C5C5C"/></Box>
                 <Box><SvgIcon component="delete" size={36} fill="#F44336"/></Box>
             </Box>
         )
@@ -173,6 +331,7 @@ const LibraryTable : React.FC = () => {
       {
         accessorKey: "template_icon",
         header: "",
+        Header: renderTemplateIconHeader,
         Cell: renderTemplateIconCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
@@ -180,29 +339,30 @@ const LibraryTable : React.FC = () => {
       {
         accessorKey: "template_name",
         header: "Name",
+        Header: renderTemplateNameHeader,
         Cell: renderTemplateNameCell,
-        // Header: renderTemplateNameHeader,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
       },
       {
         accessorKey: "created",
         header: "Created",
-        // Header: renderTemplateCreatedHeader,
+        Header: renderTemplateCreatedHeader,
+        Cell: renderTemplateCreatedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
         accessorKey: "last_modified",
         header: "Last Modified",
-        // Header: renderTemplateModifiedHeader,
+        Header: renderTemplateModifiedHeader,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
      {
         accessorKey: "actions",
         header: "Actions",
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
         Cell: renderActionsCell,
+        muiTableHeadCellProps: () => ({className: "template-head-text" }),
       },
     ]
 
@@ -220,7 +380,7 @@ const LibraryTable : React.FC = () => {
   }
 
     return (
-        <div className="template-library-table-main-container">
+        <div className="template-library-table-container">
             <Table 
                 tableProps={templateTableProps}
             />

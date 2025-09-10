@@ -1,14 +1,13 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import { defaultConstants } from '../../core/constants';
-import clientLogo from "@assets/Logile Logo.svg"
-import { alpha, InputBase, Stack, styled } from '@mui/material';
-import Icon from '../../core/components/Icon';
-import IconButton from '../../components/IconButton';
+import { defaultConstants } from '@/core/constants';
+import clientLogo from "@/assets/Logile Logo.svg"
+import { Stack } from '@mui/material';
+import IconButton from '@/components/IconButton';
 import UserProfileInfoCard from './components/userProfile/UserProfileInfoCard';
-import navAvatarPng from '../../assets/navbarAvatar.png'
+import navAvatarPng from '@/assets/navbarAvatar.png'
 import NavSearchBar from './components/searchBar/SearchBar';
-import SvgIcon from '../../core/components/Icon';
+import SvgIcon from '@/core/components/Icon';
 interface AppBarProps {
   drawerHeight: number;
 }
@@ -18,7 +17,7 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight }) => {
     console.log(value)
   }
   return <Stack component={"header"}
-    sx={{ padding: 0, height: drawerHeight, backgroundColor: 'var(--background-secondary)', color: 'var(--text-primary)', position: "unset" }}
+    sx={{ padding: 0, height: drawerHeight, backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', position: "unset" }}
   >
     <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", padding: "0 var(--space-3xl)" }}>
       {/* Logo Section */}

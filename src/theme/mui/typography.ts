@@ -4,15 +4,15 @@ const typography = {
     fontFamily: `roboto`,
     h1: {
       fontSize: '2.5rem',
-      fontWeight: 700,
+      fontWeight: 500,
     },
     h2: {
-      fontSize: '2rem',
-      fontWeight: 600,
+      fontSize: '2.1rem',
+      fontWeight: 500,
     },
     h3: {
         fontSize: '1.5rem',
-        fontWeight: 600,
+        fontWeight: 500,
       },
     body1: {
       fontSize: '1.5rem',

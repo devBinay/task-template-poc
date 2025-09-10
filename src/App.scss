@@ -16,27 +16,34 @@
     --space-10xl:5.28rem;
     --space-11xl:5.6rem;
  
+    --border-radius-md: .8rem;
     --topBarHeight: 6rem;
-    --background-secondary: #F6F6F6;
-    --background-default: #ffffff;
+
+    --bg-secondary: #F6F6F6;
+    --bg-default: #ffffff;
+
+    --bg-hover-gray-200:#DCDCDC;
+    --bg-hover-gray-50:#F6F6F6;
+
     --primary-color: #0A68DB;
     --primary-color-hover: #0a68dbf5;
     --secondary-color: #1E1E1E;
+
     --text-primary: #1E1E1E;
-    --text-secondary: #1E1E1E;
+    --text-secondary: #5C5C5C;
  
-    --border-tertiary: 1px solid #E7E7E7;
-    --border-secondary: 1px solid #DCDCDC;
-    --border-primary: 1px solid #C1C1C1;
-    --border-brand-primary: 1px solid #0A68DB;
-    --border-brand-primary_subtle: 1px solid #2884F5;
-    --border-brand-primary_bold: 1px solid #0858B9;
+    --border-color-tertiary: #E7E7E7;
+    --border-color-secondary: #DCDCDC;
+    --border-color-primary:  #C1C1C1;
+    --border-color-brand-primary:  #0A68DB;
+    --border-color-brand-primary_subtle: #2884F5;
+    --border-color-brand-primary_bold: #0858B9;
 }
  
 *{
     box-sizing: border-box;
 }
 html{
-    font-size: 62.5%;
+    font-size: 10px;
 }
  
