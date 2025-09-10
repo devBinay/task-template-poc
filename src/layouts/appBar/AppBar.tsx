@@ -1,9 +1,9 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import { defaultConstants } from '@/core/constants';
-import clientLogo from "@assets/Logile Logo.svg"
+import clientLogo from "@/assets/Logile Logo.svg"
 import { Stack } from '@mui/material';
-import IconButton from '@components/IconButton';
+import IconButton from '@/components/IconButton';
 import UserProfileInfoCard from './components/userProfile/UserProfileInfoCard';
 import navAvatarPng from '@/assets/navbarAvatar.png'
 import NavSearchBar from './components/searchBar/SearchBar';
