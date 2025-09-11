@@ -6,6 +6,7 @@ import Sidebar from './sidebar/Sidebar';
 import { defaultConstants } from '@/core/constants';
 import './appshell.style.scss'
 import { useEffect, useRef, useState } from 'react';
+import { useGetViewPortSize } from '@/utils/getViewPortSize';
 const topBarHeight = defaultConstants.topBarHeight;
 
 export default function AppShell() {
@@ -13,25 +14,37 @@ export default function AppShell() {
   const activePath = location.pathname;
   const [showMenu, setShowMenu] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const viewportSize = useGetViewPortSize();
+  const isDesktop = viewportSize === 'xl' || viewportSize === 'lg';
 
+  const handleMenuAnimation = (menuStatus:boolean) => {
+     if (sidebarRef.current) {
+        if(menuStatus) {
+          sidebarRef.current.style.width = "90px";
+          sidebarRef.current.style.paddingRight = "var(--space-lg)";
+          sidebarRef.current.style.transition = "width .8s";
+        } else {
+          sidebarRef.current.style.width = "0px";
+          sidebarRef.current.style.paddingRight = "0px";
+          sidebarRef.current.style.transition = "width .8s";
+        }
+      }
+    }
+  
   const handleToggleMenu = () => {
-    setShowMenu(!showMenu);
+    const menuStatus = !showMenu
+    setShowMenu(menuStatus);
+    handleMenuAnimation(menuStatus);
   }
 
   useEffect(()=>{
-    if (sidebarRef.current) {
-      if(showMenu) {
-        sidebarRef.current.style.width="90px";
+    if (sidebarRef.current && isDesktop) {
+ sidebarRef.current.style.width="90px";
         sidebarRef.current.style.paddingRight = "var(--space-lg)";
-        sidebarRef.current.style.transition = "width .8s";
-      }
-      else {
-        sidebarRef.current.style.width="0px";
-        sidebarRef.current.style.paddingRight = "0px";
-        sidebarRef.current.style.transition = "width .8s";
-      }
-    }
-  },[showMenu]);
+        sidebarRef.current.style.transition = "none";
+      setShowMenu(true);  
+  }
+  },[])
   return (
     <div className='appShell__container'>
       <AppBar drawerHeight={topBarHeight} handleToggleMenu={handleToggleMenu}/>
