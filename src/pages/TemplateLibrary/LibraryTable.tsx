@@ -10,9 +10,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Table from "@/components/Table/Table";
 import { demoTableData } from "./tableData";
 import SvgIcon from "@/core/components/Icon";
+import IconButton from '@/components/IconButton';
 import { IconOutlined } from "@/components/Button/Button";
 import CommonModal from "@/components/Modal/Modal";
-import { renderPreviewPopupRow, renderPreviewHeading } from "@/Pages/TemplateLibrary/Component/PreviewType";
+import { renderPreviewPopupRow, renderPreviewHeading } from "@/pages/TemplateLibrary/component/PreviewType";
+import { useGetViewPortSize } from "@/utils/getViewPortSize";
 import "./style.scss";
 
 export type TemplateLibrary = {
@@ -76,7 +78,19 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 
-const LibraryTable : React.FC = () => {
+type LibraryTableProps = {
+  showCheckbox: boolean;
+  setShowCheckbox: (value: boolean) => void;
+  selectedTemplate: any[];
+  setSelectedTemplate: (value: any[]) => void;
+};
+
+const LibraryTable: React.FC<LibraryTableProps> = ({
+  showCheckbox,
+  setShowCheckbox,
+  selectedTemplate,
+  setSelectedTemplate
+}) => {
     const [tableActionMenu, setTableActionMenu] = useState<Record<"name" | "created" | "modified", MenuState>>({
         name: { status: false, anchorEl: null },
         created: { status: false, anchorEl: null },
@@ -84,13 +98,39 @@ const LibraryTable : React.FC = () => {
     });
     const [previewModal, setPreviewModal] = useState({status: false, data: ''});
     const [tooltipId, setTooltipId] = useState<number[]>([]);
-    const [showCheckbox, setShowCheckbox] = useState(false);
-    const [selectedTemplate, setSelectedTemplate] = useState<number[]>([]);
     const [selectedSort, setSelectedSort] = useState<{[key in keyof typeof tableActionMenu]: string | null}>({
       name: null,
       created: null,
       modified: null,
     });
+    const viewportSize = useGetViewPortSize();
+    const isDesktop = viewportSize === 'xl' || viewportSize === 'lg';
+
+    const handleRowSelection = (event: React.ChangeEvent<HTMLInputElement>, rowData: any) => {
+      let copyRowData = [...selectedTemplate];
+      if(!event || event?.target?.checked) {
+        copyRowData.push(rowData);
+      }
+      else {
+        copyRowData = copyRowData.filter((item) => item?.template_id !== rowData?.template_id);
+      }
+      if(copyRowData.length === 0) {
+        setShowCheckbox(false);
+      }
+      else {
+        setShowCheckbox(true);
+      }
+        setSelectedTemplate(copyRowData);
+    }
+
+    const isRowSelected = (rowData: any) => {
+      return selectedTemplate?.some((item) => item?.template_id === rowData?.template_id);
+    }
+
+    const clearRowSelection = () => {
+      setSelectedTemplate([]);
+      setShowCheckbox(false);
+    }
 
     const handleTooltip = (id: number) => setTooltipId((prev) => prev.includes(id) ? 
       prev.filter((item) => item !== id) : [...prev, id]);
@@ -194,22 +234,22 @@ const LibraryTable : React.FC = () => {
       );
     };
 
-    const renderTemplateNameHeader = ({ column }) => renderHeaderWithMenu(column, "name", ["Sort A -> Z", "Sort Z -> A"]);
-    const renderTemplateCreatedHeader = ({ column }) => renderHeaderWithMenu(column, "created", ["Sort Ascending", "Sort Descending"]);
-    const renderTemplateModifiedHeader = ({ column }) => renderHeaderWithMenu(column, "modified", ["Sort Ascending", "Sort Descending"]);
+    const renderTemplateNameHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "name", ["Sort A -> Z", "Sort Z -> A"]);
+    const renderTemplateCreatedHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "created", ["Sort Ascending", "Sort Descending"]);
+    const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "modified", ["Sort Ascending", "Sort Descending"]);
 
     const renderTemplateIconHeader = ({cell}) => {
-      return <Box>
+      return <Box className="template-checkbox-container no-padding">
+        { showCheckbox ?
           <FormControlLabel
-              sx={{
-                '& .MuiCheckbox-root' : { padding: 0 },
-                '& .MuiFormControlLabel-label': { m: 0, ml:'6px'  }
-              }}  
+              className="form-control-label"
+              onChange={clearRowSelection}
+              sx={{padding:0, margin:0}}
               control={
                 <Checkbox
                   size="small"
                   sx={{
-                    '& .MuiSvgIcon-root': { fontSize: 20, ml:'16px' },
+                    '& .MuiSvgIcon-root': { fontSize: 20 },
                       color: '#5C5C5C',
                     '&.Mui-checked': {
                       color: '#0A68DB',
@@ -220,24 +260,25 @@ const LibraryTable : React.FC = () => {
               }
               label=""
             /> 
+          : <Box height="20px"></Box>
+        }
       </Box>
     }
 
     const renderTemplateIconCell = ({cell}) => {
         const data = cell.getValue();
         return (
-               <Box display='flex' justifyContent='center'>
+               <Box className="template-checkbox-container" display='flex'>
                 { showCheckbox ?
                     <FormControlLabel
-                      sx={{
-                          '& .MuiCheckbox-root' : { padding: 0 },
-                          '& .MuiFormControlLabel-label': { m: 0, ml:'6px'  }
-                        }}  
+                    className="form-control-label"
+                    onChange={(event) => handleRowSelection(event, cell.row.original)}
                         control={
                             <Checkbox
                               size="small"
+                              checked={isRowSelected(cell.row.original)}
                               sx={{
-                                '& .MuiSvgIcon-root': { fontSize: 20, ml:'16px' },
+                                '& .MuiSvgIcon-root': { fontSize: 20 },
                                   color: '#5C5C5C',
                                 '&.Mui-checked': {
                                     color: '#0A68DB',
@@ -247,11 +288,20 @@ const LibraryTable : React.FC = () => {
                         }
                         label=""
                     /> :
-                    <Box onClick={() => setShowCheckbox(true)} className="cursor-pointer">
-                      <IconOutlined height="36px" width="16px" startIcon={
+                    <Box onClick={(event) => handleRowSelection(null, cell.row.original)} className="cursor-pointer">
+                      <IconOutlined height="36px" width="16px" sx={{ pointerEvents: 'none' }} startIcon={
                         data?.type === "Checklist" ?
-                          <SvgIcon component="checkedList" size={18} fill="#0A68DB" /> :
-                          <SvgIcon component="checkedDoc" size={18} fill="#009B00" />
+                        <SvgIcon 
+                            component="checkedList"
+                            size={18}
+                            fill="#0A68DB"
+                            sx={{ pointerEvents: 'none' }}
+                         /> :
+                        <SvgIcon 
+                            component="checkedDoc"
+                            size={18}
+                            fill="#009B00"
+                         />
                         }
                         variant='outlined'
                       />
@@ -264,13 +314,15 @@ const LibraryTable : React.FC = () => {
     const renderTemplateNameCell = ({cell}) => {
         const data = cell.getValue();
         return (
-               <Box minWidth="300px" display="flex" alignItems="center" gap="10px">
+               <Box minWidth="300px" display="flex" alignItems="center" gap="10px" ml="-10px">
                    <Box display="flex" flexDirection="column" gap="6px">
                         <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.name}</Box>
+                          {!isDesktop ?
                           <Box display="flex" gap="24px">
                             <Box className="template-body-text"><span className="template-title-text">Type:</span> {data?.type}</Box>
                             <Box className="template-body-text"><span className="template-title-text">Status:</span> {data?.status}</Box>
                           </Box>
+                          :""}
                    </Box>
                </Box>
             )
@@ -311,11 +363,11 @@ const LibraryTable : React.FC = () => {
     const renderActionsCell = ({cell}) => {
         return (
             <Box display="flex" alignItems="center">
-                <Box><SvgIcon component="send" size={36} fill="#5C5C5C"/></Box>
-                <Box><SvgIcon component="copy" size={36} fill="#5C5C5C"/></Box>
-                <Box><SvgIcon component="edit" size={36} fill="#5C5C5C"/></Box>
-                <Box><SvgIcon component="download" size={20} fill="#5C5C5C"/></Box>
-                <Box><SvgIcon component="delete" size={36} fill="#F44336"/></Box>
+              <IconButton disableHover={true}><SvgIcon component="send" size={20} fill="#5C5C5C"/></IconButton>
+              <IconButton disableHover={true}><SvgIcon component="copy" size={20} fill="#5C5C5C"/></IconButton>
+              <IconButton disableHover={true}><SvgIcon component="edit" size={20} fill="#5C5C5C"/></IconButton>
+              <IconButton disableHover={true}><SvgIcon component="download" size={20} fill="#5C5C5C"/></IconButton>
+              <IconButton disableHover={true}><SvgIcon component="delete" size={20} fill="#F44336"/></IconButton>
             </Box>
         )
     }
@@ -335,8 +387,24 @@ const LibraryTable : React.FC = () => {
         Header: renderTemplateNameHeader,
         Cell: renderTemplateNameCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
+      }]
+
+    const desktopColumns = [
+      {
+        accessorKey: "template_name.type",
+        header: "Type",
+        muiTableHeadCellProps: () => ({className: "template-head-text" }),
+        muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
+        accessorKey: "template_name.status",
+        header: "Status",
+        muiTableHeadCellProps: () => ({className: "template-head-text" }),
+        muiTableBodyCellProps: () => ({className: "template-body-text" })
+      }
+    ];  
+
+    const columns2 = [{
         accessorKey: "created",
         header: "Created",
         Header: renderTemplateCreatedHeader,
@@ -359,8 +427,17 @@ const LibraryTable : React.FC = () => {
       },
     ]
 
+    const getColumns = () => {
+      //Desktop View
+       if (isDesktop) 
+          return [...columns, ...desktopColumns, ...columns2];
+  
+       // Tab View
+       return [...columns, ...columns2];
+    }
+
   const templateTableProps = {
-    columns,
+    columns: getColumns(),
     data: demoTableData,
     enableColumnActions: false,
     enableColumnFilters: false,
@@ -384,9 +461,9 @@ const LibraryTable : React.FC = () => {
               onClose={() => setPreviewModal({status: false, data: ''})}
               title={renderPreviewHeading({
                   heading: "5-S Audit All Departments - 5S Certification Audits",
-                  btn1visible: "true", 
+                  btn1visible: true, 
                   btn1Name: "upload", 
-                  btn2visible: "true", 
+                  btn2visible: true, 
                   btn2Name: "moreOption"
                 })
               }

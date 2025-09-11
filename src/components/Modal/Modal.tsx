@@ -1,6 +1,8 @@
 import React from "react";
-import { Modal, Box, Typography, IconButton, Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 import SvgIcon from "@/core/components/Icon";
+import IconButton from '@/components/IconButton';
 
 interface CommonModalProps {
   open: boolean;
@@ -38,14 +40,14 @@ const CommonModal: React.FC<CommonModalProps> = ({
   cancelText = "Cancel",
 }) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} className="common-modal">
       <Box sx={style}>
         {/* Title */}
         {title && (
-          <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+          <Box display="flex" alignItems="center" justifyContent="space-between" mb={1} gap="2px">
             <Box width="95%">{title}</Box>
-            <IconButton onClick={onClose}>
-              <SvgIcon component="close" size={30} fill="#5C5C5C" />
+            <IconButton disableHover={true} onClick={onClose}>
+              <SvgIcon component="close" size={32} fill="#5C5C5C" />
             </IconButton>
           </Box>
         )}
@@ -56,11 +58,11 @@ const CommonModal: React.FC<CommonModalProps> = ({
         {/* Actions */}
         {showActions && (
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <Button onClick={onClose}>{cancelText}</Button>
+            <IconButton onClick={onClose}>{cancelText}</IconButton>
             {onConfirm && (
-              <Button onClick={onConfirm} variant="contained" color="primary">
+              <IconButton onClick={onConfirm} color="primary">
                 {confirmText}
-              </Button>
+              </IconButton>
             )}
           </Box>
         )}

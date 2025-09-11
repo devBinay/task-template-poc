@@ -23,8 +23,9 @@ const IconButtonStyled = styled(ButtonBase, {
 
   const hoverStyles: Record<Variant, object> = {
     primary: {
-      color: theme.palette.primary.main,
-      backgroundColor: alpha(theme.palette.primary.main, 0.1),
+          color: theme.palette.primary.main,
+          backgroundColor: alpha(theme.palette.primary.main, 0.1),
+        
     },
     secondary: {
       color: theme.palette.secondary.main,
@@ -47,7 +48,8 @@ const IconButtonStyled = styled(ButtonBase, {
     ...(variant === "outline" && { border: `1px solid var(--border-color-secondary)` }),
     "&:hover": {
       cursor: "pointer",
-      ...(hoverStyles[variant] || {}),
+
+      ...(!disableHover ? hoverStyles[variant] : {}),
     },
   };
 });

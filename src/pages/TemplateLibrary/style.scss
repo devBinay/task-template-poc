@@ -41,4 +41,21 @@
     .cursor-pointer {
         cursor: pointer;
     }
+    .template-checkbox-container {
+        user-select: none;
+        .form-control-label {
+            .MuiCheckbox-root{ 
+                padding: 0;
+            }
+            .MuiFormControlLabel-label{ 
+                margin: 0; 
+                margin-left:'6px';  
+            }
+            
+        }
+        .MuiFormControlLabel-root{
+            margin:0;
+            padding:0px 10px;;
+        }
+    }
 }
