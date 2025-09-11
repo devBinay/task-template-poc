@@ -11,6 +11,8 @@ import Table from "@/components/Table/Table";
 import { demoTableData } from "./tableData";
 import SvgIcon from "@/core/components/Icon";
 import { IconOutlined } from "@/components/Button/Button";
+import CommonModal from "@/components/Modal/Modal";
+import { renderPreviewPopupRow, renderPreviewHeading } from "@/Pages/TemplateLibrary/Component/PreviewType";
 import "./style.scss";
 
 export type TemplateLibrary = {
@@ -246,19 +248,10 @@ const LibraryTable : React.FC = () => {
                         label=""
                     /> :
                     <Box onClick={() => setShowCheckbox(true)} className="cursor-pointer">
-                      <IconOutlined height="36px" width="16px" sx={{ pointerEvents: 'none' }} startIcon={
+                      <IconOutlined height="36px" width="16px" startIcon={
                         data?.type === "Checklist" ?
-                        <SvgIcon 
-                            component="checkedList"
-                            size={18}
-                            fill="#0A68DB"
-                            sx={{ pointerEvents: 'none' }}
-                         /> :
-                        <SvgIcon 
-                            component="checkedDoc"
-                            size={18}
-                            fill="#009B00"
-                         />
+                          <SvgIcon component="checkedList" size={18} fill="#0A68DB" /> :
+                          <SvgIcon component="checkedDoc" size={18} fill="#009B00" />
                         }
                         variant='outlined'
                       />
@@ -384,6 +377,56 @@ const LibraryTable : React.FC = () => {
             <Table 
                 tableProps={templateTableProps}
             />
+
+           {/* Template Preview Popup */}
+            <CommonModal
+              open={previewModal.status}
+              onClose={() => setPreviewModal({status: false, data: ''})}
+              title={renderPreviewHeading({
+                  heading: "5-S Audit All Departments - 5S Certification Audits",
+                  btn1visible: "true", 
+                  btn1Name: "upload", 
+                  btn2visible: "true", 
+                  btn2Name: "moreOption"
+                })
+              }
+              showActions={false}
+            >
+              <Box sx={{ borderRadius: "8px", border: "1px solid #DCDCDC"}}>
+                <Box sx={{ padding: "16px", backgroundColor: "#F4F5FA", display: "flex", gap: "10px", fontWeight: "500"}}>
+                  <Box width="70%">Question</Box>
+                  <Box width="30%" ml="30px">Answer</Box>
+                </Box>
+                {renderPreviewPopupRow({
+                  index: "1",
+                  text: "Acknowledge that you have reviewed the alert.",
+                  type: "",
+                  answer: "Confirmed",
+                  mandatory: true
+                })}
+                {renderPreviewPopupRow({
+                  index: "2",
+                  text: "Select cause",
+                  type: "Dropdown",
+                  answer: "Select a cause",
+                  mandatory: true
+                })}
+                {renderPreviewPopupRow({
+                  index: "3",
+                  text: "Select corrective actions",
+                  type: "Dropdown",
+                  answer: "Select actions",
+                  mandatory: true
+                })}
+                {renderPreviewPopupRow({
+                  index: "4",
+                  text: "Comments",
+                  type: "Multiline-Textfield",
+                  answer: "Comments",
+                  mandatory: true
+                })}
+              </Box>
+            </CommonModal>
         </div>
     )
 }

@@ -5,7 +5,6 @@ import { PrimaryButton } from '@/components/Button/Button';
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
 import { styled } from "@mui/material/styles";
 import LibraryTable from './LibraryTable';
 import PageTemplate from '../../components/pageTemplate/PageTemplate';
@@ -15,6 +14,7 @@ import { folderTreeData } from './tableData';
 import EmptyState from '../../components/EmptyList/EmptyList';
 import "./style.scss";
 import SearchDrawer from '../SearchDrawer.js';
+import TableRowSkeleton from './Component/Skeleton.js';
 
 const SearchField = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
@@ -36,6 +36,7 @@ const TemplateLibrary: React.FC = () => {
 
     const [searchDrawer, setSearchDrawer] = useState({status: false, text: ""});
     const [selectedDirectoryId, setSelectedDirectoryId] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const openSearchDrawer = () => {
         setSearchDrawer((prev) => ({ ...prev, status: true }));
@@ -53,7 +54,7 @@ const TemplateLibrary: React.FC = () => {
           <SvgIcon component={"chevronLeft"} size={"20"}/>
           </IconButton>
           <Typography variant='h2'>
-          Template
+            Template
           </Typography>
         </Stack>
         </PageTemplate.Header>
@@ -77,19 +78,18 @@ const TemplateLibrary: React.FC = () => {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton edge="end">
-                                        <SvgIcon component="search" size={20} />
-                                    </IconButton>
+                                  <SvgIcon component="search" size={20} />
                                 </InputAdornment>
                             ),
                         }}
                     />
                 </Box>
                 <Box whiteSpace="nowrap"><PrimaryButton>Create Template</PrimaryButton></Box>
-                 <Button 
+                <Button 
                   startIcon={
                     <SvgIcon component="upload" size={20} fill="#5C5C5C" />
                   }
+                  sx={{ borderColor: '#DCDCDC' }}
                   variant='outlined' 
                   className='more-options-button'
                 ></Button>
@@ -97,7 +97,8 @@ const TemplateLibrary: React.FC = () => {
                   startIcon={
                     <SvgIcon component="moreOption" size={20} fill="#5C5C5C" />
                   }
-                  variant='outlined' 
+                  sx={{ borderColor: '#DCDCDC' }}
+                  variant='outlined'
                   className='more-options-button'
                 ></Button>
             </Box>
@@ -107,18 +108,21 @@ const TemplateLibrary: React.FC = () => {
 
         <Box display="flex" >
             <Box width={'20%'}>
-                <DirectoryTree data={folderTreeData?.data} setSelectedData={setSelectedDirectoryId} />
+              <DirectoryTree data={folderTreeData?.data} setSelectedData={setSelectedDirectoryId} />
             </Box>
             <Box width={"80%"}>
-                {!selectedDirectoryId ?  
-                    <EmptyState
-                        title="To view task templates, select a folder on the left or search above"
-                        description="Nothing is selected"
-                        imageSrcName="emptyState"
-                        imageWidth={90}
-                    /> :
-                    <LibraryTable />
-                }
+              {loading ? [...Array(5)].map((_, i) => (
+                <TableRowSkeleton key={i} />
+              )) :
+              !selectedDirectoryId ?  
+                <EmptyState
+                  title = "To view task templates, select a folder on the left or search above"
+                  description = "Nothing is selected"
+                  imageSrcName = "emptyState"
+                  imageWidth={90}
+                /> :
+                <LibraryTable />
+              }
             </Box>
         </Box>
 
