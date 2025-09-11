@@ -1,5 +1,5 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse, type AxiosInstance } from 'axios';
-import type { DirectResponse, PaginatedResponse } from '@/core/types/pagination.type';
+
 import { setInterceptor } from '@/core/services/api-interceptor';
 
 const axiosInstance: AxiosInstance = axios.create({
@@ -9,32 +9,34 @@ const axiosInstance: AxiosInstance = axios.create({
 
 setInterceptor(axiosInstance);
 
-function get<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T> | PaginatedResponse<T>>> {
-  return axiosInstance.get<DirectResponse<T> | PaginatedResponse<T>>(url, config);
+function get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  return axiosInstance.get<T>(url, config) as Promise<T>;
 }
 
-function post<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
-  return axiosInstance.post<DirectResponse<T>>(url, data, config);
+
+function post<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
+  return axiosInstance.post<T>(url, data, config) as Promise<T>;
 }
 
-function put<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
-  return axiosInstance.put<DirectResponse<T>>(url, data, config);
+
+function put<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
+  return axiosInstance.put<T>(url, data, config) as Promise<T>;
 }
 
-function patch<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
-  return axiosInstance.patch<DirectResponse<T>>(url, data, config);
+
+function patch<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
+  return axiosInstance.patch<T>(url, data, config) as Promise<T>;
 }
 
-function del<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<DirectResponse<T>>> {
-  return axiosInstance.delete<DirectResponse<T>>(url, config);
+
+function del<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  return axiosInstance.delete<T>(url, config) as Promise<T>;
 }
 
-const httpBaseService = {
+export default {
   get,
   post,
   put,
   patch,
   del
 };
-
-export default httpBaseService;
