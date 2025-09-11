@@ -5,8 +5,8 @@ import './sidebar.style.scss'
 import SvgIcon from '@/core/components/Icon';
 import type { icons } from '@/core/constants/Icons';
 interface SidebarProps {
-  drawerWidth: number;
   activePath: string;
+  sidebarRef?: React.Ref<HTMLDivElement>;
 }
 
 const menuItems: {
@@ -64,20 +64,16 @@ const StyledListItemButton = styled(ListItemButton,{
     }
 }));
 
-const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
   const [appSwitchValue,setAppSwitchValue] = useState<"IMS"|"WFM">("IMS");
   const handleSwitchAppName = ()=>{
     setAppSwitchValue(prev=> prev == 'IMS' ? 'WFM':'IMS')
   }
-
- return <Stack className='sidebar__container' sx={()=>({
-  backgroundColor:'var(--bg-secondary)',
-  width:drawerWidth
- })}>
-    <div className='sidebar__switch'>
+  return (
+ <Stack className='sidebar__container' ref={sidebarRef}>
+  <Stack className='sidebar__switch'>
     <ButtonBase  disableRipple disableTouchRipple onClick={handleSwitchAppName}>
-
-    <SvgIcon component='exchange' size={18} fill={'currentColor'}/>
+    <SvgIcon component='exchange' size={20} />
     <Typography sx={()=>({
       textAlign:'center',
       fontWeight:500,
@@ -86,7 +82,6 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => {
       fontSize:"1.7rem"
     })}>{appSwitchValue}</Typography>
     </ButtonBase>
-    </div>
 
     <Stack className='sidebar__list'>
       {menuItems.map((item) => {
@@ -96,6 +91,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => {
                 <Typography sx={()=>({
                   textAlign:'center',
                   fontSize:"1.2rem",
+                  whiteSpace: "nowrap",
                   fontWeight:"inherit",
                 })}>{item.text}</Typography>
           </StyledListItemButton>
@@ -103,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => {
       })}
     </Stack>
 </Stack>
-
-    };
+</Stack>
+)};
 
 export default Sidebar;

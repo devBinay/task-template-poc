@@ -9,8 +9,10 @@ import navAvatarPng from '@/assets/navbarAvatar.png'
 import NavSearchBar from './components/searchBar/SearchBar';
 import SvgIcon from '@/core/components/Icon';
 import { styled } from "@mui/material/styles";
+import "./AppBar.style.scss";
 interface AppBarProps {
   drawerHeight: number;
+  handleToggleMenu: () => void,
 }
 
 const MainMenu = styled(Button)(() => ({
@@ -31,10 +33,10 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
   const handleSearch = (value: string) => {
     console.log(value)
   }
-  return <Stack component={"header"}
-    sx={{ padding: 0, height: drawerHeight, backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', position: "unset" }}
+  return <Stack className='app-bar-main-container' component={"header"}
+    sx={{ height: drawerHeight }}
   >
-    <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", padding: "var(--space-xs) var(--space-3xl)" }}>
+    <div className='logo-section'>
       {/* Logo Section */}
       <Stack direction={"row"} sx={{
         height: "fit-content",
