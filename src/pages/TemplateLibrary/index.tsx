@@ -54,9 +54,10 @@ const TemplateLibrary: React.FC = () => {
         <Stack direction={"row"} alignItems={'center'}>
           <IconButton variant="outline" disableHover={true} disableTouchRipple sx={{
                marginRight:'var(--space-lg)',
-               backgroundColor:'var(--bg-default)'
+               backgroundColor:'var(--bg-default)',
+               padding:'.8rem'
           }}>
-          <SvgIcon component={"chevronLeft"} fill='var(--icon-color-secondary)' size={20}/>
+          <SvgIcon component={"chevronLeft"} fill='var(--icon-color-secondary)' size={18}/>
           </IconButton>
           <Typography variant='h2'>
           Template

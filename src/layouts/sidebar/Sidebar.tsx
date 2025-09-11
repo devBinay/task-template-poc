@@ -80,8 +80,8 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => {
     <SvgIcon component='exchange' size={18} fill={'currentColor'}/>
     <Typography sx={()=>({
       textAlign:'center',
-      fontWeight:800,
-      lineHeight:1,
+      fontWeight:500,
+      lineHeight:'2.2rem',
       transition:'ease-in-out 1s',
       fontSize:"1.7rem"
     })}>{appSwitchValue}</Typography>

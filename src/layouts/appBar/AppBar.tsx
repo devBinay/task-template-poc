@@ -29,17 +29,18 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight }) => {
         <img src={clientLogo} />
         <Typography sx={(theme) => ({
           color: theme.palette.primary.main,
-          marginLeft: ".5rem",
-          fontSize: "1.4rem",
-          fontWeight: 800,
-          lineHeight: 1,
+          marginLeft: ".8rem",
+          fontSize: "1.5rem",
+          fontWeight: 500,
+          lineHeight: '2rem',
+          
         })}>
           {defaultConstants.appAbbr}
         </Typography>
       </Stack>
 
       {/* Search Bar */}
-      <Stack sx={{ marginLeft: "auto", width:"24rem", height:"3.6rem" }}>
+      <Stack sx={{ marginLeft: "auto", maxWidth:"24rem", maxHeight:"3.6rem" }}>
         <NavSearchBar placeholder='Search...' onSearch={handleSearch} iconPosition='left' icon='search' />
       </Stack>
       {/* Icons Section */}

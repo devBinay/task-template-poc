@@ -32,7 +32,8 @@ return <MuiAppBar
         color:theme.palette.primary.main,
         marginLeft:".5rem",
         fontWeight:800,
-        lineHeight:1
+        lineHeight:1,
+        fontSize:'1.5rem'
       })}>
         {defaultConstants.appAbbr}
         </Typography>
