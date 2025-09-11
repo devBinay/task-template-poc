@@ -42,7 +42,7 @@ fs.readdir(svgFolder, (err, files) => {
       // Prepare icon entry
       const key = toCamelCase(newFileName);
       iconEntries.push(
-        `    ${key}: React.lazy(() => import(pathInitial + '/${newFileName}?react'))`
+        `    ${key}: React.lazy(() => import('@/assets/images/icons/${newFileName}?react'))`
       );
 
       console.log(`Processed: ${newFileName}`);
@@ -51,9 +51,6 @@ fs.readdir(svgFolder, (err, files) => {
 
   // Generate index file content
   const fileContent = `import React from "react";
-
-const pathInitial = "../../assets/images/icons";
-
 export const icons = {
 ${iconEntries.join(",\n")}
 };
