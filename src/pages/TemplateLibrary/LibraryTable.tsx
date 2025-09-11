@@ -13,9 +13,9 @@ import SvgIcon from "@/core/components/Icon";
 import IconButton from '@/components/IconButton';
 import { IconOutlined } from "@/components/Button/Button";
 import CommonModal from "@/components/Modal/Modal";
-import { renderPreviewPopupRow, renderPreviewHeading } from "@/pages/TemplateLibrary/components/PreviewType";
-import { useGetViewPortSize } from "@/utils/getViewPortSize";
+import { renderPreviewPopupRow, renderPreviewHeading } from "./components/PreviewType";
 import "./style.scss";
+import { useGetViewPortSize } from "@/utils/getViewPortSize";
 
 export type TemplateLibrary = {
   template_icon: string;

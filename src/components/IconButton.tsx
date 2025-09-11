@@ -15,7 +15,6 @@ const IconButtonStyled = styled(ButtonBase, {
 })<IconButtonProps>(({ theme, variant = "primary", disableHover }) => {
   const baseStyles = {
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.background.default,
     border: "1px solid transparent",
     padding: "0.5rem",
     transition: "all 0.2s ease-in-out",

@@ -19,7 +19,7 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight }) => {
   return <Stack component={"header"}
     sx={{ padding: 0, height: drawerHeight, backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', position: "unset" }}
   >
-    <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", padding: "0 var(--space-3xl)" }}>
+    <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", padding: "var(--space-xs) var(--space-3xl)" }}>
       {/* Logo Section */}
       <Stack direction={"row"} sx={{
         height: "fit-content",
@@ -43,20 +43,31 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight }) => {
         <NavSearchBar placeholder='Search...' onSearch={handleSearch} iconPosition='left' icon='search' />
       </Stack>
       {/* Icons Section */}
-      <Stack sx={{ marginLeft: "var(--space-4xl)", gap: ".5rem", flexDirection: "row" }}>
-        <IconButton variant="primary">
-          <SvgIcon component="calendarBlank" size={20} />
+      <Stack sx={{ marginLeft: "var(--space-4xl)", gap: "var(--space-xs)", flexDirection: "row" }}>
+        <IconButton variant="primary" style={{
+          padding:"1rem"
+        }}>
+          <SvgIcon component="calendarBlank" size={20}  />
         </IconButton>
-        <IconButton variant="primary">
+        <IconButton variant="primary" style={{
+          padding:"1rem"
+        }}>
           <SvgIcon component="clipboardToDo" size={20} />
         </IconButton>
-        <IconButton variant="primary">
+        <IconButton variant="primary" style={{
+          padding:"1rem"
+        }}>
           <SvgIcon component="envelope" size={20} />
         </IconButton>
-        <IconButton variant="primary">
+        <IconButton variant="primary" style={{
+          padding:"1rem"
+        }}>
           <SvgIcon component="comment" size={20} />
         </IconButton>
-        <IconButton variant="primary">
+        <IconButton variant="primary" style={{
+          padding:"1rem",
+          
+        }}>
           <SvgIcon component="notification" size={20} />
         </IconButton>
       </Stack>
