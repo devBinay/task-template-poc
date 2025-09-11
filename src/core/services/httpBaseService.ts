@@ -1,4 +1,4 @@
-import axios, { type AxiosRequestConfig, type AxiosResponse, type AxiosInstance } from 'axios';
+import axios, { type AxiosRequestConfig, type AxiosInstance } from 'axios';
 
 import { setInterceptor } from '@/core/services/api-interceptor';
 
