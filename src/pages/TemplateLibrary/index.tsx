@@ -15,7 +15,7 @@ import SvgIcon from '@/core/components/Icon';
 import { folderTreeData } from './tableData';
 import EmptyState from '../../components/EmptyList/EmptyList';
 import SearchDrawer from '@/pages/SearchDrawer';
-import TableRowSkeleton from '@/pages/TemplateLibrary/component/Skeleton';
+import TableRowSkeleton from '@/pages/TemplateLibrary/components/Skeleton';
 import "./style.scss";
 
 const SearchField = styled(TextField)(({ theme }) => ({
