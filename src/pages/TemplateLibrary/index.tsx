@@ -52,10 +52,11 @@ const TemplateLibrary: React.FC = () => {
     return <PageTemplate>
         <PageTemplate.Header>
         <Stack direction={"row"} alignItems={'center'}>
-          <IconButton variant="outline" disableHover={true} sx={{
+          <IconButton variant="outline" disableHover={true} disableTouchRipple sx={{
                marginRight:'var(--space-lg)',
+               backgroundColor:'var(--bg-default)'
           }}>
-          <SvgIcon component={"chevronLeft"} fill='var(--icon-color-secondary)' size={"20"}/>
+          <SvgIcon component={"chevronLeft"} fill='var(--icon-color-secondary)' size={20}/>
           </IconButton>
           <Typography variant='h2'>
           Template
