@@ -42,16 +42,16 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
         height: "fit-content",
         alignItems: "flex-end"
       }}>
-        <Box display="flex" alignItems="center" gap="33px">
-        <Box>
+            <Box sx={{marginRight: "2.4rem"}}>
           <MainMenu onClick={handleToggleMenu} startIcon={
             <SvgIcon component="hamburger" size={24} />
           }>
 
           </MainMenu>
         </Box>
+
         <Box><img src={clientLogo} /></Box>
-        </Box>
+    
         <Typography sx={(theme) => ({
           color: theme.palette.primary.main,
           marginLeft: ".8rem",
