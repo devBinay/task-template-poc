@@ -26,6 +26,7 @@ export const icons = {
     folderInput: React.lazy(() => import('@/assets/images/icons/folder-input.svg?react')),
     foodSafety: React.lazy(() => import('@/assets/images/icons/food-safety.svg?react')),
     forecast: React.lazy(() => import('@/assets/images/icons/forecast.svg?react')),
+    hamburger: React.lazy(() => import('@/assets/images/icons/hamburger.svg?react')),
     history: React.lazy(()=>import ('@/assets/images/time/history.svg?react')),
     home: React.lazy(() => import('@/assets/images/icons/home.svg?react')),
     infoCircle: React.lazy(()=>import ('@/assets/images/icons/info-circle.svg?react')),

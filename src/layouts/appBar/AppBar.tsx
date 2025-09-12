@@ -2,31 +2,56 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import { defaultConstants } from '@/core/constants';
 import clientLogo from "@/assets/Logile Logo.svg"
-import { Stack } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import IconButton from '@/components/IconButton';
 import UserProfileInfoCard from './components/userProfile/UserProfileInfoCard';
 import navAvatarPng from '@/assets/navbarAvatar.png'
 import NavSearchBar from './components/searchBar/SearchBar';
 import SvgIcon from '@/core/components/Icon';
+import { styled } from "@mui/material/styles";
+import "./AppBar.style.scss";
 interface AppBarProps {
   drawerHeight: number;
+  handleToggleMenu: () => void,
 }
 
-const AppBar: React.FC<AppBarProps> = ({ drawerHeight }) => {
+const MainMenu = styled(Button)(() => ({
+  '&.MuiButton-root': {
+    minWidth: 'auto',
+    padding: '6px 8px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // border:'1px solid gray',
+  },
+  '.MuiButton-startIcon' : {
+    margin: 0,
+  }
+}));
+
+const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
   const handleSearch = (value: string) => {
     console.log(value)
   }
-  return <Stack component={"header"}
-    sx={{ padding: 0, height: drawerHeight, backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', position: "unset" }}
+  return <Stack className='app-bar-main-container' component={"header"}
+    sx={{ height: drawerHeight }}
   >
-    <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", padding: "var(--space-xs) var(--space-3xl)" }}>
+    <div className='logo-section'>
       {/* Logo Section */}
       <Stack direction={"row"} sx={{
         height: "fit-content",
         alignItems: "flex-end"
       }}>
+        <Box display="flex" alignItems="center" gap="33px">
+        <Box>
+          <MainMenu onClick={handleToggleMenu} startIcon={
+            <SvgIcon component="hamburger" size={24} />
+          }>
 
-        <img src={clientLogo} />
+          </MainMenu>
+        </Box>
+        <Box><img src={clientLogo} /></Box>
+        </Box>
         <Typography sx={(theme) => ({
           color: theme.palette.primary.main,
           marginLeft: ".8rem",
