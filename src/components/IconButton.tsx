@@ -12,12 +12,13 @@ interface IconButtonProps extends ButtonBaseProps {
 
 const IconButtonStyled = styled(ButtonBase, {
   shouldForwardProp: (prop) => prop !== "variant" && prop !== "disableHover",
-})<IconButtonProps>(({ theme, variant = "primary", disableHover }) => {
+})<IconButtonProps>(({ theme, variant = "primary", disableHover, disabled }) => {
   const baseStyles = {
     borderRadius: theme.shape.borderRadius,
     border: "1px solid transparent",
     padding: "0.5rem",
     transition: "all 0.2s ease-in-out",
+    color: disabled ? "#DCDCDC" : "#5C5C5C"
   };
 
   const hoverStyles: Record<Variant, object> = {
