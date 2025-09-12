@@ -5,7 +5,7 @@
     display: flex;
     align-items: start;
     overflow-y: auto;
-    white-space: nowrap;
+    // white-space: nowrap;
     word-break: keep-all;
     padding-right: 0px;
     scrollbar-width: none;
@@ -15,7 +15,7 @@
     scrollbar-width: none;
 
       &>.sidebar__list{
-        padding-right: var(--space-lg);
+      
         width: 100%;
           max-width: fit-content;
           gap:var(--space-sm);
@@ -83,6 +83,7 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
         &>a{
+      
             display: block;
             width: 100%;
         }

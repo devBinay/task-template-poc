@@ -64,7 +64,7 @@ const StyledListItemButton = styled(ListItemButton,{
     }
 }));
 
-const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef, menuStatus }) => {
   const [appSwitchValue,setAppSwitchValue] = useState<"IMS"|"WFM">("IMS");
   const handleSwitchAppName = ()=>{
     setAppSwitchValue(prev=> prev == 'IMS' ? 'WFM':'IMS')
@@ -92,8 +92,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
                 <Typography sx={()=>({
                   textAlign:'center',
                   fontSize:"1.2rem",
-                  whiteSpace: "nowrap",
+                  width:"6.2rem",
                   fontWeight:"inherit",
+                  textOverflow:"ellipsis",
+                  overflow:"hidden",
+               
+             
+                  transition:'ease-in-out 1s',
                 })}>{item.text}</Typography>
           </StyledListItemButton>
       
