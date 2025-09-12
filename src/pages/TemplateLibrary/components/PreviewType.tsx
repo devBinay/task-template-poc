@@ -4,8 +4,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from '@mui/material/Select';
 import SvgIcon from "@/core/components/Icon";
 import IconButton from "@/components/IconButton";
+import type { IconName } from '@/core/types/icon.type';
 import "../style.scss";
-import type { svgIconsTypes } from "@/types";
 
 type AnswerType = "Textfield" | "Dropdown" | "Multiline-Textfield" | string;
 
@@ -14,12 +14,13 @@ interface RenderAnswerProps {
   answer: string;
 }
 
+
 interface PreviewHeadingProps {
   heading: string;
   btn1visible?: boolean;
-  btn1Name?: svgIconsTypes;
+  btn1Name?: IconName;
   btn2visible?: boolean;
-  btn2Name?: svgIconsTypes;
+  btn2Name?: IconName;
 }
 
 interface PreviewBodyProps {

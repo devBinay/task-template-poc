@@ -1,6 +1,4 @@
-import type { Theme } from "@mui/material/styles";
-
-export const buttonConfig = (theme: Theme) => ({
+export const buttonConfig = () => ({
   primary: {
     fontSize: "15px",
     fontWeight: "400",

@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { PrimaryButton } from '../components/Button/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import type { SelectChangeEvent } from '@mui/material/Select';
 import StyledAutocomplete from '../components/Autocomplete/Autocomplete';
 
 interface TabPanelProps {
@@ -57,7 +58,26 @@ function StyledTextField({label="", width="100%"}) {
     )
 }
 
-function StyledDropdown ({label="",handleChange=()=>{},value="", width="100%", options=[]}) {
+interface DropdownOption {
+  value: string | number;
+  label: string;
+}
+
+
+interface StyledDropdownProps {
+  label?: string;
+  handleChange?: (event: SelectChangeEvent, child?: React.ReactNode) => void;
+  value?: string | number;
+  width?: string;
+  options?: DropdownOption[];
+}
+
+function StyledDropdown ({
+  label = "",
+  handleChange = () => {},
+  width = "100%",
+  options = []
+}: StyledDropdownProps) {
     return (
       <Box width={width}>
          <Typography className='text-label'>{label}</Typography>
@@ -67,7 +87,9 @@ function StyledDropdown ({label="",handleChange=()=>{},value="", width="100%", o
          IconComponent={()=><Box sx={{transform: `rotate(-90deg)`}}><SvgIcon component='chevronLeft' size={18} fill='#5C5C5C' /></Box>}
         >
             {
-               options && options?.length > 0 && options.map((option)=><MenuItem key={option?.value} value={option?.value}>{option?.label}</MenuItem>)
+               options && options.length > 0 && options.map((option) => (
+                 <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+               ))
             }
         </Select>
       </Box>  
@@ -183,14 +205,14 @@ const SearchDrawer = ({
 
                                 <StyledAutocomplete
                                 options={TEMPLATE_STATUS_OPTIONS}
-                                getOptionLabel={(option) => option.label}
+                                getOptionLabel={(option: DropdownOption) => option.label}
                                 placeholder="Select Task Tags"
                                 label='Task Tags'
                                 />
 
                                 <StyledAutocomplete
                                 options={TEMPLATE_STATUS_OPTIONS}
-                                getOptionLabel={(option) => option.label}
+                                getOptionLabel={(option: DropdownOption) => option.label}
                                 placeholder="Search Question Tags"
                                 label='Question Tags'
                                 />

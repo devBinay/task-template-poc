@@ -22,11 +22,11 @@ export default function AppShell() {
         if(menuStatus) {
           sidebarRef.current.style.width = "90px";
           sidebarRef.current.style.paddingRight = "var(--space-lg)";
-          sidebarRef.current.style.transition = "width .8s";
+          sidebarRef.current.style.transition = "width .3s";
         } else {
           sidebarRef.current.style.width = "0px";
           sidebarRef.current.style.paddingRight = "0px";
-          sidebarRef.current.style.transition = "width .8s";
+          sidebarRef.current.style.transition = "width .3s";
         }
       }
     }
