@@ -2,10 +2,11 @@ import React from "react";
 import { SimpleTreeView, TreeItem, treeItemClasses } from "@mui/x-tree-view";
 import { styled } from "@mui/material/styles";
 import SvgIcon from "@/core/components/Icon";
+import Box from "@mui/material/Box";
 import "./style.scss";
 
 type TreeNode = {
-  tagId: number;
+  tagId: string;
   tagName: string;
   children?: TreeNode[];
 };
@@ -17,15 +18,15 @@ interface DirectoryTreeProps {
 
 const StyledTreeItem = styled(TreeItem)(() => ({
   [`& .${treeItemClasses.label}`]: {
-    fontSize: "15px",
+    fontSize: "17px",
     fontWeight: 400,
     color: "#333333",
     borderRadius: "0px",
   },
   [`& .${treeItemClasses.content}`]: {
     padding: "6px",
-    backgroundColor: "transparent",
     gap: "0px",
+    backgroundColor: "transparent",
   },
   [`& .${treeItemClasses.content}:hover`]: {
     backgroundColor: "transparent !important",
@@ -40,9 +41,6 @@ const StyledTreeItem = styled(TreeItem)(() => ({
     color: "#0A68DB",
     fontWeight: 500,
   },
-  [`& .MuiTreeItem-root`]: {
-    marginLeft: "20px",
-  },
   [`& .MuiTreeItem-iconContainer`]: {
     width: "auto",
   },
@@ -55,6 +53,8 @@ const ArrowRightIcon = () => (
 const ArrowDownIcon = () => (
   <SvgIcon component="arrowDownFill" size={24} fill="#5C5C5C" />
 );
+
+const BlankIcon = () => (<Box height="24px" width="24px"></Box>)
 
 const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) => {
 
@@ -72,7 +72,7 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) 
     <div className="template-directory-tree-main-container">
     <SimpleTreeView
       aria-label="directory tree"
-      slots={{ expandIcon: ArrowRightIcon, collapseIcon: ArrowDownIcon }}
+      slots={{ expandIcon: ArrowRightIcon, collapseIcon: ArrowDownIcon, endIcon: BlankIcon }}
       sx={{ flexGrow: 1, overflowY: "auto",  borderRight: '1px solid lightgray', height:'100%' }}
     >
       {data.map((tree) => renderTree(tree))}

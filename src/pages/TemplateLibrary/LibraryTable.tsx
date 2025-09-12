@@ -18,6 +18,7 @@ import { useGetViewPortSize } from "@/utils/getViewPortSize";
 import "./style.scss";
 import type { TemplateLibraryTableRowType } from "./types";
 import type { MRT_Cell, MRT_Column } from "material-react-table";
+import { formatDate } from "@/pages/TemplateLibrary/components/DateFormat";
 
 export type TemplateLibrary = {
   template_icon: string;
@@ -90,6 +91,8 @@ type LibraryTableProps = {
 const LibraryTable: React.FC<LibraryTableProps> = ({
   showCheckbox,
   setShowCheckbox,
+  hoveredRowId,
+  setHoveredRowId,
   selectedTemplate,
   setSelectedTemplate
 }) => {
@@ -99,7 +102,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         modified: { status: false, anchorEl: null },
     });
     const [previewModal, setPreviewModal] = useState<{status: boolean, data: MRT_Cell<TemplateLibraryTableRowType> | null}>({status: false, data: null});
-    const [tooltipId, setTooltipId] = useState<number[]>([]);
+    const [tooltipId, setTooltipId] = useState<number | null>(null);
     const [selectedSort, setSelectedSort] = useState<{[key in keyof typeof tableActionMenu]: string | null}>({
       name: null,
       created: null,
@@ -108,13 +111,13 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     const viewportSize = useGetViewPortSize();
     const isDesktop = viewportSize === 'xl' || viewportSize === 'lg';
 
-    const handleRowSelection = (checked: boolean, rowData: TemplateLibraryTableRowType) => {
+    const handleRowSelection = (checked:boolean, rowData: TemplateLibraryTableRowType) => {
       let copyRowData = [...selectedTemplate];
-      if(!event || event?.target?.checked) {
+      if(checked) {
         copyRowData.push(rowData);
       }
       else {
-        copyRowData = copyRowData.filter((item) => item?.template_id !== rowData?.template_id);
+        copyRowData = copyRowData.filter((item) => item?.templateId !== rowData?.templateId);
       }
       if(copyRowData.length === 0) {
         setShowCheckbox(false);
@@ -126,7 +129,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     }
 
     const isRowSelected = (rowData: TemplateLibraryTableRowType) => {
-      return selectedTemplate?.some((item) => item?.template_id === rowData?.template_id);
+      return selectedTemplate?.some((item) => item?.templateId === rowData?.templateId);
     }
 
     const clearRowSelection = () => {
@@ -134,8 +137,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       setShowCheckbox(false);
     }
 
-    const handleTooltip = (id: number) => setTooltipId((prev) => prev.includes(id) ? 
-      prev.filter((item) => item !== id) : [...prev, id]);
+    const handleTooltip = (id: number) => setTooltipId((prev) => (prev === id ? null : id));
 
     const handleMenuClick = (event: React.MouseEvent<HTMLElement>, type: keyof typeof tableActionMenu) => {
       event.stopPropagation();
@@ -151,7 +153,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       });
     };
 
-    const handleMenuClose = () => {
+    const handleMenuClose = (type?: keyof typeof tableActionMenu) => {
       setTableActionMenu({
         name: { status: false, anchorEl: null },
         created: { status: false, anchorEl: null },
@@ -164,11 +166,11 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     };
 
 
-    const handlePreviewModalOpen = (cellData:MRT_Cell<TemplateLibraryTableRowType>) => {
+    const handlePreviewModalOpen = (cellData: any[]) => {
       setPreviewModal({status: true, data: cellData});
     }
 
-    const renderHeaderWithMenu = (column: MRT_Column<TemplateLibraryTableRowType>, type: keyof typeof tableActionMenu, menuItems: string[]) => {
+    const renderHeaderWithMenu = (column: any, type: keyof typeof tableActionMenu, menuItems: string[]) => {
       const selected = selectedSort[type];
       const isAscending = selected?.toLowerCase().includes("a → z");
 
@@ -197,7 +199,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             key={`${type}-menu-${tableActionMenu[type].status ? "open" : "closed"}`}
             anchorEl={tableActionMenu[type].anchorEl}
             open={tableActionMenu[type].status}
-            onClose={() => handleMenuClose()}
+            onClose={() => handleMenuClose(type)}
           >
             {menuItems.map((item, index) => {
               const isSelected = selected === item;
@@ -217,14 +219,14 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                     },
                   }}
                 >
-                  <Box display="flex" alignItems="center" width="100%" justifyContent="space-between">
+                  <Box display="flex" alignItems="center" width="100%" color={isSelected ? "#0A68DB" : "#333"} justifyContent="space-between">
                     {item}
                     {isSelected && (
                       <SvgIcon
                         component="check"
                         size={20}
                         fill="#0A68DB"
-                        
+                        style={{ marginLeft: "auto" }}
                       />
                     )}
                   </Box>
@@ -241,7 +243,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "modified", ["Sort Ascending", "Sort Descending"]);
 
     const renderTemplateIconHeader = () => {
-      return <Box className="template-checkbox-container no-padding">
+      return <Box className="template-checkbox-container icon-header-container">
         { showCheckbox ?
           <FormControlLabel
               className="form-control-label"
@@ -256,6 +258,9 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                     '&.Mui-checked': {
                       color: '#0A68DB',
                     },
+                    '&.MuiFormControlLabel-root': {
+                      padding: '0px 10px'
+                    }
                   }}
                   indeterminate={showCheckbox}
                 />
@@ -268,13 +273,18 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     }
 
     const renderTemplateIconCell = ({cell }: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
-        const data = cell.getValue();
+        const data = cell.row?.original;
+        const rowId = cell.row.id;
+        const isHovered = hoveredRowId === rowId;
         return (
-               <Box className="template-checkbox-container" display='flex'>
-                { showCheckbox ?
+               <Box className="template-checkbox-container" display='flex' 
+                  onMouseEnter={() => setHoveredRowId(rowId)}
+                  onMouseLeave={() => setHoveredRowId(null)}
+                >
+                { (showCheckbox || isHovered) ?
                     <FormControlLabel
-                    className="form-control-label"
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleRowSelection(event.target.checked, cell.row.original)}
+                      className="form-control-label"
+                      onChange={(event) => handleRowSelection(event.target.checked, cell.row.original)}
                         control={
                             <Checkbox
                               size="small"
@@ -288,11 +298,11 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                                 }}
                             />
                         }
-                        label=""
+                      label=""
                     /> :
-                    <Box onClick={() => handleRowSelection(true, cell.row.original)} className="cursor-pointer">
-                      <IconOutlined  sx={{ pointerEvents: 'none'}} height="4rem" width="4rem" startIcon={
-                        data?.type === "Checklist" ?
+                    <Box onClick={(event) => handleRowSelection(true, cell.row.original)} className="cursor-pointer">
+                      <IconOutlined sx={{ pointerEvents: 'none' }} height={"3.6rem"} width={'1.6rem'} startIcon={
+                        data?.iconName === "v15-Shop-supply" ?
                         <SvgIcon 
                             component="checkedList"
                             size={18}
@@ -314,15 +324,23 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     }
 
     const renderTemplateNameCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
-        const data = cell.getValue();
+        const data = cell.row?.original;
         return (
                <Box minWidth="300px" display="flex" alignItems="center" gap="10px" ml="-10px">
                    <Box display="flex" flexDirection="column" gap="6px">
-                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.name}</Box>
+                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.templateName}</Box>
                           {!isDesktop ?
                           <Box display="flex" gap="24px">
-                            <Box className="template-body-text"><span className="template-title-text">Type:</span> {data?.type}</Box>
-                            <Box className="template-body-text"><span className="template-title-text">Status:</span> {data?.status}</Box>
+                            <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Type:</span>{data?.tagType}</Box>
+                            <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Status:</span>
+                              {data?.status === "Incomplete" ? 
+                                <Box display='flex' gap='2px' alignItems='center' justifyContent='center' color="#F44336">
+                                  <Box>{data?.status}</Box>
+                                  <><SvgIcon component="exclamationTriangle" size={16} fill="#F44336" /></>
+                                </Box> :
+                                <Box display='flex' gap='2px'>{data?.status || "- -"}</Box>
+                              }
+                            </Box>
                           </Box>
                           :""}
                    </Box>
@@ -330,15 +348,28 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             )
     }
 
+    const renderTemplateStatusCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
+      const data = cell.row?.original;
+      return (<Box>
+        {data?.status === "Incomplete" ? 
+          <Box display='flex' gap='2px' alignItems='center' justifyContent='center' color="#F44336">
+            <Box>{data?.status}</Box>
+            <><SvgIcon component="exclamationTriangle" size={16} fill="#F44336" /></>
+          </Box> :
+          <Box display='flex' gap='2px'>{data?.status || "- -"}</Box> 
+        }
+      </Box>
+      )
+    }
+
     const renderTemplateCreatedCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
-        const data = cell.getValue();
-        const templateData = cell.row.original;
-        return (
-               <Box display="flex" gap="4px" alignItems='center'>
-                <Box>{data}</Box>
+      const templateData = cell.row.original;
+      return (
+            <Box display="flex" gap="4px" alignItems='center'>
+              <Box>{formatDate(templateData?.createdTime)}</Box>
                 <Tooltip 
-                  key={templateData.template_id}
-                  title={templateData.template_id}
+                  key={templateData.templateId}
+                  title={<Box>ID: {templateData.templateId}</Box>}
                   arrow
                   slotProps={{
                     tooltip: {
@@ -351,32 +382,49 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                   PopperProps={{
                     sx: { zIndex: 1000 },
                   }}
-                  open={tooltipId.includes(templateData.template_id)}
+                  open={tooltipId === templateData.templateId}
                   disableFocusListener
                   disableHoverListener
                   disableTouchListener
                 >
-                  <Box display='flex' className="cursor-pointer" onClick={()=>handleTooltip(templateData?.template_id)}><SvgIcon component="infoCircle" size={18} fill="#5C5C5C"/></Box>
+                  <Box
+                    display="flex"
+                    className="cursor-pointer"
+                    onClick={() => handleTooltip(templateData.templateId)}
+                  >
+                    <SvgIcon component="infoCircle" size={18} fill="#5C5C5C" />
+                  </Box>
                 </Tooltip>
-                </Box>
+              </Box>
             )
     }
 
-    const renderActionsCell = () => {
+    const renderTemplateModifiedCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
+      const templateData = cell.row.original;
+      return (
+            <Box display="flex" gap="4px" alignItems='center'>
+              <Box>{formatDate(templateData?.lastModifiedTime)}</Box>
+            </Box>
+            )
+    }
+
+    const renderActionsCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
+      const status = cell.row.original?.status;
+      const disabledActions = selectedTemplate?.length > 1;
         return (
             <Box display="flex" alignItems="center">
-              <IconButton disableHover={true}><SvgIcon component="send" size={20} fill="#5C5C5C"/></IconButton>
-              <IconButton disableHover={true}><SvgIcon component="copy" size={20} fill="#5C5C5C"/></IconButton>
-              <IconButton disableHover={true}><SvgIcon component="edit" size={20} fill="#5C5C5C"/></IconButton>
-              <IconButton disableHover={true}><SvgIcon component="download" size={20} fill="#5C5C5C"/></IconButton>
-              <IconButton disableHover={true}><SvgIcon component="delete" size={20} fill="#F44336"/></IconButton>
+              <IconButton disabled={(disabledActions || status === "Incomplete") ? true : false} disableHover><SvgIcon component="send" size={20} /></IconButton>
+              <IconButton disabled={disabledActions} disableHover><SvgIcon component="copy" size={20} /></IconButton>
+              <IconButton disabled={disabledActions} disableHover><SvgIcon component="edit" size={20} /></IconButton>
+              <IconButton disabled={disabledActions} disableHover><SvgIcon component="download" size={20} /></IconButton>
+              <IconButton disabled={disabledActions} disableHover><SvgIcon component="delete" size={20} fill={disabledActions ? "#FFCCC8" : "#F4433D"}/></IconButton>
             </Box>
         )
     }
 
     const columns = [
       {
-        accessorKey: "template_icon",
+        accessorKey: "iconName",
         header: "",
         Header: renderTemplateIconHeader,
         Cell: renderTemplateIconCell,
@@ -384,7 +432,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         muiTableBodyCellProps: () => ({className: "template-body-text" })
      },
       {
-        accessorKey: "template_name",
+        accessorKey: "templateName",
         header: "Name",
         Header: renderTemplateNameHeader,
         Cell: renderTemplateNameCell,
@@ -393,21 +441,22 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
 
     const desktopColumns = [
       {
-        accessorKey: "template_name.type",
+        accessorKey: "tagType",
         header: "Type",
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
-        accessorKey: "template_name.status",
+        accessorKey: "status",
         header: "Status",
+        Cell: renderTemplateStatusCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       }
     ];  
 
     const columns2: MRT_Column<TemplateLibraryTableRowType>[] = [{
-        accessorKey: "created",
+        accessorKey: "createdTime",
         header: "Created",
         Header: renderTemplateCreatedHeader,
         Cell: renderTemplateCreatedCell,
@@ -415,9 +464,10 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
-        accessorKey: "last_modified",
+        accessorKey: "lastModifiedTime",
         header: "Last Modified",
         Header: renderTemplateModifiedHeader,
+        Cell: renderTemplateModifiedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
@@ -455,6 +505,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         <div className="template-library-table-container">
             <Table 
                 tableProps={templateTableProps}
+                isRowSelected={isRowSelected} 
             />
 
            {/* Template Preview Popup */}
@@ -509,6 +560,5 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         </div>
     )
 }
-
 
 export default LibraryTable;
