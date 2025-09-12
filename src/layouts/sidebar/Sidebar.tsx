@@ -65,7 +65,6 @@ const StyledListItemButton = styled(ListItemButton,{
 }));
 
 const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
-  console.log("=========menuItems",menuItems)
   const [appSwitchValue,setAppSwitchValue] = useState<"IMS"|"WFM">("IMS");
   const handleSwitchAppName = ()=>{
     setAppSwitchValue(prev=> prev == 'IMS' ? 'WFM':'IMS')
