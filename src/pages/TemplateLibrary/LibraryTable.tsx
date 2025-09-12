@@ -111,9 +111,9 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     const viewportSize = useGetViewPortSize();
     const isDesktop = viewportSize === 'xl' || viewportSize === 'lg';
 
-    const handleRowSelection = (event: React.ChangeEvent<HTMLInputElement>, rowData: TemplateLibraryTableRowType) => {
+    const handleRowSelection = (checked:boolean, rowData: TemplateLibraryTableRowType) => {
       let copyRowData = [...selectedTemplate];
-      if(!event || event?.target?.checked) {
+      if(checked) {
         copyRowData.push(rowData);
       }
       else {
@@ -129,7 +129,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     }
 
     const isRowSelected = (rowData: TemplateLibraryTableRowType) => {
-      return selectedTemplate?.some((item) => item?.template_id === rowData?.template_id);
+      return selectedTemplate?.some((item) => item?.templateId === rowData?.templateId);
     }
 
     const clearRowSelection = () => {
@@ -284,7 +284,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                 { (showCheckbox || isHovered) ?
                     <FormControlLabel
                       className="form-control-label"
-                      onChange={(event) => handleRowSelection(event, cell.row.original)}
+                      onChange={(event) => handleRowSelection(event.target.checked, cell.row.original)}
                         control={
                             <Checkbox
                               size="small"
@@ -300,8 +300,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                         }
                       label=""
                     /> :
-                    <Box onClick={(event) => handleRowSelection(event, cell.row.original)} className="cursor-pointer">
-                      <IconOutlined sx={{ pointerEvents: 'none',height:"3.6rem", width:'1.6rem' }} startIcon={
+                    <Box onClick={(event) => handleRowSelection(true, cell.row.original)} className="cursor-pointer">
+                      <IconOutlined sx={{ pointerEvents: 'none' }} height={"3.6rem"} width={'1.6rem'} startIcon={
                         data?.iconName === "v15-Shop-supply" ?
                         <SvgIcon 
                             component="checkedList"
@@ -403,8 +403,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       const templateData = cell.row.original;
       return (
             <Box display="flex" gap="4px" alignItems='center'>
-              {/* <Box>{formatDate(templateData?.lastModifiedTime)}</Box> */}
-               <Box>{templateData?.lastModifiedTime}</Box>
+              <Box>{formatDate(templateData?.lastModifiedTime)}</Box>
             </Box>
             )
     }

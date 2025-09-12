@@ -66,10 +66,10 @@ const TemplateLibrary: React.FC = () => {
         </PageTemplate.Header>
       <PageTemplate.Content>
       <Box className="template-library-container">
-         <Box display="flex" padding={"8px 16px"} alignItems="center">
+         <Box display="flex" padding={"0rem .8rem"} alignItems="center">
             <Box width="20%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
             { showCheckbox ?
-              <Box width="80%" display="flex" justifyContent="space-between" alignItems="center" fontSize={'19px'} fontWeight={500}>
+              <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize={'19px'} fontWeight={500}>
                 <Box display="flex" alignItems="center" gap="22px">
                   <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}}>
                     <SvgIcon component="arrowUp" size={24} fill="#333333" />
@@ -87,7 +87,7 @@ const TemplateLibrary: React.FC = () => {
                   </IconButton>
                 </Box>
               </Box> :
-              <Box width="80%" display="flex" alignItems="center" gap='12px' justifyContent={"space-between"} flexGrow={1}>
+              <Box width="80%" height="36px" display="flex" alignItems="center" gap='12px' justifyContent={"space-between"} flexGrow={1}>
                 <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="16px">
                     Template Library
                 </Box>
