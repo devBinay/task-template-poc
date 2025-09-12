@@ -65,15 +65,16 @@ const StyledListItemButton = styled(ListItemButton,{
 }));
 
 const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
+  console.log("=========menuItems",menuItems)
   const [appSwitchValue,setAppSwitchValue] = useState<"IMS"|"WFM">("IMS");
   const handleSwitchAppName = ()=>{
     setAppSwitchValue(prev=> prev == 'IMS' ? 'WFM':'IMS')
   }
   return (
  <Stack className='sidebar__container' ref={sidebarRef}>
-  <Stack className='sidebar__switch'>
+  <div className='sidebar__switch'>
     <ButtonBase  disableRipple disableTouchRipple onClick={handleSwitchAppName}>
-    <SvgIcon component='exchange' size={20} />
+    <SvgIcon component='exchange' size={18} fill={'currentColor'}/>
     <Typography sx={()=>({
       textAlign:'center',
       fontWeight:500,
@@ -82,6 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
       fontSize:"1.7rem"
     })}>{appSwitchValue}</Typography>
     </ButtonBase>
+    </div>
 
     <Stack className='sidebar__list'>
       {menuItems.map((item) => {
@@ -98,7 +100,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
       
       })}
     </Stack>
-</Stack>
 </Stack>
 )};
 
