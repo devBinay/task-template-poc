@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DirectoryTree from "@/components/DirectoryTree";
 import { Stack } from '@mui/material';
 import { PrimaryButton } from '@/components/Button/Button';
@@ -17,6 +17,7 @@ import EmptyState from '../../components/EmptyList/EmptyList';
 import SearchDrawer from '@/pages/SearchDrawer';
 import TableRowSkeleton from '@/pages/TemplateLibrary/components/Skeleton';
 import "./style.scss";
+import { getAllDirectories } from './services/template-library.service';
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -48,6 +49,12 @@ const TemplateLibrary: React.FC = () => {
     const closeSearchDrawer = () => {
         setSearchDrawer((prev) => ({ ...prev, status: false, text: "" }));
     };
+
+    useEffect(()=>{
+      getAllDirectories().then(res=>{
+        console.log("res",res);
+      })
+    },[])
 
     return <PageTemplate>
         <PageTemplate.Header>
