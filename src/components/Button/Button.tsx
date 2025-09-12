@@ -4,9 +4,9 @@ import { styled } from "@mui/material/styles";
 import { buttonConfig } from "./ButtonConfig";
 
 export const PrimaryButton = styled(Button)<ButtonProps>(
-  ({ theme }) => buttonConfig(theme).primary
+  () => buttonConfig().primary
 );
 
 export const IconOutlined = styled(Button)<ButtonProps>(
-  ({ theme }) => buttonConfig(theme).iconOutlined
+  () => buttonConfig().iconOutlined
 );
