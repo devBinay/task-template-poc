@@ -1,6 +1,4 @@
-
 import { styled, alpha } from '@mui/material/styles';
-
 import InputBase from '@mui/material/InputBase';
 import Icon from '@/core/components/Icon';
 

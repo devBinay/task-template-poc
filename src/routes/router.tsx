@@ -1,7 +1,5 @@
-import React, { Suspense } from 'react';
-import { createBrowserRouter, type RouteObject } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import AppShell from '@/layouts/AppShell';
-import Home from '@/pages/Home';
 import About from '@/pages/About';
 import { IconsDemo } from '@/component-library/Icons';
 import { ComponentLibraryLandingPage } from '@/component-library/LandingPage';

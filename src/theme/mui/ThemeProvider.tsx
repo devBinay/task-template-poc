@@ -1,6 +1,6 @@
 // theme/ThemeProvider.tsx
 
-import React, { createContext, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useMemo, useState, type ReactNode } from 'react';
 import { ThemeProvider as MuiThemeProvider, CssBaseline } from '@mui/material';
 import { getTheme } from './theme';
 

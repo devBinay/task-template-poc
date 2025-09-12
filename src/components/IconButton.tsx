@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { alpha, useTheme } from "@mui/material";
+import { alpha } from "@mui/material";
 import ButtonBase, {type ButtonBaseProps } from "@mui/material/ButtonBase";
 
 type Variant = "primary" | "secondary" | "outline";

@@ -1,6 +1,4 @@
-import * as React from "react";
 import useAutocomplete from "@mui/material/useAutocomplete";
-import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import { autocompleteClasses } from "@mui/material/Autocomplete";
 import SvgIcon from "../../core/components/Icon";
