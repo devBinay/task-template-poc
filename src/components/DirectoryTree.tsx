@@ -5,7 +5,7 @@ import SvgIcon from "@/core/components/Icon";
 import "./style.scss";
 
 type TreeNode = {
-  tagId: number;
+  tagId: string;
   tagName: string;
   children?: TreeNode[];
 };
@@ -25,7 +25,6 @@ const StyledTreeItem = styled(TreeItem)(() => ({
   [`& .${treeItemClasses.content}`]: {
     padding: "6px",
     backgroundColor: "transparent",
-    gap: "0px",
   },
   [`& .${treeItemClasses.content}:hover`]: {
     backgroundColor: "transparent !important",
@@ -40,20 +39,17 @@ const StyledTreeItem = styled(TreeItem)(() => ({
     color: "#0A68DB",
     fontWeight: 500,
   },
-  [`& .MuiTreeItem-root`]: {
-    marginLeft: "20px",
-  },
-  [`& .MuiTreeItem-iconContainer`]: {
-    width: "auto",
+  [`& .MuiTreeItem-group`]: {
+    marginLeft: "60px !important",
   },
 }));
 
 const ArrowRightIcon = () => (
-  <SvgIcon component="arrowRightFill" size={24} fill="#5C5C5C" />
+  <SvgIcon component="arrowRightFill" size={18} fill="#5C5C5C" />
 );
 
 const ArrowDownIcon = () => (
-  <SvgIcon component="arrowDownFill" size={24} fill="#5C5C5C" />
+  <SvgIcon component="arrowDownFill" size={18} fill="#5C5C5C" />
 );
 
 const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) => {
