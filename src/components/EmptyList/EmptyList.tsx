@@ -2,6 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import SvgIcon from "@/core/components/Icon";
 import "./EmptyList.scss";
+import type { IconName } from "@/core/types/icon.type";
 
 interface EmptyStateProps {
   imageSrcName: string; 
@@ -18,7 +19,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
 }) => {
   return (
     <Box className="empty-list-container">
-      <SvgIcon component={imageSrcName} size={imageWidth} />
+      <SvgIcon component={imageSrcName as IconName} size={imageWidth} />
       {title && (
         <Box className="mt-16 mb-8 heading-text">
           {title}

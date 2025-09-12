@@ -1,5 +1,6 @@
 import SvgIcon from '@/core/components/Icon';
 import { icons } from '@/core/constants/Icons';
+import type { IconName } from '@/core/types/icon.type';
 
 export const IconsDemo: React.FC = () => {
   return (
@@ -18,7 +19,7 @@ export const IconsDemo: React.FC = () => {
                     height: '120px',
                     width: '120px'
             }} key={name}>
-            <SvgIcon component={name} size={64} fill="#888888" /> 
+            <SvgIcon component={name as IconName} size={64} fill="#888888" /> 
             <span>{name}</span>
             </div>
         ))

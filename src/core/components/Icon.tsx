@@ -3,7 +3,7 @@ import { icons } from "../constants/Icons";
 import Box from "@mui/material/Box";
 interface SvgIconProps {
   component: keyof typeof icons;
-  size?: number;
+  size?: string | number;
   className?: string;
   fill?: string;
   stroke?: string;
