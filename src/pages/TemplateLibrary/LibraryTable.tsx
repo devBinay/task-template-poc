@@ -16,7 +16,6 @@ import CommonModal from "@/components/Modal/Modal";
 import { renderPreviewPopupRow, renderPreviewHeading } from "@/pages/TemplateLibrary/component/PreviewType";
 import { useGetViewPortSize } from "@/utils/getViewPortSize";
 import "./style.scss";
-import { useGetViewPortSize } from "@/utils/getViewPortSize";
 import type { TemplateLibraryTableRowType } from "./types";
 import type { MRT_Cell, MRT_Column } from "material-react-table";
 
