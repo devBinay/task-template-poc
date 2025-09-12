@@ -1,7 +1,8 @@
 import React from "react";
 import { icons } from "../constants/Icons";
 import Box from "@mui/material/Box";
-import type { IconName } from '@/core/types/icon.type';
+import type { IconName } from "../types/icon.type";
+
 interface SvgIconProps {
   component: IconName;
   size?: string | number;

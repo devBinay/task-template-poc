@@ -16,6 +16,8 @@ import CommonModal from "@/components/Modal/Modal";
 import { renderPreviewPopupRow, renderPreviewHeading } from "./components/PreviewType";
 import "./style.scss";
 import { useGetViewPortSize } from "@/utils/getViewPortSize";
+import type { TemplateLibraryTableRowType } from "./types";
+import type { MRT_Cell, MRT_Column } from "material-react-table";
 
 export type TemplateLibrary = {
   template_icon: string;
@@ -81,8 +83,8 @@ const StyledMenu = styled((props: MenuProps) => (
 type LibraryTableProps = {
   showCheckbox: boolean;
   setShowCheckbox: (value: boolean) => void;
-  selectedTemplate: any[];
-  setSelectedTemplate: (value: any[]) => void;
+  selectedTemplate: TemplateLibraryTableRowType[];
+  setSelectedTemplate: (value: TemplateLibraryTableRowType[]) => void;
 };
 
 const LibraryTable: React.FC<LibraryTableProps> = ({
@@ -96,7 +98,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         created: { status: false, anchorEl: null },
         modified: { status: false, anchorEl: null },
     });
-    const [previewModal, setPreviewModal] = useState({status: false, data: ''});
+    const [previewModal, setPreviewModal] = useState<{status: boolean, data: MRT_Cell<TemplateLibraryTableRowType> | null}>({status: false, data: null});
     const [tooltipId, setTooltipId] = useState<number[]>([]);
     const [selectedSort, setSelectedSort] = useState<{[key in keyof typeof tableActionMenu]: string | null}>({
       name: null,
@@ -106,7 +108,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     const viewportSize = useGetViewPortSize();
     const isDesktop = viewportSize === 'xl' || viewportSize === 'lg';
 
-    const handleRowSelection = (event: React.ChangeEvent<HTMLInputElement>, rowData: any) => {
+    const handleRowSelection = (event: React.ChangeEvent<HTMLInputElement>, rowData: TemplateLibraryTableRowType) => {
       let copyRowData = [...selectedTemplate];
       if(!event || event?.target?.checked) {
         copyRowData.push(rowData);
@@ -123,7 +125,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         setSelectedTemplate(copyRowData);
     }
 
-    const isRowSelected = (rowData: any) => {
+    const isRowSelected = (rowData: TemplateLibraryTableRowType) => {
       return selectedTemplate?.some((item) => item?.template_id === rowData?.template_id);
     }
 
@@ -149,7 +151,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       });
     };
 
-    const handleMenuClose = (type?: keyof typeof tableActionMenu) => {
+    const handleMenuClose = () => {
       setTableActionMenu({
         name: { status: false, anchorEl: null },
         created: { status: false, anchorEl: null },
@@ -162,11 +164,11 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     };
 
 
-    const handlePreviewModalOpen = (cellData: any[]) => {
+    const handlePreviewModalOpen = (cellData:MRT_Cell<TemplateLibraryTableRowType>) => {
       setPreviewModal({status: true, data: cellData});
     }
 
-    const renderHeaderWithMenu = (column: any, type: keyof typeof tableActionMenu, menuItems: string[]) => {
+    const renderHeaderWithMenu = (column: MRT_Column<TemplateLibraryTableRowType>, type: keyof typeof tableActionMenu, menuItems: string[]) => {
       const selected = selectedSort[type];
       const isAscending = selected?.toLowerCase().includes("a → z");
 
@@ -195,7 +197,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             key={`${type}-menu-${tableActionMenu[type].status ? "open" : "closed"}`}
             anchorEl={tableActionMenu[type].anchorEl}
             open={tableActionMenu[type].status}
-            onClose={() => handleMenuClose(type)}
+            onClose={() => handleMenuClose()}
           >
             {menuItems.map((item, index) => {
               const isSelected = selected === item;
@@ -234,11 +236,11 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       );
     };
 
-    const renderTemplateNameHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "name", ["Sort A -> Z", "Sort Z -> A"]);
-    const renderTemplateCreatedHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "created", ["Sort Ascending", "Sort Descending"]);
-    const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "modified", ["Sort Ascending", "Sort Descending"]);
+    const renderTemplateNameHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "name", ["Sort A -> Z", "Sort Z -> A"]);
+    const renderTemplateCreatedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "created", ["Sort Ascending", "Sort Descending"]);
+    const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "modified", ["Sort Ascending", "Sort Descending"]);
 
-    const renderTemplateIconHeader = ({cell}) => {
+    const renderTemplateIconHeader = () => {
       return <Box className="template-checkbox-container no-padding">
         { showCheckbox ?
           <FormControlLabel
@@ -265,7 +267,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       </Box>
     }
 
-    const renderTemplateIconCell = ({cell}) => {
+    const renderTemplateIconCell = ({cell }: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
         const data = cell.getValue();
         return (
                <Box className="template-checkbox-container" display='flex'>
@@ -288,14 +290,14 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                         }
                         label=""
                     /> :
-                    <Box onClick={(event) => handleRowSelection(null, cell.row.original)} className="cursor-pointer">
-                      <IconOutlined height="36px" width="16px" sx={{ pointerEvents: 'none' }} startIcon={
+                    <Box onClick={(event) => handleRowSelection(event, cell.row.original)} className="cursor-pointer">
+                      <IconOutlined sx={{ pointerEvents: 'none',height:"3.6rem", width:'1.6rem' }} startIcon={
                         data?.type === "Checklist" ?
                         <SvgIcon 
                             component="checkedList"
                             size={18}
                             fill="#0A68DB"
-                            sx={{ pointerEvents: 'none' }}
+                            style={{ pointerEvents: 'none' }}
                          /> :
                         <SvgIcon 
                             component="checkedDoc"
@@ -311,7 +313,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             )
     }
 
-    const renderTemplateNameCell = ({cell}) => {
+    const renderTemplateNameCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
         const data = cell.getValue();
         return (
                <Box minWidth="300px" display="flex" alignItems="center" gap="10px" ml="-10px">
@@ -328,7 +330,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             )
     }
 
-    const renderTemplateCreatedCell = ({cell}) => {
+    const renderTemplateCreatedCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
         const data = cell.getValue();
         const templateData = cell.row.original;
         return (
@@ -360,7 +362,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             )
     }
 
-    const renderActionsCell = ({cell}) => {
+    const renderActionsCell = () => {
         return (
             <Box display="flex" alignItems="center">
               <IconButton disableHover={true}><SvgIcon component="send" size={20} fill="#5C5C5C"/></IconButton>
@@ -404,7 +406,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       }
     ];  
 
-    const columns2 = [{
+    const columns2: MRT_Column<TemplateLibraryTableRowType>[] = [{
         accessorKey: "created",
         header: "Created",
         Header: renderTemplateCreatedHeader,

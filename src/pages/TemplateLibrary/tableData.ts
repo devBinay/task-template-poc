@@ -1,4 +1,6 @@
-export const demoTableData = [
+import type { TemplateLibraryTableRowType } from "./types";
+
+export const demoTableData :TemplateLibraryTableRowType[] = [
   {
     template_icon: { 
         type: 'Assigned',

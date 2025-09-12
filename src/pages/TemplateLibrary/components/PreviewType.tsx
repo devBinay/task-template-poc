@@ -5,6 +5,7 @@ import Select from '@mui/material/Select';
 import SvgIcon from "@/core/components/Icon";
 import IconButton from "@/components/IconButton";
 import "../style.scss";
+import type { svgIconsTypes } from "@/types";
 
 type AnswerType = "Textfield" | "Dropdown" | "Multiline-Textfield" | string;
 
@@ -16,9 +17,9 @@ interface RenderAnswerProps {
 interface PreviewHeadingProps {
   heading: string;
   btn1visible?: boolean;
-  btn1Name?: string;
+  btn1Name?: svgIconsTypes;
   btn2visible?: boolean;
-  btn2Name?: string;
+  btn2Name?: svgIconsTypes;
 }
 
 interface PreviewBodyProps {
@@ -80,7 +81,7 @@ export const renderPreviewHeading = ({ heading, btn1visible= false, btn1Name, bt
                       <SvgIcon component={btn1Name} size={22} />
                   </IconButton>}
                   {btn2visible && btn2Name && <IconButton variant="outline">
-                      <SvgIcon component={btn2Name} size={22} />
+                      <SvgIcon component={btn2Name } size={22} />
                   </IconButton>}
                 </Box>
             </Box>
