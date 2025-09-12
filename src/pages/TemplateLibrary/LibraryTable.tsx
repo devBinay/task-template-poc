@@ -18,7 +18,7 @@ import { useGetViewPortSize } from "@/utils/getViewPortSize";
 import "./style.scss";
 import type { TemplateLibraryTableRowType } from "./types";
 import type { MRT_Cell, MRT_Column } from "material-react-table";
-// import { formatDate } from "@/pages/TemplateLibrary/components/DateFormat";
+import { formatDate } from "@/pages/TemplateLibrary/components/DateFormat";
 
 export type TemplateLibrary = {
   template_icon: string;
