@@ -108,9 +108,9 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     const viewportSize = useGetViewPortSize();
     const isDesktop = viewportSize === 'xl' || viewportSize === 'lg';
 
-    const handleRowSelection = (event: React.ChangeEvent<HTMLInputElement>, rowData: TemplateLibraryTableRowType) => {
+    const handleRowSelection = (checked: boolean, rowData: TemplateLibraryTableRowType) => {
       let copyRowData = [...selectedTemplate];
-      if(!event || event?.target?.checked) {
+      if(checked) {
         copyRowData.push(rowData);
       }
       else {
@@ -224,7 +224,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                         component="check"
                         size={20}
                         fill="#0A68DB"
-                        style={{ marginLeft: "auto" }}
+                        
                       />
                     )}
                   </Box>
@@ -274,7 +274,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                 { showCheckbox ?
                     <FormControlLabel
                     className="form-control-label"
-                    onChange={(event) => handleRowSelection(event, cell.row.original)}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleRowSelection(event.target.checked, cell.row.original)}
                         control={
                             <Checkbox
                               size="small"
@@ -290,8 +290,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                         }
                         label=""
                     /> :
-                    <Box onClick={(event) => handleRowSelection(event, cell.row.original)} className="cursor-pointer">
-                      <IconOutlined sx={{ pointerEvents: 'none',height:"3.6rem", width:'1.6rem' }} startIcon={
+                    <Box onClick={() => handleRowSelection(true, cell.row.original)} className="cursor-pointer">
+                      <IconOutlined  sx={{ pointerEvents: 'none'}} height="4rem" width="4rem" startIcon={
                         data?.type === "Checklist" ?
                         <SvgIcon 
                             component="checkedList"
