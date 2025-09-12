@@ -2,12 +2,13 @@ import { InputBase, styled } from "@mui/material";
 import React from "react";
 
 import SvgIcon from "@/core/components/Icon";
+import type { svgIconsTypes } from "@/types";
 
 interface navSearchBarProps {
     placeholder: string;
     onSearch: (value: string) => void;
     iconPosition?: 'left' | 'right'
-    icon?: string
+    icon?: svgIconsTypes
   }
   
   const SearchIconWrapper = styled('div',{
@@ -28,7 +29,7 @@ interface navSearchBarProps {
       backgroundColor:theme.palette.background.default,
       '& .MuiInputBase-input': {
           padding: "var(--space-xs) var(--space-sm)",
-          fontSize:theme.typography.fontSize,
+          fontSize: "1.7rem",
           transition: theme.transitions.create('width'),
       },
   }));
@@ -39,6 +40,7 @@ interface navSearchBarProps {
       position: 'relative',
       display:"flex",
       alignItems:"center",
+
     flexGrow:1,
       borderRadius: theme.shape.borderRadius,
       backgroundColor:theme.palette.background.default,
@@ -72,9 +74,10 @@ interface navSearchBarProps {
       value={value} 
       onChange={onChange} 
       onKeyDown={checkForEnter}
+
       />
        <SearchIconWrapper>
-      <SvgIcon component={props.icon} size={"1.8rem"}/>
+      <SvgIcon component={props.icon as svgIconsTypes} fill={"var(--icon-color-secondary)"} size={18}/>
       </SearchIconWrapper>
       </Search>
   }

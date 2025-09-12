@@ -5,15 +5,11 @@
     display: flex;
     align-items: start;
     overflow-y: auto;
-    padding-right: var(--space-lg);
-    scrollbar-width: none;
     
-    &::after {
-        content: "";
-        display: table;
-        clear: both;
-      }
+    scrollbar-width: none;
+
       &>.sidebar__list{
+        padding-right: var(--space-lg);
         width: 100%;
           max-width: fit-content;
           gap:var(--space-sm);
@@ -46,7 +42,7 @@
         align-items:center;
         flex-direction:row;
         justify-content:center;
-        padding:var(--space-xl);
+        
         color:var(--primary-color);
         cursor:pointer;
         transition: all .2s ease-in-out;
@@ -54,8 +50,16 @@
         top: 0;
         background-color: var(--bg-secondary);
         z-index: 2;
+        gap: var(--space-xs);
+        font-size: 1.4rem;
         &:hover{
             background-color: rgba(255, 255, 255, 0.1);
+        }
+        & > button{
+
+          padding:var(--space-xl);
+          display: flex;
+          gap: var(--space-xs)
         }
       };
       .sidebar__list-item{

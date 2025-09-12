@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { alpha, ListItemButton, Stack, styled, Typography } from '@mui/material';
+import { alpha, ButtonBase, ListItemButton, Stack, styled, Typography } from '@mui/material';
 import './sidebar.style.scss'
 import SvgIcon from '@/core/components/Icon';
 import type { icons } from '@/core/constants/Icons';
@@ -30,7 +30,7 @@ const menuItems: {
 
 const StyledListItemButton = styled(ListItemButton,{
   shouldForwardProp: (prop) => prop !== 'activePath',
-})<{activePath?: boolean,component?: any,to?: string}>(({ theme,activePath }) => ({
+})<{activePath?: boolean,component?: HTMLAnchorElement,to?: string}>(({ theme,activePath }) => ({
   display:"flex",
   alignItems:"center",
   flexDirection:"column",
@@ -64,26 +64,35 @@ const StyledListItemButton = styled(ListItemButton,{
     }
 }));
 
-const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => (
- <Stack className='sidebar__container' sx={()=>({
+const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => {
+  const [appSwitchValue,setAppSwitchValue] = useState<"IMS"|"WFM">("IMS");
+  const handleSwitchAppName = ()=>{
+    setAppSwitchValue(prev=> prev == 'IMS' ? 'WFM':'IMS')
+  }
+
+ return <Stack className='sidebar__container' sx={()=>({
   backgroundColor:'var(--bg-secondary)',
   width:drawerWidth
  })}>
-  <Stack className='sidebar__switch'>
-    <SvgIcon component='exchange' size={20} color={'currentColor'}/>
+    <div className='sidebar__switch'>
+    <ButtonBase  disableRipple disableTouchRipple onClick={handleSwitchAppName}>
+
+    <SvgIcon component='exchange' size={18} fill={'currentColor'}/>
     <Typography sx={()=>({
       textAlign:'center',
-      fontSize:"1.4rem",
-      fontWeight:800,
-      lineHeight:1,
-    })}>IMS</Typography>
-    </Stack>
+      fontWeight:500,
+      lineHeight:'2.2rem',
+      transition:'ease-in-out 1s',
+      fontSize:"1.7rem"
+    })}>{appSwitchValue}</Typography>
+    </ButtonBase>
+    </div>
 
     <Stack className='sidebar__list'>
       {menuItems.map((item) => {
         const isActive = activePath === item.path;  
           return <StyledListItemButton component={Link} to={item.path} activePath={isActive}>
-            <SvgIcon component={item.icon} size={24} color={isActive ? 'currentColor' : 'inherit'}/>
+            <SvgIcon component={item.icon} size={24} fill={isActive ? 'currentColor' : 'var(--icon-color-secondary)'}/>
                 <Typography sx={()=>({
                   textAlign:'center',
                   fontSize:"1.2rem",
@@ -95,6 +104,6 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth,activePath }) => (
     </Stack>
 </Stack>
 
-);
+    };
 
 export default Sidebar;

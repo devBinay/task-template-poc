@@ -29,17 +29,18 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight }) => {
         <img src={clientLogo} />
         <Typography sx={(theme) => ({
           color: theme.palette.primary.main,
-          marginLeft: ".5rem",
-          fontSize: "1.4rem",
-          fontWeight: 800,
-          lineHeight: 1,
+          marginLeft: ".8rem",
+          fontSize: "1.5rem",
+          fontWeight: 500,
+          lineHeight: '2rem',
+          
         })}>
           {defaultConstants.appAbbr}
         </Typography>
       </Stack>
 
       {/* Search Bar */}
-      <Stack sx={{ marginLeft: "auto" }}>
+      <Stack sx={{ marginLeft: "auto", maxWidth:"24rem", maxHeight:"3.6rem" }}>
         <NavSearchBar placeholder='Search...' onSearch={handleSearch} iconPosition='left' icon='search' />
       </Stack>
       {/* Icons Section */}
@@ -47,28 +48,28 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight }) => {
         <IconButton variant="primary" style={{
           padding:"1rem"
         }}>
-          <SvgIcon component="calendarBlank" size={20}  />
+          <SvgIcon component="calendarBlank" fill={"var(--icon-color-secondary)"} size={20}  />
         </IconButton>
         <IconButton variant="primary" style={{
           padding:"1rem"
         }}>
-          <SvgIcon component="clipboardToDo" size={20} />
+          <SvgIcon component="clipboardToDo" fill={"var(--icon-color-secondary)"} size={20} />
         </IconButton>
         <IconButton variant="primary" style={{
           padding:"1rem"
         }}>
-          <SvgIcon component="envelope" size={20} />
+          <SvgIcon component="envelope" fill={"var(--icon-color-secondary)"} size={20} />
         </IconButton>
-        <IconButton variant="primary" style={{
+        <IconButton variant="primary"  style={{
           padding:"1rem"
         }}>
-          <SvgIcon component="comment" size={20} />
+          <SvgIcon component="comment" fill={"var(--icon-color-secondary)"} size={20} />
         </IconButton>
         <IconButton variant="primary" style={{
           padding:"1rem",
           
         }}>
-          <SvgIcon component="notification" size={20} />
+          <SvgIcon component="notification" fill={"var(--icon-color-secondary)"} size={20} />
         </IconButton>
       </Stack>
       {/* User Profile Section */}

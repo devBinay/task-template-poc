@@ -18,7 +18,7 @@ import SearchDrawer from '@/pages/SearchDrawer';
 import TableRowSkeleton from '@/pages/TemplateLibrary/components/Skeleton';
 import "./style.scss";
 
-const SearchField = styled(TextField)(({ theme }) => ({
+const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
     fontWeight: "400",
@@ -52,10 +52,12 @@ const TemplateLibrary: React.FC = () => {
     return <PageTemplate>
         <PageTemplate.Header>
         <Stack direction={"row"} alignItems={'center'}>
-          <IconButton variant="outline" disableHover={true} sx={{
+          <IconButton variant="outline" disableHover={true} disableTouchRipple sx={{
                marginRight:'var(--space-lg)',
+               backgroundColor:'var(--bg-default)',
+               padding:'.8rem'
           }}>
-          <SvgIcon component={"chevronLeft"} size={"20"}/>
+          <SvgIcon component={"chevronLeft"} fill='var(--icon-color-secondary)' size={18}/>
           </IconButton>
           <Typography variant='h2'>
           Template

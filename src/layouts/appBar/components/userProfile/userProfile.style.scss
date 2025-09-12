@@ -28,11 +28,13 @@
         & .userInfo-name{
             font-size:1.5rem;
             font-weight:500;
-
+            line-height: 2rem;
         }
         & .userInfo-role{
             font-size:1.5rem;
             color: var(--text-secondary);
+            line-height: 2rem;
+            font-weight: 500;
             
         }
     }
