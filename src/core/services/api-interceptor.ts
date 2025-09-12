@@ -27,7 +27,8 @@ export const setInterceptor = (axiosInstance: AxiosInstance) => {
           // window.location.href = '/login';
         }
         // Handle other status codes or log errors as needed
-        alert("error")
+        // alert("error")
+        console.log(error)
         return Promise.reject(error);
       }
     );
