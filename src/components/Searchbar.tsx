@@ -1,6 +1,6 @@
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import Icon from '@/core/components/Icon';
+import SvgIcon from '@/core/components/Icon';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -63,7 +63,7 @@ const Searchbar = (props: props) => {
             inputProps={{ 'aria-label': 'search' }}
         />
         <SearchIconWrapper>
-            <Icon name="search" color='black'/>
+            <SvgIcon component="search" fill='black'/>
         </SearchIconWrapper>
     </Search>
 }

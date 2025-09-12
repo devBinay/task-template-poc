@@ -13,9 +13,9 @@ import SvgIcon from "@/core/components/Icon";
 import IconButton from '@/components/IconButton';
 import { IconOutlined } from "@/components/Button/Button";
 import CommonModal from "@/components/Modal/Modal";
-import { renderPreviewPopupRow, renderPreviewHeading } from "./components/PreviewType";
-import "./style.scss";
+import { renderPreviewPopupRow, renderPreviewHeading } from "@/pages/TemplateLibrary/component/PreviewType";
 import { useGetViewPortSize } from "@/utils/getViewPortSize";
+import "./style.scss";
 import type { TemplateLibraryTableRowType } from "./types";
 import type { MRT_Cell, MRT_Column } from "material-react-table";
 
@@ -110,7 +110,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
 
     const handleRowSelection = (checked: boolean, rowData: TemplateLibraryTableRowType) => {
       let copyRowData = [...selectedTemplate];
-      if(checked) {
+      if(!event || event?.target?.checked) {
         copyRowData.push(rowData);
       }
       else {

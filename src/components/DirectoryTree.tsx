@@ -5,7 +5,7 @@ import SvgIcon from "@/core/components/Icon";
 import "./style.scss";
 
 type TreeNode = {
-  tagId: string;
+  tagId: number;
   tagName: string;
   children?: TreeNode[];
 };
