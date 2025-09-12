@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import { defaultConstants } from '@/core/constants';
 import clientLogo from "@/assets/Logile Logo.svg"
-import { Box, Button, Stack } from '@mui/material';
+import { Badge, Box, Button, Stack } from '@mui/material';
 import IconButton from '@/components/IconButton';
 import UserProfileInfoCard from './components/userProfile/UserProfileInfoCard';
 import navAvatarPng from '@/assets/navbarAvatar.png'
@@ -40,7 +40,7 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
       {/* Logo Section */}
       <Stack direction={"row"} sx={{
         height: "fit-content",
-        alignItems: "flex-end"
+        alignItems: "center"
       }}>
             <Box sx={{marginRight: "2.4rem"}}>
           <MainMenu onClick={handleToggleMenu} startIcon={
@@ -50,9 +50,9 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
           </MainMenu>
         </Box>
 
-        <Box><img src={clientLogo} /></Box>
-    
-        <Typography sx={(theme) => ({
+        <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+        <img src={clientLogo} />
+         <Typography sx={(theme) => ({
           color: theme.palette.primary.main,
           marginLeft: ".8rem",
           fontSize: "1.5rem",
@@ -62,6 +62,9 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
         })}>
           {defaultConstants.appAbbr}
         </Typography>
+        </Stack>
+    
+       
       </Stack>
 
       {/* Search Bar */}
@@ -90,12 +93,19 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
         }}>
           <SvgIcon component="comment" fill={"var(--icon-color-secondary)"} size={20} />
         </IconButton>
+        <Badge badgeContent={'59+'}  sx={{
+    "& .MuiBadge-badge": {
+      fontWeight: 400,
+      fontSize: "1.5rem",
+    },
+  }}color="error" overlap="circular" >
         <IconButton variant="primary" style={{
           padding:"1rem",
           
         }}>
           <SvgIcon component="notification" fill={"var(--icon-color-secondary)"} size={20} />
         </IconButton>
+          </Badge>
       </Stack>
       {/* User Profile Section */}
 

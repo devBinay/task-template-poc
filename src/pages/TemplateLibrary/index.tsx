@@ -66,7 +66,7 @@ const TemplateLibrary: React.FC = () => {
         </PageTemplate.Header>
       <PageTemplate.Content>
       <Box className="template-library-container">
-         <Box display="flex" padding={"8px 16px"} alignItems="center">
+         <Box display="flex" padding={"0rem .8rem"} alignItems="center">
             <Box width="20%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
             { showCheckbox ?
               <Box width="80%" display="flex" justifyContent="space-between" alignItems="center" fontSize={'19px'} fontWeight={500}>
@@ -91,7 +91,10 @@ const TemplateLibrary: React.FC = () => {
                 <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="16px">
                     Template Library
                 </Box>
-                <Box flexGrow={1}>
+                <Box sx={{
+                  maxWidth:"50.5rem",
+                  flexGrow:1,
+                }}>
                     <SearchField
                         className="search-bar"
                         variant="outlined"
@@ -108,13 +111,15 @@ const TemplateLibrary: React.FC = () => {
                         }}
                     />
                 </Box>
+                <Stack direction={"row"} alignItems="center" gap="12px">
                 <Box whiteSpace="nowrap"><PrimaryButton>Create Template</PrimaryButton></Box>
-                <IconButton variant='outline'><SvgIcon component="upload" size={20} /></IconButton>
-                <IconButton variant='outline'><SvgIcon component="moreOption" size={20} /></IconButton>
+                <IconButton variant='outline'><SvgIcon fill='var(--icon-color-secondary)' component="upload" size={20} /></IconButton>
+                <IconButton variant='outline'><SvgIcon fill='var(--icon-color-secondary)' component="moreOption" size={20} /></IconButton>
+                </Stack>
               </Box>
             }
         </Box>
-        <Divider sx={{ marginTop: '4px', borderBottomWidth: 1 }} />
+        <Divider sx={{ marginTop: '4px', borderBottomWidth: 1, marginLeft: "-1rem", marginRight: "-1rem" }} />
 
         <Box display="flex" >
             <Box width={'20%'}>
