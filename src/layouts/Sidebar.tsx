@@ -1,4 +1,5 @@
 import React from 'react';
+import type { RefObject } from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -9,6 +10,8 @@ import { Link } from 'react-router-dom';
 interface SidebarProps {
   drawerWidth: number;
   topBarHeight?: number;
+  activePath: string;
+  sidebarRef: RefObject<HTMLDivElement>;
 }
 
 const menuItems = [
