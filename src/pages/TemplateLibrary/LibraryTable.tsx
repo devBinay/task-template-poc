@@ -97,7 +97,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
   showCheckbox,
   setShowCheckbox,
   selectedTemplate,
-  setSelectedTemplate
+  setSelectedTemplate,
+  selectedDirectoryData,
 }) => {
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
     const [tableActionMenu, setTableActionMenu] = useState<Record<"name" | "created" | "modified", MenuState>>({
@@ -571,7 +572,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
 
   const templateTableProps = {
     columns: getColumns,
-    data: demoTableData,
+    data: selectedDirectoryData,
     enableColumnActions: false,
     enableColumnFilters: false,
     enablePagination: false,
