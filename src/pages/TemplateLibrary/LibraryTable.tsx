@@ -94,7 +94,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
   hoveredRowId,
   setHoveredRowId,
   selectedTemplate,
-  setSelectedTemplate
+  setSelectedTemplate,
+  selectedDirectoryData,
 }) => {
     const [tableActionMenu, setTableActionMenu] = useState<Record<"name" | "created" | "modified", MenuState>>({
         name: { status: false, anchorEl: null },
@@ -490,7 +491,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
 
   const templateTableProps = {
     columns: getColumns(),
-    data: demoTableData,
+    data: selectedDirectoryData,
     enableColumnActions: false,
     enableColumnFilters: false,
     enablePagination: false,

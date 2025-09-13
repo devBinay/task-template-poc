@@ -1,8 +1,12 @@
 export interface DirectResponse<T> {
+  success: boolean,
+  message: string,
   data: T;
 }
 
 export interface PaginatedResponse<T> {
+  success: boolean,
+  message: string,
   data: T[];
   pagination: Pagination;
 }

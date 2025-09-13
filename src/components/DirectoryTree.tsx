@@ -13,7 +13,7 @@ type TreeNode = {
 
 interface DirectoryTreeProps {
   data: TreeNode[];
-  setSelectedData: (id: string) => void;
+  handleClick: (id: string) => void;
 }
 
 const StyledTreeItem = styled(TreeItem)(() => ({
@@ -56,11 +56,11 @@ const ArrowDownIcon = () => (
 
 const BlankIcon = () => (<Box height="24px" width="24px"></Box>)
 
-const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) => {
+const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, handleClick }) => {
 
   const renderTree = (nodes: TreeNode) => (
     <StyledTreeItem key={nodes.tagId} itemId={nodes.tagId} label={nodes.tagName} 
-      onClick={(e)=> { e.stopPropagation(); console.log('clicked',nodes.tagId, ": ", nodes.tagName); setSelectedData(nodes.tagId);}}
+      onClick={(e)=>handleClick(e, nodes)}
      >
       {Array.isArray(nodes.children)
         ? nodes.children.map((child) => renderTree(child))
