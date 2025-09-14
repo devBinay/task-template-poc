@@ -38,7 +38,7 @@ const Content: React.FC<SectionProps> = ({ children, style }) => {
         backgroundColor: "var(--bg-default)",
         flex: 1,
         borderStartStartRadius:"var(--border-radius-md)",
-        marginTop: "0.4rem",
+        marginTop: "0.6rem",
         ...style,
       }}
     >

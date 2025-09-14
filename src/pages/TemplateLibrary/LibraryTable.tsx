@@ -521,7 +521,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
               open={previewModal.status}
               onClose={() => setPreviewModal({status: false, data: null})}
               title={renderPreviewHeading({
-                  heading: "5-S Audit All Departments - 5S Certification Audits",
+                  heading: `${previewModal?.data?.templateName || ""}`,
                   btn1visible: true, 
                   btn1Name: "upload", 
                   btn2visible: true, 
