@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { alpha } from "@mui/material";
 import ButtonBase, {type ButtonBaseProps } from "@mui/material/ButtonBase";
+import type { Theme } from "@mui/material/styles";
 
 type Variant = "primary" | "secondary" | "outline";
 
@@ -12,7 +13,7 @@ interface IconButtonProps extends ButtonBaseProps {
 
 const IconButtonStyled = styled(ButtonBase, {
   shouldForwardProp: (prop) => prop !== "variant" && prop !== "disableHover",
-})<IconButtonProps>(({ theme, variant = "primary", disableHover, disabled }) => {
+})<IconButtonProps>(({ theme, variant = "primary", disableHover, disabled }: { theme: Theme } & IconButtonProps) => {
   const baseStyles = {
     borderRadius: theme.shape.borderRadius,
     border: "1px solid transparent",

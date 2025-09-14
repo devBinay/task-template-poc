@@ -17,6 +17,7 @@ import EmptyState from '../../components/EmptyList/EmptyList';
 import SearchDrawer from '@/pages/SearchDrawer';
 import TableRowSkeleton from '@/pages/TemplateLibrary/components/Skeleton';
 import "./style.scss";
+import type { TemplateLibraryTableRowType } from './types';
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -37,10 +38,10 @@ const SearchField = styled(TextField)(( ) => ({
 const TemplateLibrary: React.FC = () => {
 
     const [searchDrawer, setSearchDrawer] = useState({status: false, text: ""});
-    const [selectedDirectoryId, setSelectedDirectoryId] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null);
+    const [loading] = useState(false);
     const [showCheckbox, setShowCheckbox] = useState(false);
-    const [selectedTemplate, setSelectedTemplate] = useState<any[]>([]);
+    const [selectedTemplate, setSelectedTemplate] = useState<TemplateLibraryTableRowType[]>([]);
 
     const openSearchDrawer = () => {
         setSearchDrawer((prev) => ({ ...prev, status: true }));

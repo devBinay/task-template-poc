@@ -19,6 +19,7 @@ import "./style.scss";
 import type { TemplateLibraryTableRowType } from "./types";
 import type { MRT_Cell, MRT_Column } from "material-react-table";
 import { formatDate } from "@/pages/TemplateLibrary/components/DateFormat";
+import type { IconName } from "@/core/types/icon.type";
 
 export type TemplateLibrary = {
   template_icon: string;
@@ -86,6 +87,8 @@ type LibraryTableProps = {
   setShowCheckbox: (value: boolean) => void;
   selectedTemplate: TemplateLibraryTableRowType[];
   setSelectedTemplate: (value: TemplateLibraryTableRowType[]) => void;
+  hoveredRowId?: string | null;
+  setHoveredRowId?: (value: string | null) => void;
 };
 
 const LibraryTable: React.FC<LibraryTableProps> = ({
@@ -101,7 +104,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         created: { status: false, anchorEl: null },
         modified: { status: false, anchorEl: null },
     });
-    const [previewModal, setPreviewModal] = useState<{status: boolean, data: MRT_Cell<TemplateLibraryTableRowType> | null}>({status: false, data: null});
+    const [previewModal, setPreviewModal] = useState<{status: boolean, data: TemplateLibraryTableRowType | null}>({status: false, data: null});
     const [tooltipId, setTooltipId] = useState<number | null>(null);
     const [selectedSort, setSelectedSort] = useState<{[key in keyof typeof tableActionMenu]: string | null}>({
       name: null,
@@ -153,7 +156,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       });
     };
 
-    const handleMenuClose = (type?: keyof typeof tableActionMenu) => {
+    const handleMenuClose = () => {
       setTableActionMenu({
         name: { status: false, anchorEl: null },
         created: { status: false, anchorEl: null },
@@ -166,11 +169,11 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     };
 
 
-    const handlePreviewModalOpen = (cellData: any[]) => {
+    const handlePreviewModalOpen = (cellData: TemplateLibraryTableRowType) => {
       setPreviewModal({status: true, data: cellData});
     }
 
-    const renderHeaderWithMenu = (column: any, type: keyof typeof tableActionMenu, menuItems: string[]) => {
+    const renderHeaderWithMenu = (column: MRT_Column<TemplateLibraryTableRowType>, type: keyof typeof tableActionMenu, menuItems: string[]) => {
       const selected = selectedSort[type];
       const isAscending = selected?.toLowerCase().includes("a → z");
 
@@ -199,7 +202,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             key={`${type}-menu-${tableActionMenu[type].status ? "open" : "closed"}`}
             anchorEl={tableActionMenu[type].anchorEl}
             open={tableActionMenu[type].status}
-            onClose={() => handleMenuClose(type)}
+            onClose={() => handleMenuClose()}
           >
             {menuItems.map((item, index) => {
               const isSelected = selected === item;
@@ -284,7 +287,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                 { (showCheckbox || isHovered) ?
                     <FormControlLabel
                       className="form-control-label"
-                      onChange={(event) => handleRowSelection(event.target.checked, cell.row.original)}
+                      onChange={(event) => handleRowSelection((event.target as HTMLInputElement).checked, cell.row.original)}
                         control={
                             <Checkbox
                               size="small"
@@ -300,8 +303,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                         }
                       label=""
                     /> :
-                    <Box onClick={(event) => handleRowSelection(true, cell.row.original)} className="cursor-pointer">
-                      <IconOutlined sx={{ pointerEvents: 'none' }} height={"3.6rem"} width={'1.6rem'} startIcon={
+                    <Box onClick={() => handleRowSelection(true, cell.row.original)} className="cursor-pointer">
+                      <IconOutlined sx={{ pointerEvents: 'none', height: '3.6rem', width: '1.6rem' }} startIcon={
                         data?.iconName === "v15-Shop-supply" ?
                         <SvgIcon 
                             component="checkedList"
@@ -336,7 +339,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                               {data?.status === "Incomplete" ? 
                                 <Box display='flex' gap='2px' alignItems='center' justifyContent='center' color="#F44336">
                                   <Box>{data?.status}</Box>
-                                  <><SvgIcon component="exclamationTriangle" size={16} fill="#F44336" /></>
+                                  <><SvgIcon component={'exclamationTriangle' as IconName} size={16} fill="#F44336" /></>
                                 </Box> :
                                 <Box display='flex' gap='2px'>{data?.status || "- -"}</Box>
                               }
@@ -354,7 +357,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         {data?.status === "Incomplete" ? 
           <Box display='flex' gap='2px' alignItems='center' justifyContent='center' color="#F44336">
             <Box>{data?.status}</Box>
-            <><SvgIcon component="exclamationTriangle" size={16} fill="#F44336" /></>
+            <><SvgIcon component={'exclamationTriangle' as IconName} size={16} fill="#F44336" /></>
           </Box> :
           <Box display='flex' gap='2px'>{data?.status || "- -"}</Box> 
         }
@@ -455,7 +458,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       }
     ];  
 
-    const columns2: MRT_Column<TemplateLibraryTableRowType>[] = [{
+    const columns2 = [{
         accessorKey: "createdTime",
         header: "Created",
         Header: renderTemplateCreatedHeader,
@@ -511,7 +514,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
            {/* Template Preview Popup */}
             <CommonModal
               open={previewModal.status}
-              onClose={() => setPreviewModal({status: false, data: ''})}
+              onClose={() => setPreviewModal({status: false, data: null})}
               title={renderPreviewHeading({
                   heading: "5-S Audit All Departments - 5S Certification Audits",
                   btn1visible: true, 

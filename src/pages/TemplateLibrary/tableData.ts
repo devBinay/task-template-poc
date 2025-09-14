@@ -1,6 +1,6 @@
 import type { TemplateLibraryTableRowType } from "./types";
 
-export const demoTableData2 :TemplateLibraryTableRowType[] = [
+export const demoTableData2 : unknown[] = [
   {
     template_icon: { 
         type: 'Assigned',
@@ -859,7 +859,7 @@ export const folderTreeData = {
     ]
   }
 
-export const demoTableData :TemplateLibraryTableRowType[] = [
+export const demoTableData: TemplateLibraryTableRowType[] = [
         {
             "templateId": 1894,
             "tagId": 2002,

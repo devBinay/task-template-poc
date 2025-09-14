@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 
 import InputBase from '@mui/material/InputBase';
@@ -51,8 +50,8 @@ interface props {
     onSearch: (value:string)=> void
 }
 const Searchbar = (props: props) => {
-    const {onSearch,placeholder,iconPosition} = props
-    const handleOnKeyPress = (event)=>{
+    const {placeholder} = props
+    const handleOnKeyPress = ()=>{
         
     }
     return <Search>

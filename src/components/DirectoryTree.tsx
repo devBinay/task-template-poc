@@ -6,14 +6,14 @@ import Box from "@mui/material/Box";
 import "./style.scss";
 
 type TreeNode = {
-  tagId: string;
+  tagId: number;
   tagName: string;
   children?: TreeNode[];
 };
 
 interface DirectoryTreeProps {
   data: TreeNode[];
-  setSelectedData: (id: string) => void;
+  setSelectedData: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const StyledTreeItem = styled(TreeItem)(() => ({

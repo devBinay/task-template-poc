@@ -1,4 +1,4 @@
-import type { AxiosInstance } from "axios";
+import type { AxiosInstance, AxiosRequestHeaders } from "axios";
 
 export const setInterceptor = (axiosInstance: AxiosInstance) => {
 
@@ -8,7 +8,7 @@ export const setInterceptor = (axiosInstance: AxiosInstance) => {
         // Example: Add Authorization header if token exists
         const token = localStorage.getItem('token');
         if (token) {
-          config.headers = config.headers || {};
+          config.headers = config.headers || {} as AxiosRequestHeaders;
           config.headers['Authorization'] = `Bearer ${token}`;
         }
         // Add other headers as needed

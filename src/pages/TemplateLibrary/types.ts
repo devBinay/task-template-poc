@@ -1,12 +1,12 @@
 
 export type TemplateLibraryTableRowType = {
   iconName: string;
-  iconColor: string;
+  iconColour: string;
   templateName: string;
   tagType: string;
-  status: string;
-  templateId: string;
-  tagId: string;
+  status: string | null;
+  templateId: number;
+  tagId: number;
   createdTime: string;
   lastModifiedTime: string;
 };

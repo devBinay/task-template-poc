@@ -19,7 +19,7 @@ const Search = styled('div')(({ theme }) => ({
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-    width: theme.custom.borderRadiusSm,
+    width: theme.shape.borderRadius, // changed from theme.custom.borderRadiusSm
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -47,9 +47,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 interface props {
-    placeholder: string,
-    iconPosition:"start"|"end",
-    onSearch: (value:string)=> void
+    placeholder?: string,
+    iconPosition?: "start"|"end",
+    onSearch?: (value:string)=> void
 }
 const Searchbar = (props: props) => {
     const {placeholder} = props

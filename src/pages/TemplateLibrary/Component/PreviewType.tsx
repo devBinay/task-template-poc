@@ -5,6 +5,7 @@ import Select from '@mui/material/Select';
 import SvgIcon from "@/core/components/Icon";
 import IconButton from "@/components/IconButton";
 import "../style.scss";
+import type { IconName } from "@/core/types/icon.type";
 
 type AnswerType = "Textfield" | "Dropdown" | "Multiline-Textfield" | string;
 
@@ -16,9 +17,9 @@ interface RenderAnswerProps {
 interface PreviewHeadingProps {
   heading: string;
   btn1visible?: boolean;
-  btn1Name?: string;
+  btn1Name?: IconName;
   btn2visible?: boolean;
-  btn2Name?: string;
+  btn2Name?: IconName;
 }
 
 interface PreviewBodyProps {

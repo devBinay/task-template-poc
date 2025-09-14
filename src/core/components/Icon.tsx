@@ -9,6 +9,7 @@ interface SvgIconProps {
   className?: string;
   fill?: string;
   stroke?: string;
+  style?: React.CSSProperties;
 }
 
 const SvgIcon: React.FC<SvgIconProps> = ({
@@ -17,6 +18,7 @@ const SvgIcon: React.FC<SvgIconProps> = ({
   className,
   fill = "currentColor",
   stroke,
+  style,
   ...props
 }) => {
     const Component = icons[component]
@@ -30,6 +32,7 @@ const SvgIcon: React.FC<SvgIconProps> = ({
       className={className}
       fill={fill}
       stroke={stroke}
+      style={style}
       {...props}
     />
   );

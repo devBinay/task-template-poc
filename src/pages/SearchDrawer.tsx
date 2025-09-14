@@ -2,7 +2,6 @@ import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SvgIcon from '../core/components/Icon';
-import Searchbar from './TemplateLibrary/Searchbar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { styled } from "@mui/material/styles";
@@ -15,19 +14,20 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import StyledAutocomplete from '../components/Autocomplete/Autocomplete';
+import Searchbar from '@/components/Searchbar';
 
 interface TabPanelProps {
   children?: React.ReactNode;
-  value: Boolean;
+  value: boolean;
 }
-const StyledDrawer = styled(Drawer)(({ theme }) => ({
+const StyledDrawer = styled(Drawer)(() => ({
     '& .MuiDrawer-paper': {
       borderBottomLeftRadius:"8px",
       borderBottomRightRadius: "8px",
     }
 }))
 
-const StyledTabs = styled(Tabs)(({ theme }) => ({
+const StyledTabs = styled(Tabs)(() => ({
     borderBottom: '1px solid #DCDCDC',
     minHeight: 'auto',
     '& .MuiButtonBase-root': {
@@ -106,7 +106,7 @@ const SearchDrawer = ({
 }: SearchDrawerProps) => {
     const {RECENT, ADVANCE} = TEMPLATE_SEARCH_TABS;
     const [currentTab, setCurrentTab] = useState(RECENT.value);
-    const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    const handleTabChange = (newValue: string) => {
         setCurrentTab(newValue);
     }
     return (

@@ -1,9 +1,10 @@
+import type { TemplateLibraryTableRowType } from "@/pages/TemplateLibrary/types";
 import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
-import type { MRT_TableOptions, MRT_RowData, MRT_Row } from "material-react-table";
+import type { MRT_RowData, MRT_Row } from "material-react-table";
 
 interface TableProps {
-  tableProps: MRT_TableOptions<MRT_RowData>;
-  isRowSelected?: (rowData: MRT_RowData) => boolean; // 👈 pass in from parent
+  tableProps;
+  isRowSelected?: (rowData: TemplateLibraryTableRowType) => boolean; // 👈 pass in from parent
 }
 
 const Table = ({ tableProps, isRowSelected, ...props }: TableProps) => {
@@ -11,7 +12,7 @@ const Table = ({ tableProps, isRowSelected, ...props }: TableProps) => {
     ...tableProps,
     muiTableBodyRowProps: ({ row }: { row: MRT_Row<MRT_RowData> }) => ({
       sx: {
-        bgcolor: isRowSelected && isRowSelected(row.original) ? "#E3F2FD" : "inherit",
+        bgcolor: isRowSelected && isRowSelected(row.original as TemplateLibraryTableRowType) ? "#E3F2FD" : "inherit",
         "&:hover": {
           bgcolor: "#E3F2FD",
         },

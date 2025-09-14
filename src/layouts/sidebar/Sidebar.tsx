@@ -30,7 +30,7 @@ const menuItems: {
 
 const StyledListItemButton = styled(ListItemButton,{
   shouldForwardProp: (prop) => prop !== 'activePath',
-})<{activePath?: boolean,component?: HTMLAnchorElement,to?: string}>(({ theme,activePath }) => ({
+})<{activePath?: boolean, component?: React.ElementType, to?: string}>(({ theme,activePath }) => ({
   display:"flex",
   alignItems:"center",
   flexDirection:"column",
@@ -64,7 +64,7 @@ const StyledListItemButton = styled(ListItemButton,{
     }
 }));
 
-const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef, menuStatus }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
   const [appSwitchValue,setAppSwitchValue] = useState<"IMS"|"WFM">("IMS");
   const handleSwitchAppName = ()=>{
     setAppSwitchValue(prev=> prev == 'IMS' ? 'WFM':'IMS')

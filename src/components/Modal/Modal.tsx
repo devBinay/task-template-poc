@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type ReactElement } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import SvgIcon from "@/core/components/Icon";
@@ -7,7 +7,7 @@ import IconButton from '@/components/IconButton';
 interface CommonModalProps {
   open: boolean;
   onClose: () => void;
-  title?: string;
+  title?: ReactElement;
   children: React.ReactNode;
   showActions?: boolean;
   onConfirm?: () => void;
