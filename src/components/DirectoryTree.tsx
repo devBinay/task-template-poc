@@ -73,7 +73,7 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) 
     <SimpleTreeView
       aria-label="directory tree"
       slots={{ expandIcon: ArrowRightIcon, collapseIcon: ArrowDownIcon, endIcon: BlankIcon }}
-      sx={{ flexGrow: 1, overflowY: "auto",  borderRight: '1px solid lightgray', height:'100%' }}
+      sx={{ flexGrow: 1, overflowY: "auto", height:'100%' }}
     >
       {data.map((tree) => renderTree(tree))}
     </SimpleTreeView>

@@ -4,6 +4,8 @@ import { alpha, ButtonBase, ListItemButton, Stack, styled, Typography } from '@m
 import './sidebar.style.scss'
 import SvgIcon from '@/core/components/Icon';
 import type { icons } from '@/core/constants/Icons';
+import { useGetViewPortSize } from '@/utils/getViewPortSize';
+
 interface SidebarProps {
   activePath: string;
   sidebarRef?: React.Ref<HTMLDivElement>;
@@ -66,6 +68,7 @@ const StyledListItemButton = styled(ListItemButton,{
 
 const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
   const [appSwitchValue,setAppSwitchValue] = useState<"IMS"|"WFM">("IMS");
+  const viewportSize = useGetViewPortSize();
   const handleSwitchAppName = ()=>{
     setAppSwitchValue(prev=> prev == 'IMS' ? 'WFM':'IMS')
   }
@@ -87,17 +90,16 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
     <Stack className='sidebar__list'>
       {menuItems.map((item) => {
         const isActive = activePath === item.path;  
+        const isLargeView = viewportSize === 'xl';
           return <StyledListItemButton component={Link} to={item.path} activePath={isActive}>
             <SvgIcon component={item.icon} size={24} fill={isActive ? 'currentColor' : 'var(--icon-color-secondary)'}/>
                 <Typography sx={()=>({
                   textAlign:'center',
-                  fontSize:"1.2rem",
-                  width:"6.2rem",
+                  fontSize: isLargeView ? "1.2rem": "1rem",
+                  width: !isLargeView ? "7.1rem": "auto",
                   fontWeight:"inherit",
-                  textOverflow:"ellipsis",
+                  textOverflow: !isLargeView ? "ellipsis": "unset",
                   overflow:"hidden",
-               
-             
                   transition:'ease-in-out 1s',
                 })}>{item.text}</Typography>
           </StyledListItemButton>
