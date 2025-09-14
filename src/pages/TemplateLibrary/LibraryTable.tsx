@@ -305,7 +305,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
                       label=""
                     /> 
                     <Box onClick={() => handleRowSelection(true, cell.row.original)} sx={{ pointerEvents: "auto" }} className="icon-wrapper cursor-pointer">
-                      <IconOutlined sx={{ pointerEvents: 'none', height: '3.6rem', width: '3.6rem' }} startIcon={
+                      <IconOutlined sx={{ pointerEvents: 'none' }} startIcon={
                         data?.iconName === "v15-Shop-supply" ?
                         <SvgIcon 
                             component="checkedList"
