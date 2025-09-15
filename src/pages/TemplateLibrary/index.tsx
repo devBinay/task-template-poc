@@ -16,9 +16,9 @@ import { folderTreeData } from './tableData';
 import EmptyState from '../../components/EmptyList/EmptyList';
 import SearchDrawer from '@/pages/SearchDrawer';
 import "./style.scss";
-import type { TemplateLibraryTableRowType } from './types';
 import { getAllDirectories, getReportByReportType, getTemplateByTagId } from './services/template-library.service';
 import type { DirectoryType, TemplateType } from './types/template-library.type';
+import { renderDirectorySkelton } from './components/Skeleton';
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -94,7 +94,6 @@ const TemplateLibrary: React.FC = () => {
       if(selectedDirectory) {
         const tagId = selectedDirectory?.tagId;
         const reportType = selectedDirectory?.reportType;
-
         if(reportType !== undefined && reportType !== null) {
           getAllReports(reportType);
         }
@@ -106,9 +105,12 @@ const TemplateLibrary: React.FC = () => {
 
 
     useEffect(()=>{
+      setLoading(prev=>({...prev, directory: true}));
       getAllDirectories().then(res=>{
+        setLoading(prev=>({...prev, directory: false}));
         setDirectoryData(res)
       }).catch(error=>{
+        setLoading(prev=>({...prev, directory: false}));
         console.log("error",error)
       })
     },[])
@@ -190,7 +192,10 @@ const TemplateLibrary: React.FC = () => {
 
         <Box display="flex"  overflow={'auto'} >
             <Box width={'20%'}>
+              {
+                loading?.directory ? renderDirectorySkelton() :
                 <DirectoryTree data={directoryData?.data || []} handleClick={handleDirectoryClick} />
+              }
             </Box>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
               {!loading?.templates && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  

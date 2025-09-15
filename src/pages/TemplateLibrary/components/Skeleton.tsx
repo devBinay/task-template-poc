@@ -52,3 +52,18 @@ export const renderTemplateActionSkelton = () => {
       </Box>
   )
 }
+
+export const renderDirectorySkelton = () => {
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" gap="6px" padding="12px" 
+    sx={{
+      borderRight: "1px solid lightgray",
+      height: "100vh",
+      paddingRight:"1.6rem"
+    }}>
+       <Skeleton variant="rectangular" sx={{borderRadius:"8px"}} width="100%"  height={20} />
+        <Skeleton variant="rectangular" sx={{borderRadius:"8px"}} width="100%"  height={20} />
+        <Skeleton variant="rectangular" sx={{borderRadius:"8px"}} width="100%"  height={20} />
+    </Box>
+  )
+}
