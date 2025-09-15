@@ -99,7 +99,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
   setShowCheckbox,
   selectedTemplate,
   setSelectedTemplate,
-  selectedDirectoryData,
+  selectedDirectoryData=[],
   loading,
 }) => {
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
