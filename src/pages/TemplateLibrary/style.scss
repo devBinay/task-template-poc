@@ -23,7 +23,7 @@
         border-radius: 0px;
     }
     .MuiTableCell-root {
-   
+        padding: 0.8rem;
         width: auto;
     }
     .MuiTableHeadCell-root {
@@ -32,6 +32,9 @@
         padding: 0.5rem 10rem;
     }
    
+    .MuiTableRow-root {
+        box-shadow: none;
+    }
     .template-head-text {
         font-size: 15px;
         font-weight: 500;
@@ -83,7 +86,6 @@
 
        position: relative;
         user-select: none;
-
         .form-control-label {
            background-color: var(--bg-secondary);
             z-index: -1;

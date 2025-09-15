@@ -11,11 +11,9 @@ const Table = ({ tableProps, isRowSelected, ...props }: TableProps) => {
   const table = useMaterialReactTable({
     ...tableProps,
     muiTableBodyRowProps: ({ row }: { row: MRT_Row<MRT_RowData> }) => ({
+      hover: isRowSelected && isRowSelected(row.original as TemplateLibraryTableRowType) ? false : true,
       sx: {
-        bgcolor: isRowSelected && isRowSelected(row.original as TemplateLibraryTableRowType) ? "#E3F2FD" : "inherit",
-        "&:hover": {
-          bgcolor: "#E3F2FD",
-        },
+        bgcolor: isRowSelected && isRowSelected(row.original as TemplateLibraryTableRowType) ? "rgba(10, 104, 219, 0.1)" : "inherit",
       },
     }),
   });

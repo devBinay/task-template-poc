@@ -14,7 +14,6 @@ interface RenderAnswerProps {
   answer: string;
 }
 
-
 interface PreviewHeadingProps {
   heading: string;
   btn1visible?: boolean;
