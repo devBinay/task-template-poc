@@ -13,7 +13,7 @@ const Table = ({ tableProps, isRowSelected, ...props }: TableProps) => {
     muiTableBodyRowProps: ({ row }: { row: MRT_Row<MRT_RowData> }) => ({
       hover: isRowSelected && isRowSelected(row.original as TemplateLibraryTableRowType) ? false : true,
       sx: {
-        bgcolor: isRowSelected && isRowSelected(row.original as TemplateLibraryTableRowType) ? "rgba(10, 104, 219, 0.1)" : "inherit",
+        bgcolor: isRowSelected && isRowSelected(row.original as TemplateLibraryTableRowType) ? "#C9E0FD" : "inherit",
       },
     }),
   });
