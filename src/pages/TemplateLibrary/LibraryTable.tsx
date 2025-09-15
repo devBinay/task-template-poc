@@ -312,6 +312,14 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
       )
     }
 
+    const renderTemplateActionHeader = ({column}) => {
+      return (
+        <Box height="20px" display="flex" ml="8px" alignItems="center">
+          {column.columnDef.header}
+        </Box>
+      )
+    }
+
     const renderTemplateIconCell = ({cell }: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
         const data = cell.row?.original;
         const isTableSelectable = selectedTemplate.length > 0 ;
@@ -559,14 +567,14 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         header: "Actions",
         hide:false,
         size:1,
-        Header: renderTemplateCommonHeader,
+        Header: renderTemplateActionHeader,
         Cell: (loading?.templates || loading?.reports ) ? renderTemplateActionSkelton : renderActionsCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{padding:"1rem 1.6rem 1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text", style:{paddingRight:"1.6rem"} })
       },
     ]
 
-    const getColumns = useMemo(() => {
+    const getColumns = () => {
       return columns.filter(i=> !i.hide).sort((a, b) => (a.order || 0) - (b.order || 0));
       // let col = [];
       //  if (isDesktop) 
@@ -575,10 +583,10 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
       //     col = [...columns, ...columns2];
 
       // return col.sort((a, b) => (a.order || 0) - (b.order || 0));
-    }, [viewportSize, selectedTemplate, columnVisibility]);
+    };
 
-  const templateTableProps = {
-    columns: getColumns,
+    const templateTableProps = {
+    columns: getColumns(),
     data: (loading?.templates || loading?.reports ) 
           ? Array.from({ length: 10 }).map((_, idx) => ({ id: `skeleton-${idx}` })) : selectedDirectoryData,
     enableColumnActions: false,

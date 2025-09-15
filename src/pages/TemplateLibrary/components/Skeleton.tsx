@@ -28,7 +28,7 @@ export const renderTemplateNameSkelton = () => {
 export const renderTemplateRowSkelton = () => {
   return (
     <Box>
-      <Skeleton variant="rectangular" sx={{borderRadius:"4px"}} width={64} height={20} />
+      <Skeleton variant="rectangular" sx={{borderRadius:"4px"}} width="80%" height={20} />
     </Box>
   )
 }

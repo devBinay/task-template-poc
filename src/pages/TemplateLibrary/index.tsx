@@ -75,7 +75,8 @@ const TemplateLibrary: React.FC = () => {
             setLoading(prev=>({...prev, templates: false}));
             setSelectedDirectoryData(res?.data || []);
         }).catch(error=>{
-            console.log("error",error)
+            console.log("error", error)
+            setLoading(prev=>({...prev, templates: false}));
         })
     }
 
@@ -87,6 +88,7 @@ const TemplateLibrary: React.FC = () => {
         setSelectedDirectoryData(res?.data || []);
       }).catch(error=>{
         console.log("error", error)
+        setLoading(prev=>({...prev, reports: false}));
       })
     }
 
@@ -114,7 +116,7 @@ const TemplateLibrary: React.FC = () => {
         console.log("error",error)
       })
     },[])
-
+    
 
     return <PageTemplate>
         <PageTemplate.Header>
