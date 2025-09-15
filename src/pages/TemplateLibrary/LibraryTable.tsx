@@ -293,7 +293,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
                     }
                   }}
                   checked={selectedTemplate.length == selectedDirectoryData.length}
-                  indeterminate={selectedTemplate.length == selectedDirectoryData.length ? showCheckbox : true }
+                  indeterminate={selectedTemplate.length > 0 && showCheckbox && selectedTemplate.length !== selectedDirectoryData.length ? true : false }
                 />
               }
               label=""
