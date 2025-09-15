@@ -13,6 +13,6 @@ export const getTemplateByTagId: (tagId: number, payload:any) => Promise<Paginat
 }
 
 export const getReportByReportType: (reportType: number, payload:any) => Promise<PaginatedResponse<ReportType>> = (reportType, payload={}) => {
-    const url = API_CONFIG.templateLibrary.getTemplateByTagId.replace("{reportType}",`${reportType}`);
+    const url = API_CONFIG.templateLibrary.getReportByReportType.replace("{reportType}",`${reportType}`);
     return post<PaginatedResponse<ReportType>>(url,payload);
 }

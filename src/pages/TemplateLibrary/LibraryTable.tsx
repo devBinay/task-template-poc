@@ -383,17 +383,17 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         return (
                <Box minWidth="300px" display="flex" alignItems="center" gap="10px">
                    <Box display="flex" flexDirection="column" gap="6px">
-                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.templateName}</Box>
+                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.templateName || data?.name || ""}</Box>
                           {!isDesktop ?
                           <Box display="flex" gap="24px">
-                            <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Type:</span>{data?.tagType}</Box>
+                            <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Type:</span>{data?.tagType || "Checklist"}</Box>
                             <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Status:</span>
                               {data?.status === "Incomplete" ? 
                                 <Box display='flex' gap='2px' alignItems='center' justifyContent='center' color="#F44336">
                                   <Box>{data?.status}</Box>
                                   <><SvgIcon component={'exclamationTriangle' as IconName} size={16} fill="#F44336" /></>
                                 </Box> :
-                                <Box display='flex' gap='2px'>{data?.status || "- -"}</Box>
+                                <Box display='flex' gap='2px'>{data?.status || "Active"}</Box>
                               }
                             </Box>
                           </Box>
@@ -411,9 +411,16 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
             <Box>{data?.status}</Box>
             <><SvgIcon component={'exclamationTriangle' as IconName} size={16} fill="#F44336" /></>
           </Box> :
-          <Box display='flex' gap='2px'>{data?.status || "- -"}</Box> 
+          <Box display='flex' gap='2px'>{data?.status || "Active"}</Box> 
         }
       </Box>
+      )
+    }
+
+     const renderTemplateTypeCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
+      const data = cell.row?.original;
+      return (
+          <Box display='flex' gap='2px'>{data?.type || "Checklist"}</Box> 
       )
     }
 
@@ -507,7 +514,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         accessorKey: "tagType",
         header: "Type",
         Header: renderTemplateCommonHeader,
-         size:1,
+        size:1,
+        Cell: renderTemplateTypeCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
@@ -516,7 +524,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:!isDesktop,
         accessorKey: "status",
         header: "Status",
-         size:1,
+        size:1,
         Header: renderTemplateCommonHeader,
         Cell: renderTemplateStatusCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
@@ -537,9 +545,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         accessorKey: "lastModifiedTime",
         header: "Last Modified",
         hide:false,
-
-       size:1,
-
+        size:1,
         Header: renderTemplateModifiedHeader,
         Cell: renderTemplateModifiedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
@@ -550,8 +556,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         accessorKey: "actions",
         header: "Actions",
         hide:false,
-
-         size:1,
+        size:1,
         Header: renderTemplateCommonHeader,
         Cell: renderActionsCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{padding:"1rem 1.6rem 1rem 0.8rem"} }),

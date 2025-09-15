@@ -96,11 +96,11 @@ const TemplateLibrary: React.FC = () => {
         const tagId = selectedDirectory?.tagId;
         const reportType = selectedDirectory?.reportType;
 
-        if(tagId !== undefined && tagId !== null) {
-          getAllTemplates(tagId);
-        }
-        else if(reportType !== undefined && reportType !== null) {
+        if(reportType !== undefined && reportType !== null) {
           getAllReports(reportType);
+        }
+        else if(tagId !== undefined && tagId !== null) {
+          getAllTemplates(tagId);
         }
       }
     },[selectedDirectory])
@@ -194,7 +194,7 @@ const TemplateLibrary: React.FC = () => {
                 <DirectoryTree data={directoryData?.data || []} handleClick={handleDirectoryClick} />
             </Box>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
-                {loading ? [...Array(5)].map((_, i) => (
+                {loading?.template ? [...Array(5)].map((_, i) => (
                 <TableRowSkeleton key={i} />
               )) :
               selectedDirectoryData?.length == 0 ?  
