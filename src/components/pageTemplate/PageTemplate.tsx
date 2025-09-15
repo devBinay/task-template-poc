@@ -35,7 +35,6 @@ const Content: React.FC<SectionProps> = ({ children, style }) => {
   return (
     <div
       style={{
-        padding: "1rem",
         backgroundColor: "var(--bg-default)",
         flex: 1,
         overflowY: "auto",

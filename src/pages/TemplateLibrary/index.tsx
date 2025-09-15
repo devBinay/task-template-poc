@@ -67,13 +67,15 @@ const TemplateLibrary: React.FC = () => {
         </PageTemplate.Header>
       <PageTemplate.Content>
       <Box className="template-library-container">
-         <Box display="flex" padding={"0rem .8rem"} alignItems="center">
-            <Box width="20%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
+         <Box display="flex"  alignItems="center" className='template-library__header'>
+            <Box width="19.2%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
             { showCheckbox ?
               <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize={'19px'} fontWeight={500}>
                 <Box display="flex" alignItems="center" gap="22px">
-                  <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}}>
+                  <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}} >
+                  <IconButton variant='primary' disableHover disableRipple disableTouchRipple sx={{padding:0, minWidth:0}} onClick={() => setSelectedTemplate([])}>
                     <SvgIcon component="arrowUp" size={24} fill="#333333" />
+                  </IconButton>
                   </Box>
                   <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="16px">
                     {selectedTemplate.length} Selected

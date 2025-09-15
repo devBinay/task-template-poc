@@ -94,11 +94,11 @@ type LibraryTableProps = {
 const LibraryTable: React.FC<LibraryTableProps> = ({
   showCheckbox,
   setShowCheckbox,
-  hoveredRowId,
-  setHoveredRowId,
+
   selectedTemplate,
   setSelectedTemplate
 }) => {
+  const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
     const [tableActionMenu, setTableActionMenu] = useState<Record<"name" | "created" | "modified", MenuState>>({
         name: { status: false, anchorEl: null },
         created: { status: false, anchorEl: null },
@@ -134,14 +134,26 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     const isRowSelected = (rowData: TemplateLibraryTableRowType) => {
       return selectedTemplate?.some((item) => item?.templateId === rowData?.templateId);
     }
+    
 
-    const clearRowSelection = () => {
-      setSelectedTemplate([]);
-      setShowCheckbox(false);
+    /**
+     * Checks if all rows are selected. if yes, it clears the selection; otherwise, it selects all rows.
+     * @returns void
+    */
+    const handleSelectAllRows = () => {
+      const isAllRowsSelected = selectedTemplate.length === demoTableData.length;
+      if(!isAllRowsSelected) {
+        setSelectedTemplate(demoTableData);
+      }
+      else {
+        setSelectedTemplate([]);
+      }
     }
+
 
     const handleTooltip = (id: number) => setTooltipId((prev) => (prev === id ? null : id));
 
+    
     const handleMenuClick = (event: React.MouseEvent<HTMLElement>, type: keyof typeof tableActionMenu) => {
       event.stopPropagation();
       const isOpen = tableActionMenu[type].status;
@@ -250,7 +262,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         { showCheckbox ?
           <FormControlLabel
               className="form-control-label"
-              onChange={clearRowSelection}
+              onChange={handleSelectAllRows}
               sx={{padding:0, margin:0}}
               control={
                 <Checkbox
@@ -277,14 +289,28 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
 
     const renderTemplateIconCell = ({cell }: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
         const data = cell.row?.original;
-        const rowId = cell.row.id;
-        const isHovered = hoveredRowId === rowId;
-        return (
-               <Box className="template-checkbox-container" display='flex' 
-                  onMouseEnter={() => setHoveredRowId(rowId)}
-                  onMouseLeave={() => setHoveredRowId(null)}
+        const isTableSelectable = selectedTemplate.length > 0 ;
+        return <>
+              {!isTableSelectable && <Box className="template-checkbox-container tablebody-col__checkbox--toggle" display='flex' 
                 >
-                { (showCheckbox || isHovered) ?
+                    <Box onClick={(event) => handleRowSelection(true, cell.row.original)} className="cursor-pointer icon-container" >
+                      <IconOutlined sx={{ pointerEvents: 'none' }} height={"3.6rem"} width={'1.6rem'} startIcon={
+                        data?.iconName === "v15-Shop-supply" ?
+                        <SvgIcon 
+                            component="checkedList"
+                            size={18}
+                            fill="#0A68DB"
+                            style={{ pointerEvents: 'none' }}
+                         /> :
+                        <SvgIcon 
+                            component="checkedDoc"
+                            size={18}
+                            fill="#009B00"
+                         />
+                        }
+                        variant='outlined'
+                      />
+                    </Box>
                     <FormControlLabel
                       className="form-control-label"
                       onChange={(event) => handleRowSelection((event.target as HTMLInputElement).checked, cell.row.original)}
@@ -302,28 +328,31 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                             />
                         }
                       label=""
-                    /> :
-                    <Box onClick={() => handleRowSelection(true, cell.row.original)} className="cursor-pointer">
-                      <IconOutlined sx={{ pointerEvents: 'none', height: '3.6rem', width: '1.6rem' }} startIcon={
-                        data?.iconName === "v15-Shop-supply" ?
-                        <SvgIcon 
-                            component="checkedList"
-                            size={18}
-                            fill="#0A68DB"
-                            style={{ pointerEvents: 'none' }}
-                         /> :
-                        <SvgIcon 
-                            component="checkedDoc"
-                            size={18}
-                            fill="#009B00"
-                         />
+                    /> 
+                     </Box>}
+               {
+                isTableSelectable && <Box className="checkbox-container cursor-pointer" onClick={(event) => handleRowSelection(event.target.checked, cell.row.original)} >
+                        <FormControlLabel
+                      className="form-control-label"
+                      onChange={(event) => handleRowSelection(event.target.checked, cell.row.original)}
+                        control={
+                            <Checkbox
+                              size="small"
+                              checked={isRowSelected(cell.row.original)}
+                              sx={{
+                                '& .MuiSvgIcon-root': { fontSize: 20 },
+                                  color: '#5C5C5C',
+                                '&.Mui-checked': {
+                                    color: '#0A68DB',
+                                  },
+                                }}
+                            />
                         }
-                        variant='outlined'
-                      />
+                      label=""
+                    /> 
                     </Box>
-                }
-               </Box>
-            )
+    }
+          </>
     }
 
     const renderTemplateNameCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
@@ -429,14 +458,17 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       {
         accessorKey: "iconName",
         header: "",
+       size:1,
+ 
         Header: renderTemplateIconHeader,
         Cell: renderTemplateIconCell,
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
-        muiTableBodyCellProps: () => ({className: "template-body-text" })
+        muiTableHeadCellProps: () => ({className: "tableheader-checkbox__container", }),
+        muiTableBodyCellProps: () => ({className: "template-body-text",  })
      },
       {
         accessorKey: "templateName",
         header: "Name",
+       size:1,
         Header: renderTemplateNameHeader,
         Cell: renderTemplateNameCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
@@ -446,12 +478,16 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       {
         accessorKey: "tagType",
         header: "Type",
+       size:1,
+
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
         accessorKey: "status",
         header: "Status",
+       size:1,
+
         Cell: renderTemplateStatusCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
@@ -461,6 +497,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     const columns2 = [{
         accessorKey: "createdTime",
         header: "Created",
+       size:1,
+
         Header: renderTemplateCreatedHeader,
         Cell: renderTemplateCreatedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
@@ -469,6 +507,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       {
         accessorKey: "lastModifiedTime",
         header: "Last Modified",
+       size:1,
+
         Header: renderTemplateModifiedHeader,
         Cell: renderTemplateModifiedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
@@ -477,6 +517,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
      {
         accessorKey: "actions",
         header: "Actions",
+       size:1,
+
         Cell: renderActionsCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
       },
