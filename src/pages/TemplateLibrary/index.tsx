@@ -128,7 +128,7 @@ const TemplateLibrary: React.FC = () => {
             <Box width={'20%'}>
                 <DirectoryTree data={folderTreeData?.data} setSelectedData={setSelectedDirectoryId} />
             </Box>
-            <Box width={"80%"}>
+            <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
                 {loading ? [...Array(5)].map((_, i) => (
                 <TableRowSkeleton key={i} />
               )) :
