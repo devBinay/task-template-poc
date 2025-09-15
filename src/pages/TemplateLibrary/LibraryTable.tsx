@@ -261,7 +261,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       return <Box className="template-checkbox-container icon-header-container">
         { selectedTemplate.length > 0 ?
           <FormControlLabel
-              className="form-control-label cursor-pointer"
+              className="tableheader__checkbox cursor-pointer"
               onChange={handleSelectAllRows}
               sx={{padding:0, margin:0}}
               control={
@@ -295,8 +295,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         return <>
               {!isTableSelectable && <Box className="template-checkbox-container tablebody-col__checkbox--toggle" display='flex' 
                 >
-                    <Box onClick={(event) => handleRowSelection(true, cell.row.original)} className="cursor-pointer icon-container" >
-                      <IconOutlined sx={{ pointerEvents: 'none' }} height={"3.6rem"} width={'1.6rem'} startIcon={
+                    <Box onClick={() => handleRowSelection(true, cell.row.original)} className="cursor-pointer icon-container" >
+                      <IconOutlined sx={{ pointerEvents: 'none' }} startIcon={
                         data?.iconName === "v15-Shop-supply" ?
                         <SvgIcon 
                             component="checkedList"
@@ -336,7 +336,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                 isTableSelectable && <Box className="checkbox-container cursor-pointer" onClick={(event) => handleRowSelection(event.target.checked, cell.row.original)} >
                         <FormControlLabel
                       className="form-control-label"
-                      onChange={(event) => handleRowSelection(event.target.checked, cell.row.original)}
+                      onChange={(event) => handleRowSelection((event.target as HTMLInputElement).checked, cell.row.original)}
                         control={
                             <Checkbox
                               size="small"
@@ -458,6 +458,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
 
     const columns = [
       {
+        order:0,
         accessorKey: "iconName",
         header: "",
         size:1,
@@ -467,6 +468,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         muiTableBodyCellProps: () => ({className: "template-body-text",  })
      },
       {
+        order:1,
         accessorKey: "templateName",
         header: "Name",
        size:1,
@@ -477,6 +479,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
 
     const desktopColumns = [
       {
+        order:2,
         accessorKey: "tagType",
         header: "Type",
        size:1,
@@ -485,6 +488,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
+        order:3,
         accessorKey: "status",
         header: "Status",
        size:1,
@@ -496,16 +500,17 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     ];  
 
     const columns2 = [{
+        order:4,
         accessorKey: "createdTime",
         header: "Created",
-       size:1,
-
+        size:1,
         Header: renderTemplateCreatedHeader,
         Cell: renderTemplateCreatedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
+        order:5,
         accessorKey: "lastModifiedTime",
         header: "Last Modified",
        size:1,
@@ -516,9 +521,10 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
      {
+        order:6,
         accessorKey: "actions",
         header: "Actions",
-       size:1,
+        size:1,
 
         Cell: renderActionsCell,
         muiTableHeadCellProps: () => ({className: "template-head-text" }),
@@ -526,12 +532,13 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     ]
 
     const getColumns = () => {
-      //Desktop View
+      let col = [];
        if (isDesktop) 
-          return [...columns, ...desktopColumns, ...columns2];
-  
-       // Tab View
-       return [...columns, ...columns2];
+          col =  [...columns, ...desktopColumns, ...columns2];
+       else
+          col = [...columns, ...columns2];
+
+      return col.sort((a, b) => (a.order || 0) - (b.order || 0));
     }
 
   const templateTableProps = {

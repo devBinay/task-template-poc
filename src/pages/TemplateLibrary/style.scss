@@ -47,7 +47,21 @@
     .tableheader-checkbox__container{
         background-color: #F4F5FA;
         min-width: fit-content;
+        .tableheader__checkbox{
+            background-color: var(--bg-secondary);
+          
+             position: absolute;
+            border-radius: 50%;
+            .MuiCheckbox-root{ 
+                padding: 0;
+            }
+            .MuiFormControlLabel-label{ 
+                margin: 0; 
+                margin-left:'6px';  
+            }
+        }
     }
+   
     .template-body-text {
         font-size: 15px;
         font-weight: 400;
