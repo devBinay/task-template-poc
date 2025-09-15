@@ -11,7 +11,7 @@ export const getTheme = (mode: 'light' | 'dark') =>
         xs: 0,
         sm: 1200, 
         md: 1440, 
-        lg: 1920,
+        lg: 1440,
         xl: 2560, 
       },
     },

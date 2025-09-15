@@ -106,7 +106,7 @@ const SearchDrawer = ({
 }: SearchDrawerProps) => {
     const {RECENT, ADVANCE} = TEMPLATE_SEARCH_TABS;
     const [currentTab, setCurrentTab] = useState(RECENT.value);
-    const handleTabChange = (newValue: string) => {
+    const handleTabChange = (e: React.SyntheticEvent, newValue: string) => {
         setCurrentTab(newValue);
     }
     return (
