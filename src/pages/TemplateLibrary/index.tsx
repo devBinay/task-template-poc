@@ -73,7 +73,7 @@ const TemplateLibrary: React.FC = () => {
      setLoading(prev=>({...prev, templates: true}));
           getTemplateByTagId(tagId, payload).then(res=>{
             setLoading(prev=>({...prev, templates: false}));
-            setSelectedDirectoryData(res?.data);
+            setSelectedDirectoryData(res?.data || []);
         }).catch(error=>{
             console.log("error",error)
         })
@@ -84,7 +84,7 @@ const TemplateLibrary: React.FC = () => {
       const payload = paginationData;
       getReportByReportType(reportType, payload).then(res=>{
         setLoading(prev=>({...prev, reports: false}));
-        setSelectedDirectoryData(res?.data);
+        setSelectedDirectoryData(res?.data || []);
       }).catch(error=>{
         console.log("error", error)
       })
