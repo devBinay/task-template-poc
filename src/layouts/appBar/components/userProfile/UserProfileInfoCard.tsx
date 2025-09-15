@@ -1,5 +1,5 @@
  
-import { Menu, MenuItem, Typography } from '@mui/material'
+import { Divider, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material'
 import React, { useRef, type Ref } from 'react'
 import './userProfile.style.scss'
 import SvgIcon from '@/core/components/Icon'
@@ -34,6 +34,7 @@ const UserProfileInfoCard: React.FC<UserProfileInfoCardProps> = ({user}) => {
         }
           <Menu
         id="basic-menu"
+        elevation={0}
         anchorEl={anchorEl.current as unknown as HTMLElement}
         open={isDropdownOpen}
         onClose={handleClose}
@@ -42,10 +43,87 @@ const UserProfileInfoCard: React.FC<UserProfileInfoCardProps> = ({user}) => {
             'aria-labelledby': 'basic-button',
           },
         }}
+         PaperProps={{
+          sx: {
+            border: "1px solid #DCDCDC",
+            width: "22.2rem", 
+          },
+        }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose} color="#DCDCDC">
+            <ListItemIcon>
+              <SvgIcon component="user" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>Change Role</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="focus" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>Set Focus</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="users" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>User Profile</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="edit" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>Modify Dashboard</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="userMinus" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>Reduce Role</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="userSetting" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>User Management</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="userStar" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>Admin Mode</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="theme" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>Theme</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="globe" size={18} />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>Language</Typography>
+          </MenuItem>
+
+          <Divider />
+
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SvgIcon component="signout" size={18} fill="#F44336" />
+            </ListItemIcon>
+            <Typography className="menubar-heading" sx={{color: "#333333"}}>
+              Logout
+            </Typography>
+          </MenuItem>
+
       </Menu>
       </div>
     </div>
