@@ -323,7 +323,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
                             size={18}
                             fill="#0A68DB"
                             style={{ pointerEvents: 'none' }}
-                         /> :
+                         /> : 
                         <SvgIcon 
                             component="checkedDoc"
                             size={18}
