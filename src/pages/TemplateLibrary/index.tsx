@@ -69,7 +69,7 @@ const TemplateLibrary: React.FC = () => {
       <Box className="template-library-container">
          <Box display="flex"  alignItems="center" className='template-library__header'>
             <Box width="19.2%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
-            { showCheckbox ?
+            { selectedTemplate.length > 0 ?
               <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize={'19px'} fontWeight={500}>
                 <Box display="flex" alignItems="center" gap="22px">
                   <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}} >
