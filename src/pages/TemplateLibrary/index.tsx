@@ -15,7 +15,6 @@ import SvgIcon from '@/core/components/Icon';
 import { folderTreeData } from './tableData';
 import EmptyState from '../../components/EmptyList/EmptyList';
 import SearchDrawer from '@/pages/SearchDrawer';
-import TableRowSkeleton from '@/pages/TemplateLibrary/components/Skeleton';
 import "./style.scss";
 import type { TemplateLibraryTableRowType } from './types';
 import { getAllDirectories, getReportByReportType, getTemplateByTagId } from './services/template-library.service';
@@ -194,10 +193,7 @@ const TemplateLibrary: React.FC = () => {
                 <DirectoryTree data={directoryData?.data || []} handleClick={handleDirectoryClick} />
             </Box>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
-                {loading?.template ? [...Array(5)].map((_, i) => (
-                <TableRowSkeleton key={i} />
-              )) :
-              selectedDirectoryData?.length == 0 ?  
+              {!loading?.templates && selectedDirectoryData?.length == 0 ?  
                     <EmptyState
                         title = "To view task templates, select a folder on the left or search above"
                         description = "Nothing is selected"
@@ -210,6 +206,7 @@ const TemplateLibrary: React.FC = () => {
                       setSelectedTemplate={setSelectedTemplate}
                       selectedTemplate={selectedTemplate}
                       selectedDirectoryData={selectedDirectoryData}
+                      loading={loading}
                     />
                 }
             </Box>
