@@ -145,9 +145,9 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
      * @returns void
     */
     const handleSelectAllRows = () => {
-      const isAllRowsSelected = selectedTemplate.length === demoTableData.length;
+      const isAllRowsSelected = selectedTemplate.length === selectedDirectoryData.length;
       if(!isAllRowsSelected) {
-        setSelectedTemplate(demoTableData);
+        setSelectedTemplate(selectedDirectoryData);
       }
       else {
         setSelectedTemplate([]);
@@ -273,11 +273,10 @@ const renderTemplateCreatedHeader = ({ column }: { column: MRT_Column<TemplateLi
 const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "modified", TEMPLATE_SORTING.MODIFIED);
 
     const renderTemplateIconHeader = () => {
-      return <Box className="template-checkbox-container icon-header-container">
+      return <Box className="template-checkbox-container icon-header-container" >
         { selectedTemplate.length > 0 ?
           <FormControlLabel
               className="tableheader__checkbox cursor-pointer"
-              onChange={handleSelectAllRows}
               sx={{padding:0, margin:0}}
               control={
                 <Checkbox
@@ -293,8 +292,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
                       padding: '0px 10px'
                     }
                   }}
-                  // checked={selectedTemplate.length == demoTableData.length}
-                  indeterminate={selectedTemplate.length == demoTableData.length ? showCheckbox : false }
+                  checked={selectedTemplate.length == selectedDirectoryData.length}
+                  indeterminate={selectedTemplate.length == selectedDirectoryData.length ? showCheckbox : true }
                 />
               }
               label=""
