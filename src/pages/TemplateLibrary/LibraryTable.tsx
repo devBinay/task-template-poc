@@ -495,7 +495,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateIconHeader,
-        Cell: loading?.templates ? renderTemplateIconSkelton : renderTemplateIconCell,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateIconSkelton : renderTemplateIconCell,
         muiTableHeadCellProps: () => ({className: "tableheader-checkbox__container", style:{width: "50px", padding: "0.8rem 0.6rem 0.8rem 1.6rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text", style: { padding: "0.8rem 0.6rem 0.8rem 1.6rem"} })
      },
@@ -504,9 +504,9 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         accessorKey: "templateName",
         header: "Name",
         hide:false,
-       size:1,
+        size:1,
         Header: renderTemplateNameHeader,
-        Cell: loading?.templates ? isDesktop ? renderTemplateNameSkeltonDesktop : renderTemplateNameSkelton : renderTemplateNameCell,
+        Cell: (loading?.templates || loading?.reports ) ? isDesktop ? renderTemplateNameSkeltonDesktop : renderTemplateNameSkelton : renderTemplateNameCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding: "0.8rem 0.4rem 0.8rem 0.6rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text", style: {padding: "0.8rem 0.4rem 0.8rem 0.6rem"} })
       },
@@ -517,7 +517,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         header: "Type",
         Header: renderTemplateCommonHeader,
         size:1,
-        Cell: loading?.templates ? renderTemplateRowSkelton : renderTemplateTypeCell,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateTypeCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
@@ -528,7 +528,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         header: "Status",
         size:1,
         Header: renderTemplateCommonHeader,
-        Cell: loading?.templates ? renderTemplateRowSkelton : renderTemplateStatusCell,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateStatusCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },{
@@ -538,7 +538,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateCreatedHeader,
-        Cell: loading?.templates ? renderTemplateCreatedSkelton : renderTemplateCreatedCell,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateCreatedSkelton : renderTemplateCreatedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
@@ -549,7 +549,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateModifiedHeader,
-        Cell: loading?.templates ? renderTemplateRowSkelton : renderTemplateModifiedCell,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateModifiedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
@@ -560,7 +560,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateCommonHeader,
-        Cell: loading?.templates ? renderTemplateActionSkelton : renderActionsCell,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateActionSkelton : renderActionsCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{padding:"1rem 1.6rem 1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text", style:{paddingRight:"1.6rem"} })
       },
@@ -579,7 +579,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
 
   const templateTableProps = {
     columns: getColumns,
-    data: loading?.templates ? Array.from({ length: 10 }).map((_, idx) => ({ id: `skeleton-${idx}` })) : selectedDirectoryData,
+    data: (loading?.templates || loading?.reports ) 
+          ? Array.from({ length: 10 }).map((_, idx) => ({ id: `skeleton-${idx}` })) : selectedDirectoryData,
     enableColumnActions: false,
     enableColumnFilters: false,
     enablePagination: false,

@@ -198,7 +198,7 @@ const TemplateLibrary: React.FC = () => {
               }
             </Box>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
-              {!loading?.templates && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
+              {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
                     <EmptyState
                         title = "To view task templates, select a folder on the left or search above"
                         description = "Nothing is selected"
