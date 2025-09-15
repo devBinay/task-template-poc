@@ -14,7 +14,7 @@
   
     & .appShell__body {
       flex-grow: 1;
-      overflow-y: auto;
+      overflow-y: hidden;
       overflow-x: hidden;
       background-color: var(--bg-secondary); 
       border-start-start-radius: var(--border-radius-md);

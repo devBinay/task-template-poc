@@ -1,5 +1,8 @@
 import SvgIcon from "@/core/components/Icon";
 import Box from "@mui/material/Box"
+
+import type { SortOption } from "./types/constants.type";
+
 export const TEMPLATE_SEARCH_TABS = {
     RECENT: {
         label: 'Recent',
@@ -24,7 +27,8 @@ export const TEMPLATE_STATUS_OPTIONS = [
     { label: 'Archived', value: 'ARCHIVED' },
 ];
 
-export const TEMPLATE_SORTING = {
+
+export const TEMPLATE_SORTING: Record<string, SortOption[]> = {
     NAME: [
         {
             getLabel: () => (<Box display="flex" alignItems="center" fontSize="14px" fontWeight="400">Sort A <Box sx={{transform: `rotate(90deg)`, display:"inline-block"}} height="18px"><SvgIcon component="arrowUp" size={18}/></Box> Z</Box>),

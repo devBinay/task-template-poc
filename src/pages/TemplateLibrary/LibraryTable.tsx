@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from '@mui/material/styles';
@@ -21,6 +21,7 @@ import type { MRT_Cell, MRT_Column } from "material-react-table";
 import { formatDate } from "@/pages/TemplateLibrary/components/DateFormat";
 import type { IconName } from "@/core/types/icon.type";
 import { TEMPLATE_SORTING } from "../constant";
+import type { SortOption } from "../types/constants.type";
 
 export type TemplateLibrary = {
   template_icon: string;
@@ -177,7 +178,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     };
 
     const handleSortSelect = (type: keyof typeof tableActionMenu, item: string) => {
-      const newObj:any = {}
+      const newObj:unknown = {}
       Object.entries(selectedSort).map(([key, menuItem])=>{
         if(key !== type) {
           newObj[key] = null;
@@ -196,7 +197,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       setPreviewModal({status: true, data: cellData});
     }
 
-    const renderHeaderWithMenu = (column: MRT_Column<TemplateLibraryTableRowType>, type: keyof typeof tableActionMenu, menuItems: string[]) => {
+    const renderHeaderWithMenu = (column: MRT_Column<TemplateLibraryTableRowType>, type: keyof typeof tableActionMenu, menuItems: SortOption[]) => {
       const selected = selectedSort[type];
       const isAscending = selected?.key === "ASCENDING";
 
@@ -264,9 +265,9 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       );
     };
 
-const renderTemplateNameHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "name", TEMPLATE_SORTING.NAME);
-const renderTemplateCreatedHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "created", TEMPLATE_SORTING.CREATED);
-const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHeaderWithMenu(column, "modified", TEMPLATE_SORTING.MODIFIED);
+const renderTemplateNameHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "name", TEMPLATE_SORTING.NAME);
+const renderTemplateCreatedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "created", TEMPLATE_SORTING.CREATED);
+const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "modified", TEMPLATE_SORTING.MODIFIED);
 
     const renderTemplateIconHeader = () => {
       return <Box className="template-checkbox-container icon-header-container">
@@ -352,7 +353,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
                     /> 
                      </Box>}
                {
-                isTableSelectable && <Box className="checkbox-container cursor-pointer" onClick={(event) => handleRowSelection(event.target.checked, cell.row.original)} >
+                isTableSelectable && <Box className="checkbox-container cursor-pointer"  >
                         <FormControlLabel
                       className="form-control-label"
                       onChange={(event) => handleRowSelection((event.target as HTMLInputElement).checked, cell.row.original)}
@@ -475,11 +476,13 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
         )
     }
 
+    const [columnVisibility, setColumnVisibility] = useState({});
     const columns = [
       {
         order:0,
         accessorKey: "iconName",
         header: "",
+        hide:false,
         size:1,
         Header: renderTemplateIconHeader,
         Cell: renderTemplateIconCell,
@@ -490,16 +493,16 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
         order:1,
         accessorKey: "templateName",
         header: "Name",
+        hide:false,
        size:1,
         Header: renderTemplateNameHeader,
         Cell: renderTemplateNameCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding: "0.8rem 0.4rem 0.8rem 0.6rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text", style: {padding: "0.8rem 0.4rem 0.8rem 0.6rem"} })
-      }]
-
-    const desktopColumns = [
+      },
       {
         order:2,
+        hide:!isDesktop,
         accessorKey: "tagType",
         header: "Type",
         Header: renderTemplateCommonHeader,
@@ -509,6 +512,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
       },
       {
         order:3,
+        hide:!isDesktop,
         accessorKey: "status",
         header: "Status",
          size:1,
@@ -516,13 +520,11 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
         Cell: renderTemplateStatusCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
-      }
-    ];  
-
-    const columns2 = [{
+      },{
         order:4,
         accessorKey: "createdTime",
         header: "Created",
+        hide:false,
         size:1,
         Header: renderTemplateCreatedHeader,
         Cell: renderTemplateCreatedCell,
@@ -533,6 +535,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
         order:5,
         accessorKey: "lastModifiedTime",
         header: "Last Modified",
+        hide:false,
+
        size:1,
 
         Header: renderTemplateModifiedHeader,
@@ -544,6 +548,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
         order:6,
         accessorKey: "actions",
         header: "Actions",
+        hide:false,
+
          size:1,
         Header: renderTemplateCommonHeader,
         Cell: renderActionsCell,
@@ -552,18 +558,19 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
       },
     ]
 
-    const getColumns = () => {
-      let col = [];
-       if (isDesktop) 
-          col =  [...columns, ...desktopColumns, ...columns2];
-       else
-          col = [...columns, ...columns2];
+    const getColumns = useMemo(() => {
+      return columns.filter(i=> !i.hide).sort((a, b) => (a.order || 0) - (b.order || 0));
+      // let col = [];
+      //  if (isDesktop) 
+      //     col =  [...columns, ...desktopColumns, ...columns2];
+      //  else
+      //     col = [...columns, ...columns2];
 
-      return col.sort((a, b) => (a.order || 0) - (b.order || 0));
-    }
+      // return col.sort((a, b) => (a.order || 0) - (b.order || 0));
+    }, [viewportSize, selectedTemplate, columnVisibility]);
 
   const templateTableProps = {
-    columns: getColumns(),
+    columns: getColumns,
     data: demoTableData,
     enableColumnActions: false,
     enableColumnFilters: false,
@@ -579,7 +586,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: any }) => renderHead
         <div className="template-library-table-container">
             <Table 
                 tableProps={templateTableProps}
-                isRowSelected={isRowSelected} 
+                isRowSelected={isRowSelected}
+                
             />
 
            {/* Template Preview Popup */}

@@ -18,6 +18,8 @@
     }
 }
 .template-library-table-container {
+    overflow-y: auto;
+    height:80rem;
     .MuiPaper-root {
         box-shadow: none;
         border-radius: 0px;
