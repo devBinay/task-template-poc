@@ -18,7 +18,7 @@ const UserProfileInfoCard: React.FC<UserProfileInfoCardProps> = ({user}) => {
     setIsDropdownOpen(false);
   };
   return (
-    <div className='userProfileInfoCard' onClick={handleDropdownClick} ref={anchorEl.current}>
+    <div className={`userProfileInfoCard ${isDropdownOpen && 'userProfileInfoCardSelected' }`} onClick={handleDropdownClick} ref={anchorEl.current}>
         <img src={user.avatar} alt={user.name} className='avatar' />
         <div className='userInfo'>
             <Typography className='userInfo-name'>{user.name}</Typography>
