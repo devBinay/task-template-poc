@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DirectoryTree from "@/components/DirectoryTree";
 import { Stack } from '@mui/material';
 import { PrimaryButton } from '@/components/Button/Button';
@@ -15,9 +15,10 @@ import SvgIcon from '@/core/components/Icon';
 import { folderTreeData } from './tableData';
 import EmptyState from '../../components/EmptyList/EmptyList';
 import SearchDrawer from '@/pages/SearchDrawer';
-import TableRowSkeleton from '@/pages/TemplateLibrary/components/Skeleton';
 import "./style.scss";
-import type { TemplateLibraryTableRowType } from './types';
+import { getAllDirectories, getReportByReportType, getTemplateByTagId } from './services/template-library.service';
+import type { DirectoryType, TemplateType } from './types/template-library.type';
+import { renderDirectorySkelton } from './components/Skeleton';
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -35,13 +36,24 @@ const SearchField = styled(TextField)(( ) => ({
   },
 }));
 
+const PAGE_SIZE = 10;
 const TemplateLibrary: React.FC = () => {
 
     const [searchDrawer, setSearchDrawer] = useState({status: false, text: ""});
-    const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null);
-    const [loading] = useState(false);
+    const [selectedDirectory, setSelectedDirectory] = useState<string | null>(null);
+    const [loading, setLoading] = useState({
+      directory:false,
+      templates: false,
+      reports: false,
+    });
     const [showCheckbox, setShowCheckbox] = useState(false);
-    const [selectedTemplate, setSelectedTemplate] = useState<TemplateLibraryTableRowType[]>([]);
+    const [selectedTemplate, setSelectedTemplate] = useState<any[]>([]);
+    const [directoryData, setDirectoryData] = useState<DirectoryType[]>();
+    const [selectedDirectoryData, setSelectedDirectoryData] = useState<TemplateType>();
+    const [paginationData, setPaginationData] = useState<any>({
+            currentPage: 1,
+            pageSize: PAGE_SIZE,
+    });
 
     const openSearchDrawer = () => {
         setSearchDrawer((prev) => ({ ...prev, status: true }));
@@ -49,6 +61,62 @@ const TemplateLibrary: React.FC = () => {
     const closeSearchDrawer = () => {
         setSearchDrawer((prev) => ({ ...prev, status: false, text: "" }));
     };
+
+    const handleDirectoryClick = (event:  React.MouseEvent<HTMLElement>, directory:any) => {
+      event?.preventDefault();
+      event?.stopPropagation();
+      setSelectedDirectory(directory);
+    }
+
+    const getAllTemplates = (tagId: number) => {
+        const payload = paginationData;
+     setLoading(prev=>({...prev, templates: true}));
+          getTemplateByTagId(tagId, payload).then(res=>{
+            setLoading(prev=>({...prev, templates: false}));
+            setSelectedDirectoryData(res?.data || []);
+        }).catch(error=>{
+            console.log("error", error)
+            setLoading(prev=>({...prev, templates: false}));
+        })
+    }
+
+    const getAllReports = (reportType: number) => {
+      setLoading(prev=>({...prev, reports: true}));
+      const payload = paginationData;
+      getReportByReportType(reportType, payload).then(res=>{
+        setLoading(prev=>({...prev, reports: false}));
+        setSelectedDirectoryData(res?.data || []);
+      }).catch(error=>{
+        console.log("error", error)
+        setLoading(prev=>({...prev, reports: false}));
+      })
+    }
+
+    useEffect(()=>{
+      if(selectedDirectory) {
+        const tagId = selectedDirectory?.tagId;
+        const reportType = selectedDirectory?.reportType;
+        if(reportType !== undefined && reportType !== null) {
+          getAllReports(reportType);
+        }
+        else if(tagId !== undefined && tagId !== null) {
+          getAllTemplates(tagId);
+        }
+      }
+    },[selectedDirectory])
+
+
+    useEffect(()=>{
+      setLoading(prev=>({...prev, directory: true}));
+      getAllDirectories().then(res=>{
+        setLoading(prev=>({...prev, directory: false}));
+        setDirectoryData(res)
+      }).catch(error=>{
+        setLoading(prev=>({...prev, directory: false}));
+        console.log("error",error)
+      })
+    },[])
+    
 
     return <PageTemplate>
         <PageTemplate.Header>
@@ -67,13 +135,15 @@ const TemplateLibrary: React.FC = () => {
         </PageTemplate.Header>
       <PageTemplate.Content>
       <Box className="template-library-container">
-         <Box display="flex" padding={"0rem .8rem"} alignItems="center">
-            <Box width="20%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
-            { showCheckbox ?
+         <Box display="flex"  alignItems="center" className='template-library__header'>
+            <Box width="19.2%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
+            { selectedTemplate.length > 0 ?
               <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize={'19px'} fontWeight={500}>
                 <Box display="flex" alignItems="center" gap="22px">
-                  <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}}>
+                  <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}} >
+                  <IconButton variant='primary' disableHover disableRipple disableTouchRipple sx={{padding:0, minWidth:0}} onClick={() => setSelectedTemplate([])}>
                     <SvgIcon component="arrowUp" size={24} fill="#333333" />
+                  </IconButton>
                   </Box>
                   <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="16px">
                     {selectedTemplate.length} Selected
@@ -114,23 +184,23 @@ const TemplateLibrary: React.FC = () => {
                 </Box>
                 <Stack direction={"row"} alignItems="center" gap="12px">
                 <Box whiteSpace="nowrap"><PrimaryButton>Create Template</PrimaryButton></Box>
-                <IconButton variant='outline'><SvgIcon fill='var(--icon-color-secondary)' component="upload" size={20} /></IconButton>
-                <IconButton variant='outline'><SvgIcon fill='var(--icon-color-secondary)' component="moreOption" size={20} /></IconButton>
+                <IconButton variant='outline'><SvgIcon component="upload" size={20} /></IconButton>
+                <IconButton variant='outline'><SvgIcon component="moreOption" size={20} /></IconButton>
                 </Stack>
               </Box>
             }
         </Box>
-        <Divider sx={{ marginTop: '4px', borderBottomWidth: 1, marginLeft: "-1rem", marginRight: "-1rem" }} />
+        <Divider sx={{ borderBottomWidth: 1}} />
 
-        <Box display="flex" >
+        <Box display="flex"  overflow={'auto'} >
             <Box width={'20%'}>
-                <DirectoryTree data={folderTreeData?.data} setSelectedData={setSelectedDirectoryId} />
+              {
+                loading?.directory ? renderDirectorySkelton() :
+                <DirectoryTree data={directoryData?.data || []} handleClick={handleDirectoryClick} />
+              }
             </Box>
-            <Box width={"80%"}>
-                {loading ? [...Array(5)].map((_, i) => (
-                <TableRowSkeleton key={i} />
-              )) :
-              !selectedDirectoryId ?  
+            <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
+              {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
                     <EmptyState
                         title = "To view task templates, select a folder on the left or search above"
                         description = "Nothing is selected"
@@ -142,6 +212,8 @@ const TemplateLibrary: React.FC = () => {
                       setShowCheckbox={setShowCheckbox}
                       setSelectedTemplate={setSelectedTemplate}
                       selectedTemplate={selectedTemplate}
+                      selectedDirectoryData={selectedDirectoryData}
+                      loading={loading}
                     />
                 }
             </Box>
@@ -154,7 +226,6 @@ const TemplateLibrary: React.FC = () => {
 
        </Box>
       </PageTemplate.Content>
-
     </PageTemplate>
     ;
 };

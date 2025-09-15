@@ -19,7 +19,7 @@ export default function AppShell() {
   const handleMenuAnimation = (menuStatus:boolean) => {
      if (sidebarRef.current) {
         if(menuStatus) {
-          sidebarRef.current.style.width = "90px";
+          sidebarRef.current.style.width = "92px";
           sidebarRef.current.style.paddingRight = "var(--space-lg)";
           sidebarRef.current.style.transition = "width .3s";
         } else {
@@ -36,14 +36,16 @@ export default function AppShell() {
     handleMenuAnimation(menuStatus);
   }
 
-  useEffect(()=>{
-    if (sidebarRef.current && isDesktop) {
- sidebarRef.current.style.width="90px";
-        sidebarRef.current.style.paddingRight = "var(--space-lg)";
-        sidebarRef.current.style.transition = "none";
-      setShowMenu(true);  
-  }
-  },[])
+  useEffect(() => {
+    if (isDesktop) {
+      setShowMenu(true);
+      handleMenuAnimation(true);
+    } else {
+      setShowMenu(false);
+      handleMenuAnimation(false);
+    }
+  }, [isDesktop]);
+  
   return (
     <div className='appShell__container'>
       <AppBar drawerHeight={topBarHeight} handleToggleMenu={handleToggleMenu}/>

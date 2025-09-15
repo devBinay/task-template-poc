@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from '@mui/material/styles';
@@ -20,6 +20,9 @@ import type { TemplateLibraryTableRowType } from "./types";
 import type { MRT_Cell, MRT_Column } from "material-react-table";
 import { formatDate } from "@/pages/TemplateLibrary/components/DateFormat";
 import type { IconName } from "@/core/types/icon.type";
+import { TEMPLATE_SORTING } from "../constant";
+import type { SortOption } from "../types/constants.type";
+import { renderTemplateActionSkelton, renderTemplateCreatedSkelton, renderTemplateIconSkelton, renderTemplateNameSkelton, renderTemplateNameSkeltonDesktop, renderTemplateRowSkelton } from "./components/Skeleton";
 
 export type TemplateLibrary = {
   template_icon: string;
@@ -94,11 +97,12 @@ type LibraryTableProps = {
 const LibraryTable: React.FC<LibraryTableProps> = ({
   showCheckbox,
   setShowCheckbox,
-  hoveredRowId,
-  setHoveredRowId,
   selectedTemplate,
-  setSelectedTemplate
+  setSelectedTemplate,
+  selectedDirectoryData=[],
+  loading,
 }) => {
+  const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
     const [tableActionMenu, setTableActionMenu] = useState<Record<"name" | "created" | "modified", MenuState>>({
         name: { status: false, anchorEl: null },
         created: { status: false, anchorEl: null },
@@ -134,14 +138,26 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     const isRowSelected = (rowData: TemplateLibraryTableRowType) => {
       return selectedTemplate?.some((item) => item?.templateId === rowData?.templateId);
     }
+    
 
-    const clearRowSelection = () => {
-      setSelectedTemplate([]);
-      setShowCheckbox(false);
+    /**
+     * Checks if all rows are selected. if yes, it clears the selection; otherwise, it selects all rows.
+     * @returns void
+    */
+    const handleSelectAllRows = () => {
+      const isAllRowsSelected = selectedTemplate.length === demoTableData.length;
+      if(!isAllRowsSelected) {
+        setSelectedTemplate(demoTableData);
+      }
+      else {
+        setSelectedTemplate([]);
+      }
     }
+
 
     const handleTooltip = (id: number) => setTooltipId((prev) => (prev === id ? null : id));
 
+    
     const handleMenuClick = (event: React.MouseEvent<HTMLElement>, type: keyof typeof tableActionMenu) => {
       event.stopPropagation();
       const isOpen = tableActionMenu[type].status;
@@ -165,29 +181,40 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     };
 
     const handleSortSelect = (type: keyof typeof tableActionMenu, item: string) => {
-      setSelectedSort((prev) => ({ ...prev, [type]: item }));
+      const newObj:unknown = {}
+      Object.entries(selectedSort).map(([key, menuItem])=>{
+        if(key !== type) {
+          newObj[key] = null;
+        }
+        else {
+          if(menuItem === null || menuItem === undefined || menuItem?.key !== item?.key)
+            newObj[key] = item;
+          else 
+            newObj[key] = null;
+        }
+      })
+      setSelectedSort({...newObj});
     };
-
 
     const handlePreviewModalOpen = (cellData: TemplateLibraryTableRowType) => {
       setPreviewModal({status: true, data: cellData});
     }
 
-    const renderHeaderWithMenu = (column: MRT_Column<TemplateLibraryTableRowType>, type: keyof typeof tableActionMenu, menuItems: string[]) => {
+    const renderHeaderWithMenu = (column: MRT_Column<TemplateLibraryTableRowType>, type: keyof typeof tableActionMenu, menuItems: SortOption[]) => {
       const selected = selectedSort[type];
-      const isAscending = selected?.toLowerCase().includes("a → z");
+      const isAscending = selected?.key === "ASCENDING";
 
       return (
-        <Box display="flex" alignItems="center" gap="6px">
+        <Box display="flex" alignItems="center" gap="4px">
           <Box>{column.columnDef.header}</Box>
 
-          {selected && <Box>
-            {isAscending ? <SvgIcon component="arrowDown" size={18} fill="#5C5C5C" /> :
-              <SvgIcon component="arrowUp" size={18} fill="#5C5C5C" />}
-          </Box>}
+          {selected ? <Box className="cursor-pointer" height="20px">
+            {isAscending ? <SvgIcon component="arrowDown" size={20} fill="#5C5C5C" /> :
+              <SvgIcon component="arrowUp" size={20} fill="#5C5C5C" />}
+          </Box>: <Box ></Box>}
 
           <Box
-            height="18px"
+            height="20px"
             className="cursor-pointer"
             onClick={(e) => handleMenuClick(e, type)}
           >
@@ -205,7 +232,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             onClose={() => handleMenuClose()}
           >
             {menuItems.map((item, index) => {
-              const isSelected = selected === item;
+              const isSelected = selected?.key === item?.key;
               return (
                 <MenuItem
                   key={index}
@@ -222,8 +249,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                     },
                   }}
                 >
-                  <Box display="flex" alignItems="center" width="100%" color={isSelected ? "#0A68DB" : "#333"} justifyContent="space-between">
-                    {item}
+                  <Box display="flex" alignItems="center" width="100%" color={isSelected ? "#0A68DB" : "#333333"} justifyContent="space-between">
+                    {item?.getLabel() || ""}
                     {isSelected && (
                       <SvgIcon
                         component="check"
@@ -241,19 +268,20 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       );
     };
 
-    const renderTemplateNameHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "name", ["Sort A -> Z", "Sort Z -> A"]);
-    const renderTemplateCreatedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "created", ["Sort Ascending", "Sort Descending"]);
-    const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "modified", ["Sort Ascending", "Sort Descending"]);
+const renderTemplateNameHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "name", TEMPLATE_SORTING.NAME);
+const renderTemplateCreatedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "created", TEMPLATE_SORTING.CREATED);
+const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateLibraryTableRowType> }) => renderHeaderWithMenu(column, "modified", TEMPLATE_SORTING.MODIFIED);
 
     const renderTemplateIconHeader = () => {
       return <Box className="template-checkbox-container icon-header-container">
-        { showCheckbox ?
+        { selectedTemplate.length > 0 ?
           <FormControlLabel
-              className="form-control-label"
-              onChange={clearRowSelection}
+              className="tableheader__checkbox cursor-pointer"
+              onChange={handleSelectAllRows}
               sx={{padding:0, margin:0}}
               control={
                 <Checkbox
+                onChange={handleSelectAllRows}
                   size="small"
                   sx={{
                     '& .MuiSvgIcon-root': { fontSize: 20 },
@@ -265,7 +293,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                       padding: '0px 10px'
                     }
                   }}
-                  indeterminate={showCheckbox}
+                  // checked={selectedTemplate.length == demoTableData.length}
+                  indeterminate={selectedTemplate.length == demoTableData.length ? showCheckbox : false }
                 />
               }
               label=""
@@ -275,36 +304,30 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       </Box>
     }
 
+    const renderTemplateCommonHeader = ({column}) => {
+      return (
+        <Box height="20px" display="flex" alignItems="center">
+          {column.columnDef.header}
+        </Box>
+      )
+    }
+
+    const renderTemplateActionHeader = ({column}) => {
+      return (
+        <Box height="20px" display="flex" ml="8px" alignItems="center">
+          {column.columnDef.header}
+        </Box>
+      )
+    }
+
     const renderTemplateIconCell = ({cell }: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
         const data = cell.row?.original;
-        const rowId = cell.row.id;
-        const isHovered = hoveredRowId === rowId;
-        return (
-               <Box className="template-checkbox-container" display='flex' 
-                  onMouseEnter={() => setHoveredRowId(rowId)}
-                  onMouseLeave={() => setHoveredRowId(null)}
+        const isTableSelectable = selectedTemplate.length > 0 ;
+        return <>
+              {!isTableSelectable && <Box className="template-checkbox-container tablebody-col__checkbox--toggle" display='flex' 
                 >
-                { (showCheckbox || isHovered) ?
-                    <FormControlLabel
-                      className="form-control-label"
-                      onChange={(event) => handleRowSelection((event.target as HTMLInputElement).checked, cell.row.original)}
-                        control={
-                            <Checkbox
-                              size="small"
-                              checked={isRowSelected(cell.row.original)}
-                              sx={{
-                                '& .MuiSvgIcon-root': { fontSize: 20 },
-                                  color: '#5C5C5C',
-                                '&.Mui-checked': {
-                                    color: '#0A68DB',
-                                  },
-                                }}
-                            />
-                        }
-                      label=""
-                    /> :
-                    <Box onClick={() => handleRowSelection(true, cell.row.original)} className="cursor-pointer">
-                      <IconOutlined sx={{ pointerEvents: 'none', height: '3.6rem', width: '1.6rem' }} startIcon={
+                    <Box onClick={() => handleRowSelection(true, cell.row.original)} className="cursor-pointer icon-container" >
+                      <IconOutlined sx={{ pointerEvents: 'none' }} startIcon={
                         data?.iconName === "v15-Shop-supply" ?
                         <SvgIcon 
                             component="checkedList"
@@ -321,27 +344,66 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                         variant='outlined'
                       />
                     </Box>
-                }
-               </Box>
-            )
+                    <FormControlLabel
+                      className="form-control-label checkbox-wrapper"
+                      onChange={(event) => handleRowSelection((event.target as HTMLInputElement).checked, cell.row.original)}
+                        control={
+                            <Checkbox
+                              size="small"
+                              checked={isRowSelected(cell.row.original)}
+                              sx={{
+                                '& .MuiSvgIcon-root': { fontSize: 20 },
+                                  color: '#5C5C5C',
+                                '&.Mui-checked': {
+                                    color: '#0A68DB',
+                                  },
+                                }}
+                            />
+                        }
+                      label=""
+                    /> 
+                     </Box>}
+               {
+                isTableSelectable && <Box className="checkbox-container cursor-pointer"  >
+                        <FormControlLabel
+                      className="form-control-label"
+                      onChange={(event) => handleRowSelection((event.target as HTMLInputElement).checked, cell.row.original)}
+                        control={
+                            <Checkbox
+                              size="small"
+                              checked={isRowSelected(cell.row.original)}
+                              sx={{
+                                '& .MuiSvgIcon-root': { fontSize: 20 },
+                                  color: '#5C5C5C',
+                                '&.Mui-checked': {
+                                    color: '#0A68DB',
+                                  },
+                                }}
+                            />
+                        }
+                      label=""
+                    /> 
+                    </Box>
+    }
+          </>
     }
 
     const renderTemplateNameCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
         const data = cell.row?.original;
         return (
-               <Box minWidth="300px" display="flex" alignItems="center" gap="10px" ml="-10px">
+               <Box minWidth="300px" display="flex" alignItems="center" gap="10px">
                    <Box display="flex" flexDirection="column" gap="6px">
-                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.templateName}</Box>
+                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.templateName || data?.name || ""}</Box>
                           {!isDesktop ?
                           <Box display="flex" gap="24px">
-                            <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Type:</span>{data?.tagType}</Box>
+                            <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Type:</span>{data?.tagType || "Checklist"}</Box>
                             <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Status:</span>
                               {data?.status === "Incomplete" ? 
                                 <Box display='flex' gap='2px' alignItems='center' justifyContent='center' color="#F44336">
                                   <Box>{data?.status}</Box>
                                   <><SvgIcon component={'exclamationTriangle' as IconName} size={16} fill="#F44336" /></>
                                 </Box> :
-                                <Box display='flex' gap='2px'>{data?.status || "- -"}</Box>
+                                <Box display='flex' gap='2px'>{data?.status || "Active"}</Box>
                               }
                             </Box>
                           </Box>
@@ -359,9 +421,16 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             <Box>{data?.status}</Box>
             <><SvgIcon component={'exclamationTriangle' as IconName} size={16} fill="#F44336" /></>
           </Box> :
-          <Box display='flex' gap='2px'>{data?.status || "- -"}</Box> 
+          <Box display='flex' gap='2px'>{data?.status || "Active"}</Box> 
         }
       </Box>
+      )
+    }
+
+     const renderTemplateTypeCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
+      const data = cell.row?.original;
+      return (
+          <Box display='flex' gap='2px'>{data?.type || "Checklist"}</Box> 
       )
     }
 
@@ -425,75 +494,101 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         )
     }
 
+    const [columnVisibility, setColumnVisibility] = useState({});
     const columns = [
       {
+        order:0,
         accessorKey: "iconName",
         header: "",
+        hide:false,
+        size:1,
         Header: renderTemplateIconHeader,
-        Cell: renderTemplateIconCell,
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
-        muiTableBodyCellProps: () => ({className: "template-body-text" })
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateIconSkelton : renderTemplateIconCell,
+        muiTableHeadCellProps: () => ({className: "tableheader-checkbox__container", style:{width: "50px", padding: "0.8rem 0.6rem 0.8rem 1.6rem"} }),
+        muiTableBodyCellProps: () => ({className: "template-body-text", style: { padding: "0.8rem 0.6rem 0.8rem 1.6rem"} })
      },
       {
+        order:1,
         accessorKey: "templateName",
         header: "Name",
+        hide:false,
+        size:1,
         Header: renderTemplateNameHeader,
-        Cell: renderTemplateNameCell,
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
-      }]
-
-    const desktopColumns = [
+        Cell: (loading?.templates || loading?.reports ) ? isDesktop ? renderTemplateNameSkeltonDesktop : renderTemplateNameSkelton : renderTemplateNameCell,
+        muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding: "0.8rem 0.4rem 0.8rem 0.6rem"} }),
+        muiTableBodyCellProps: () => ({className: "template-body-text", style: {padding: "0.8rem 0.4rem 0.8rem 0.6rem"} })
+      },
       {
+        order:2,
+        hide:!isDesktop,
         accessorKey: "tagType",
         header: "Type",
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
+        Header: renderTemplateCommonHeader,
+        size:1,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateTypeCell,
+        muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
+        order:3,
+        hide:!isDesktop,
         accessorKey: "status",
         header: "Status",
-        Cell: renderTemplateStatusCell,
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
+        size:1,
+        Header: renderTemplateCommonHeader,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateStatusCell,
+        muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
-      }
-    ];  
-
-    const columns2 = [{
+      },{
+        order:4,
         accessorKey: "createdTime",
         header: "Created",
+        hide:false,
+        size:1,
         Header: renderTemplateCreatedHeader,
-        Cell: renderTemplateCreatedCell,
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateCreatedSkelton : renderTemplateCreatedCell,
+        muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
       {
+        order:5,
         accessorKey: "lastModifiedTime",
         header: "Last Modified",
+        hide:false,
+        size:1,
         Header: renderTemplateModifiedHeader,
-        Cell: renderTemplateModifiedCell,
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateModifiedCell,
+        muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
      {
+        order:6,
         accessorKey: "actions",
         header: "Actions",
-        Cell: renderActionsCell,
-        muiTableHeadCellProps: () => ({className: "template-head-text" }),
+        hide:false,
+        size:1,
+        Header: renderTemplateActionHeader,
+        Cell: (loading?.templates || loading?.reports ) ? renderTemplateActionSkelton : renderActionsCell,
+        muiTableHeadCellProps: () => ({className: "template-head-text", style:{padding:"1rem 1.6rem 1rem 0.8rem"} }),
+        muiTableBodyCellProps: () => ({className: "template-body-text", style:{paddingRight:"1.6rem"} })
       },
     ]
 
     const getColumns = () => {
-      //Desktop View
-       if (isDesktop) 
-          return [...columns, ...desktopColumns, ...columns2];
-  
-       // Tab View
-       return [...columns, ...columns2];
-    }
+      return columns.filter(i=> !i.hide).sort((a, b) => (a.order || 0) - (b.order || 0));
+      // let col = [];
+      //  if (isDesktop) 
+      //     col =  [...columns, ...desktopColumns, ...columns2];
+      //  else
+      //     col = [...columns, ...columns2];
 
-  const templateTableProps = {
+      // return col.sort((a, b) => (a.order || 0) - (b.order || 0));
+    };
+
+    const templateTableProps = {
     columns: getColumns(),
-    data: demoTableData,
+    data: (loading?.templates || loading?.reports ) 
+          ? Array.from({ length: 10 }).map((_, idx) => ({ id: `skeleton-${idx}` })) : selectedDirectoryData,
     enableColumnActions: false,
     enableColumnFilters: false,
     enablePagination: false,
@@ -508,7 +603,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
         <div className="template-library-table-container">
             <Table 
                 tableProps={templateTableProps}
-                isRowSelected={isRowSelected} 
+                isRowSelected={isRowSelected}
+                
             />
 
            {/* Template Preview Popup */}
@@ -516,7 +612,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
               open={previewModal.status}
               onClose={() => setPreviewModal({status: false, data: null})}
               title={renderPreviewHeading({
-                  heading: "5-S Audit All Departments - 5S Certification Audits",
+                  heading: `${previewModal?.data?.templateName || ""}`,
                   btn1visible: true, 
                   btn1Name: "upload", 
                   btn2visible: true, 
