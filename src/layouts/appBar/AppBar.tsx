@@ -95,10 +95,11 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
         </IconButton>
         <Badge badgeContent={'59+'}  sx={{
     "& .MuiBadge-badge": {
+      top:".4rem", 
       fontWeight: 400,
       fontSize: "1.5rem",
     },
-  }}color="error" overlap="circular" >
+  }}color="error" overlap="rectangular" >
         <IconButton variant="primary" style={{
           padding:"1rem",
           
