@@ -56,6 +56,21 @@ const ArrowDownIcon = () => (
 
 const BlankIcon = () => (<Box height="24px" width="24px"></Box>)
 
+function getExpandedTagIds(nodes: any) {
+  let result: any = [];
+
+  for (const node of nodes) {
+    if (node.isExpanded === true) {
+      result.push(node.tagId);
+    }
+    if (node.children && node.children.length > 0) {
+      result = result.concat(getExpandedTagIds(node.children));
+    }
+  }
+
+  return result;
+}
+
 const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) => {
 
   const renderTree = (nodes: TreeNode) => (
@@ -74,6 +89,7 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) 
       aria-label="directory tree"
       slots={{ expandIcon: ArrowRightIcon, collapseIcon: ArrowDownIcon, endIcon: BlankIcon }}
       sx={{ flexGrow: 1, overflowY: "auto", height:'100%' }}
+      defaultExpandedItems={getExpandedTagIds(data) || []}
     >
       {data.map((tree) => renderTree(tree))}
     </SimpleTreeView>

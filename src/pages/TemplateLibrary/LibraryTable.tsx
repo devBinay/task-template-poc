@@ -164,9 +164,22 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     };
 
     const handleSortSelect = (type: keyof typeof tableActionMenu, item: string) => {
-      setSelectedSort((prev) => ({ ...prev, [type]: item }));
+      const newObj:any = {}
+      Object.entries(selectedSort).map(([key, menuItem])=>{
+        if(key !== type) {
+          newObj[key] = null;
+        }
+        else {
+          /* To toggle menu items - Select items and unselect if they are alreay selected */
+          console.log("menuItem",menuItem)
+          if(menuItem === null || menuItem === undefined || menuItem?.key !== item?.key)
+            newObj[key] = item;
+          else 
+            newObj[key] = null;
+        }
+      })
+      setSelectedSort({...newObj});
     };
-
 
     const handlePreviewModalOpen = (cellData: TemplateLibraryTableRowType) => {
       setPreviewModal({status: true, data: cellData});
@@ -222,7 +235,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                   }}
                 >
                   <Box display="flex" alignItems="center" width="100%" color={isSelected ? "#0A68DB" : "#333333"} justifyContent="space-between">
-                    {item}
+                    {item?.getLabel() || ""}
                     {isSelected && (
                       <SvgIcon
                         component="check"
