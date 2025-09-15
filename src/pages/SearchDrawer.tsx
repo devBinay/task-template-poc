@@ -5,6 +5,7 @@ import SvgIcon from '../core/components/Icon';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { styled } from "@mui/material/styles";
+import InputAdornment from "@mui/material/InputAdornment";
 import './style.scss';
 import { Divider, TextField, Typography } from '@mui/material';
 import { TEMPLATE_SEARCH_TABS, TEMPLATE_TASK_TYPE_OPTIONS, TEMPLATE_STATUS_OPTIONS } from './constant';
@@ -14,7 +15,22 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import StyledAutocomplete from '../components/Autocomplete/Autocomplete';
-import Searchbar from '@/components/Searchbar';
+
+const SearchField = styled(TextField)(( ) => ({
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "8px",
+    fontWeight: "400",
+    "& fieldset": {
+      border: "1px solid lightgray",
+    },
+    "&:hover fieldset": {
+      border: "1px solid lightgray",
+    },
+    "&.Mui-focused fieldset": {
+      border: "1px solid gray",
+    },
+  },
+}));
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -118,7 +134,20 @@ const SearchDrawer = ({
             <Box className="template-library-search-drawer-main">
                 <Box display="flex" alignItems="center" padding="12px 12px 4px 12px">
                     <Button className='back-btn' startIcon={<SvgIcon component='chevronLeft' fill='#000' size="24px"/>}></Button>
-                    <Searchbar/>
+                     <SearchField
+                        className="search-bar"
+                        variant="outlined"
+                        placeholder="Search by template name"
+                        size="small"
+                        fullWidth
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                  <SvgIcon component="search" size={20} />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
                 </Box>
                 <Divider color='#DCDCDC'/>
                 <Box className="tab-container">

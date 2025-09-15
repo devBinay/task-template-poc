@@ -14,6 +14,7 @@ type TreeNode = {
 interface DirectoryTreeProps {
   data: TreeNode[];
   setSelectedData: React.Dispatch<React.SetStateAction<number | null>>;
+  handleClick: (id: string) => void;
 }
 
 const StyledTreeItem = styled(TreeItem)(() => ({
@@ -71,11 +72,11 @@ function getExpandedTagIds(nodes: any) {
   return result;
 }
 
-const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) => {
+const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, handleClick }) => {
 
   const renderTree = (nodes: TreeNode) => (
     <StyledTreeItem key={nodes.tagId} itemId={nodes.tagId} label={nodes.tagName} 
-      onClick={(e)=> { e.stopPropagation(); setSelectedData(nodes.tagId);}}
+      onClick={(e)=>handleClick(e, nodes)}
      >
       {Array.isArray(nodes.children)
         ? nodes.children.map((child) => renderTree(child))
