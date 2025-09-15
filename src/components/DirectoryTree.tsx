@@ -75,7 +75,7 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, setSelectedData }) 
 
   const renderTree = (nodes: TreeNode) => (
     <StyledTreeItem key={nodes.tagId} itemId={nodes.tagId} label={nodes.tagName} 
-      onClick={(e)=> { e.stopPropagation(); console.log('clicked',nodes.tagId, ": ", nodes.tagName); setSelectedData(nodes.tagId);}}
+      onClick={(e)=> { e.stopPropagation(); setSelectedData(nodes.tagId);}}
      >
       {Array.isArray(nodes.children)
         ? nodes.children.map((child) => renderTree(child))

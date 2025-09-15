@@ -114,8 +114,8 @@ const TemplateLibrary: React.FC = () => {
                 </Box>
                 <Stack direction={"row"} alignItems="center" gap="12px">
                 <Box whiteSpace="nowrap"><PrimaryButton>Create Template</PrimaryButton></Box>
-                <IconButton variant='outline'><SvgIcon fill='var(--icon-color-secondary)' component="upload" size={20} /></IconButton>
-                <IconButton variant='outline'><SvgIcon fill='var(--icon-color-secondary)' component="moreOption" size={20} /></IconButton>
+                <IconButton variant='outline'><SvgIcon component="upload" size={20} /></IconButton>
+                <IconButton variant='outline'><SvgIcon component="moreOption" size={20} /></IconButton>
                 </Stack>
               </Box>
             }
