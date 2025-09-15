@@ -292,8 +292,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
                       padding: '0px 10px'
                     }
                   }}
-                  // checked={selectedTemplate.length == demoTableData.length}
-                  indeterminate={selectedTemplate.length == selectedDirectoryData.length ? showCheckbox : false }
+                  checked={selectedTemplate.length == selectedDirectoryData.length}
+                  indeterminate={selectedTemplate.length == selectedDirectoryData.length ? showCheckbox : true }
                 />
               }
               label=""
