@@ -122,9 +122,9 @@ const TemplateLibrary: React.FC = () => {
               </Box>
             }
         </Box>
-        <Divider sx={{ marginTop: '4px', borderBottomWidth: 1, marginLeft: "-1rem", marginRight: "-1rem" }} />
+        <Divider sx={{ borderBottomWidth: 1}} />
 
-        <Box display="flex" >
+        <Box display="flex"  overflow={'auto'} >
             <Box width={'20%'}>
                 <DirectoryTree data={folderTreeData?.data} setSelectedData={setSelectedDirectoryId} />
             </Box>
@@ -156,7 +156,6 @@ const TemplateLibrary: React.FC = () => {
 
        </Box>
       </PageTemplate.Content>
-
     </PageTemplate>
     ;
 };
