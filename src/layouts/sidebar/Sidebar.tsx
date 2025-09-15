@@ -90,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
     <Stack className='sidebar__list'>
       {menuItems.map((item) => {
         const isActive = activePath === item.path;  
-        const isLargeView = viewportSize === 'lg';
+        const isLargeView = viewportSize === 'xl';
           return <StyledListItemButton component={Link} to={item.path} activePath={isActive}>
             <SvgIcon component={item.icon} size={24} fill={isActive ? 'currentColor' : 'var(--icon-color-secondary)'}/>
                 <Typography sx={()=>({
