@@ -259,13 +259,14 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
 
     const renderTemplateIconHeader = () => {
       return <Box className="template-checkbox-container icon-header-container">
-        { showCheckbox ?
+        { selectedTemplate.length > 0 ?
           <FormControlLabel
-              className="form-control-label"
+              className="form-control-label cursor-pointer"
               onChange={handleSelectAllRows}
               sx={{padding:0, margin:0}}
               control={
                 <Checkbox
+                onChange={handleSelectAllRows}
                   size="small"
                   sx={{
                     '& .MuiSvgIcon-root': { fontSize: 20 },
@@ -277,7 +278,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                       padding: '0px 10px'
                     }
                   }}
-                  indeterminate={showCheckbox}
+                  // checked={selectedTemplate.length == demoTableData.length}
+                  indeterminate={selectedTemplate.length == demoTableData.length ? showCheckbox : false }
                 />
               }
               label=""
@@ -458,8 +460,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
       {
         accessorKey: "iconName",
         header: "",
-       size:1,
- 
+        size:1,
         Header: renderTemplateIconHeader,
         Cell: renderTemplateIconCell,
         muiTableHeadCellProps: () => ({className: "tableheader-checkbox__container", }),
