@@ -1,4 +1,4 @@
-const baseURL = "http://192.168.16.56:9090/api"
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 export const API_CONFIG = {
     templateLibrary : {

@@ -16,7 +16,7 @@ import { folderTreeData } from './tableData';
 import EmptyState from '../../components/EmptyList/EmptyList';
 import SearchDrawer from '@/pages/SearchDrawer';
 import "./style.scss";
-import { getAllDirectories, getReportByReportType, getTemplateByTagId } from './services/template-library.service';
+import { getAllDirectories, getReportsByReportType, getTemplatesByTagId } from './services/template-library.service';
 import type { DirectoryType, TemplateType } from './types/template-library.type';
 import { renderDirectorySkelton } from './components/Skeleton';
 
@@ -71,7 +71,7 @@ const TemplateLibrary: React.FC = () => {
     const getAllTemplates = (tagId: number) => {
         const payload = paginationData;
      setLoading(prev=>({...prev, templates: true}));
-          getTemplateByTagId(tagId, payload).then(res=>{
+          getTemplatesByTagId(tagId, payload).then(res=>{
             setLoading(prev=>({...prev, templates: false}));
             setSelectedDirectoryData(res?.data || []);
         }).catch(error=>{
@@ -83,7 +83,7 @@ const TemplateLibrary: React.FC = () => {
     const getAllReports = (reportType: number) => {
       setLoading(prev=>({...prev, reports: true}));
       const payload = paginationData;
-      getReportByReportType(reportType, payload).then(res=>{
+      getReportsByReportType(reportType, payload).then(res=>{
         setLoading(prev=>({...prev, reports: false}));
         setSelectedDirectoryData(res?.data || []);
       }).catch(error=>{
