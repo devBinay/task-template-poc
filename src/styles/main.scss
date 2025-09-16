@@ -1,1 +1,8 @@
-@use './_color-palettes' 
+@use './_color-palettes'; 
+@use './border-radius';
+@use './font';
+@use './spacing';
+@use './border';
+@use './blurs';
+@use './opacity';
+

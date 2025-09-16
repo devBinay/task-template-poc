@@ -48,6 +48,181 @@
         --gray-9a: rgba(var(--gray-900) / .70);
         --gray-10a: rgba(var(--gray-900) / .80);
         --gray-11a: rgba(var(--gray-900) / .90);
-    
 
+
+        // Orange
+        --orange-50: #FFFCEA;
+        --orange-100: #FFF5C5;
+        --orange-200: #FFEB85;
+        --orange-300: #FFDA46;
+        --orange-400: #FFC71B;
+        --orange-500: #FFA500;
+        --orange-600: #E27C00;
+        --orange-700: #BB5502;
+        --orange-800: #984208;
+        --orange-900: #7C360B;
+        --orange-950: #481A00;
+        --orange-1a: rgba(var(--orange-500) / .10);
+        --orange-2a: rgba(var(--orange-500) / .15);
+        --orange-3a: rgba(var(--orange-500) / .20);
+        --orange-4a: rgba(var(--orange-500) / .25);
+        --orange-5a: rgba(var(--orange-500) / .30);
+        --orange-6a: rgba(var(--orange-500) / .40);
+        --orange-7a: rgba(var(--orange-500) / .50);
+        --orange-8a: rgba(var(--orange-500) / .60);
+        --orange-9a: rgba(var(--orange-500) / .70);
+        --orange-10a: rgba(var(--orange-500) / .80);
+        --orange-11a: rgba(var(--orange-500) / .90);
+
+        //Red
+        --red-50: #FEF3F2;
+        --red-100: #FFE3E1;
+        --red-200: #FFCCC8;
+        --red-300: #FFA8A2;
+        --red-400: #FC776D;
+        --red-500: #F44336;
+        --red-600: #E22D20;
+        --red-700: #BE2217;
+        --red-800: #9D2017;
+        --red-900: #82211A;
+        --red-950: #470C08;
+        --red-1a: rgba(var(--red-500) / .10);
+        --red-2a: rgba(var(--red-500) / .15);
+        --red-3a: rgba(var(--red-500) / .20);
+        --red-4a: rgba(var(--red-500) / .25);
+        --red-5a: rgba(var(--red-500) / .30);
+        --red-6a: rgba(var(--red-500) / .40);
+        --red-7a: rgba(var(--red-500) / .50);
+        --red-8a: rgba(var(--red-500) / .60);
+        --red-9a: rgba(var(--red-500) / .70);
+        --red-10a: rgba(var(--red-500) / .80);
+        --red-11a: rgba(var(--red-500) / .90);
+
+        //Green
+        --green-50: #E6F5E6;
+        --green-100: #CCEBCC;
+        --green-200: #99D799;
+        --green-300: #66C366;
+        --green-400: #33AF33;
+        --green-500: #009B00;
+        --green-600: #008200;
+        --green-700: #006800;
+        --green-800: #004E00;
+        --green-900: #003500;
+        --green-950: #002800;
+        --green-1a: rgba(var(--green-500) / .10);
+        --green-2a:rgba(var(--green-500) / .15);
+        --green-3a: rgba(var(--green-500) / .20);
+        --green-4a: rgba(var(--green-500) / .25);
+        --green-5a: rgba(var(--green-500) / .30);
+        --green-6a: rgba(var(--green-500) / .40);
+        --green-7a: rgba(var(--green-500) / .50);
+        --green-8a: rgba(var(--green-500) / .60);
+        --green-9a: rgba(var(--green-500) / .70);
+        --green-10a: rgba(var(--green-500) / .80);
+        --green-11a: rgba(var(--green-500) / .90);
+
+        //Masala
+        --masala-50: #EDECEC;
+        --masala-100: #DADADA;
+        --masala-200: #B6B5B4;
+        --masala-300: #918F8F;
+        --masala-400: #6D6A69;
+        --masala-500: #484544;
+        --masala-600: #3A3736;
+        --masala-700: #2B2929;
+        --masala-800: #1D1C1B;
+        --masala-900: #191817;
+        --masala-950: #0E0E0E;
+        --masala-1a: rgba(var(--masala-500) / .10);
+        --masala-2a: rgba(var(--masala-500) / .15);
+        --masala-3a: rgba(var(--masala-500) / .20);
+        --masala-4a: rgba(var(--masala-500) / .25);
+        --masala-5a: rgba(var(--masala-500) / .30);
+        --masala-6a: rgba(var(--masala-500) / .30);
+        --masala-7a: rgba(var(--masala-500) / .50);
+        --masala-8a: rgba(var(--masala-500) / .60);
+        --masala-9a: rgba(var(--masala-500) / .70);
+        --masala-10a: rgba(var(--masala-500) / .80);
+        --masala-11a: rgba(var(--masala-500) / .90);
+
+        //white
+        --white-0: #FFFFFF;
+        --white-0a: rgba(var(--white-0) / .01);
+        --white-a: rgba(var(--white-0) / .05);
+        --white-1a: rgba(var(--white-0) / .10);
+        --white-1a-a: rgba(var(--white-0) / .12);
+        --white-2a: rgba(var(--white-0) / .15);
+        --white-3a: rgba(var(--white-0) / .20);
+        --white-4a: rgba(var(--white-0) / .25);
+        --white-5a: rgba(var(--white-0) / .30);
+        --white-6a: rgba(var(--white-0) / .40);
+        --white-7a: rgba(var(--white-0) / .50);
+        --white-8a: rgba(var(--white-0) / .60);
+        --white-9a: rgba(var(--white-0) / .70);
+        --white-10a: rgba(var(--white-0) / .80);
+        --white-11a: rgba(var(--white-0) / .90);
+
+        //Other Colors
+        --artboard-background-light: #F4F5FA;
+        --artboard-background-dark: #191817;
+        --card-hover: #FAFAFA;
+        --navbar-icon: #6C6C6C;
+        --purple: #C500D4;
+        --brown: #C27500;
+        --dark-red: #D10000;
+        --dark-red-bg: #F8D9D9;
+        --orange-1: #FD6104;
+        --indigo: #7000EC;
+        --purple-light: #F9E5FB;
+        --brown-light: #FFF0DA;
+        --dark-red-light: #FDF2F2;
+        --orange-light: #FFF2D9;
+        --indigo-light: #F0E5FD;
+        --calendar-disable: #AAAAAA;
+        --drak-brown: #885406;
+        --orange-1: #E69500;
+        --nevy-blue: #1233C1;
+        --dark-green: #009B00;
+        --light-purple: #A997DF;
+        --punch-in: #11CA11;
+        --punch-in-bg: #F2FFF2;
+        --punch-out: #D10000;
+        --punch-out-bg: #FFF6F5;
+        --meal-breat-other: #E69500;
+        --meal-breat-other-bg: #FFF8F2;
+        --transition: #2482F5;
+        --transition-bg: #F2F7FD;
+        --row: #F7FAFE;
+        --total: #E6EFFC;
+        --acc-open: #FAFAFA;
+
+        // Yellow
+        --yellow-lighter: #FEF7EC;
+        --yellow-light: #FBDFB1;
+        --yellow-base: #F2AE40;
+        --yellow-dark: #B47818;
+        --yellow-darker: #693D11;
+
+        // Purple
+        --purple-lighter: #EEEBFF;
+        --purple-light: #CAC2FF;
+        --purple-base: #6E3FF3;
+        --purple-base-sub-dark: #7757FB;
+        --purple-dark: #5A36BF;
+        --purple-darker: #2B1664;
+
+        // Pink
+        --pink-lighter: #FDEBFF;
+        --pink-light: #F9C2FF;
+        --pink-base: #E255F2;
+        --pink-dark: #9C23A9;
+        --pink-darker: #620F6C;
+
+        // Teal
+        --teal-lighter: #EBFAFF;
+        --teal-light: #C2EFFF;
+        --teal-base: #35B9E9;
+        --teal-dark: #1F87AD;
+        --teal-darker: #164564;
 }
