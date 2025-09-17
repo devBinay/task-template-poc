@@ -1,14 +1,131 @@
+$fonts: (
 
-$font-sizes: (
-  "page-heading": 23,
-  "secondary-heading": 19,
-  "body": 15,
-  "body-large": 17,
-  "secondary-text": 13,
-  "kpi-number": 23,
-  "kpi-text": 17,
-  "weather": 19,
-  "caption": 10,
+  //page-heading
+  "page-heading": (
+    "sizes": (
+      "sm": 23px,
+      "md": 23px,
+      "lg": 25px,
+    ),
+    "line-height": (
+      "sm": 34px,
+      "md": 34px,
+      "lg": 34px,
+    )
+  ),
+
+  //secondary-heading
+  "secondary-heading": (
+    "sizes": (
+      "sm": 19px,
+      "md": 19px,
+      "lg": 21px,
+    ),
+    "line-height": (
+      "sm": 34px,
+      "md": 34px,
+      "lg": 34px,
+    )
+  ),
+
+  //body
+  "body": (
+     "sizes": (
+        "sm": 15px,
+        "md": 15px,
+        "lg": 17px,
+    ),
+    "line-height": (
+        "sm": 22px,
+        "md": 22px,
+        "lg": 22px,
+    )
+  ),
+
+    //body-large
+  "body-large": (
+     "sizes": (
+        "sm": 17px,
+        "md": 17px,
+        "lg": 19px,
+    ),
+    "line-height": (
+        "sm": 20px,
+        "md": 20px,
+        "lg": 20px,
+    )
+  ),
+
+  //secondary-text
+  "secondary-text": (
+     "sizes": (
+        "sm": 13px,
+        "md": 13px,
+        "lg": 15px,
+    ),
+    "line-height": (
+        "sm": 25px,
+        "md": 25px,
+        "lg": 25px,
+    )
+  ),
+
+    //kpi-number
+  "kpi-number": (
+     "sizes": (
+        "sm": 23px,
+        "md": 23px,
+        "lg": 25px,
+    ),
+    "line-height": (
+        "sm": 34px,
+        "md": 34px,
+        "lg": 34px,
+    )
+  ),
+
+   //kpi-text
+  "kpi-text": (
+     "sizes": (
+        "sm": 17px,
+        "md": 17px,
+        "lg": 19px,
+    ),
+    "line-height": (
+        "sm": 25px,
+        "md": 25px,
+        "lg": 25px,
+    )
+  ),
+
+  //weather
+  "weather": (
+     "sizes": (
+        "sm": 19px,
+        "md": 19px,
+        "lg": 21px,
+    ),
+    "line-height": (
+        "sm": 28px,
+        "md": 28px,
+        "lg": 28px,
+    )
+  ),
+
+  //caption
+  "caption": (
+     "sizes": (
+        "sm": 10px,
+        "md": 10px,
+        "lg": 12px,
+    ),
+    "line-height": (
+        "sm": 12px,
+        "md": 12px,
+        "lg": 12px,
+    )
+  ),
+
 );
 
 $font-weights: (
@@ -23,31 +140,40 @@ $font-weights: (
   900: 900,
 );
 
-$line-heights: (
-  "page-heading": 34,
-  "secondary-heading": 28,
-  "body": 22,
-  "body-large": 25,
-  "secondary-text": 20,
-  "kpi-number": 34,
-  "kpi-text": 25,
-  "weather": 28,
-  "caption": 12,
+$breakpoints: (
+  "sm": 1200px,   
+  "md": 1440px,    
+  "lg": 1920px,   
 );
 
 :root {
-  // font sizes
-  @each $name, $value in $font-sizes {
-    --size-#{$name}: #{$value};
+  // font-size & line-height
+  @each $name, $config in $fonts {
+    --size-#{$name}: #{map-get(map-get($config, "sizes"), "sm")};
+    --line-height-#{$name}: #{map-get(map-get($config, "line-height"), "sm")};
   }
 
-  // font weights
+  // font-weight
   @each $name, $value in $font-weights {
     --weight-#{$name}: #{$value};
   }
+}
 
-  // line heights
-  @each $name, $value in $line-heights {
-    --line-height-#{$name}: #{$value};
+
+// @media query override
+@each $bp, $width in $breakpoints {
+  @if $bp != "sm" {
+    @media (min-width: #{$width}) {
+      :root {
+        @each $name, $config in $fonts {
+          @if map-has-key(map-get($config, "sizes"), $bp) {
+            --size-#{$name}: #{map-get(map-get($config, "sizes"), $bp)};
+          }
+          @if map-has-key(map-get($config, "line-height"), $bp) {
+            --line-height-#{$name}: #{map-get(map-get($config, "line-height"), $bp)};
+          }
+        }
+      }
+    }
   }
 }
