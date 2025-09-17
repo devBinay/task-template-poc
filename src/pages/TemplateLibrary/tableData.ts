@@ -1,4 +1,5 @@
 import type { TemplateLibraryTableRowType } from "./types";
+import type { PaginatedResponse } from '../../core/types/pagination.type';
 
 export const demoTableData2 : unknown[] = [
   {
@@ -856,10 +857,14 @@ export const folderTreeData = {
                 },
               ]
             }
-    ]
+    ],
+    pagination: { currentPage: 1, pageSize: 10, totalPages: 1, totalItems: 100 }
   }
 
-export const demoTableData: TemplateLibraryTableRowType[] = [
+export const demoTableData: PaginatedResponse<TemplateLibraryTableRowType[]> = {
+    success: true,
+    message: 'Success',
+    data: [
         {
             "templateId": 1894,
             "tagId": 2002,
@@ -937,4 +942,6 @@ export const demoTableData: TemplateLibraryTableRowType[] = [
             "iconName": "v15-Shop-supply",
             "iconColour": "#bd9721"
         },
-    ]
+    ],
+    pagination: { currentPage: 1, pageSize: 10, totalPages: 1, totalItems: 100 }
+}
