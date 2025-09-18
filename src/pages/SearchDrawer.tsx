@@ -10,7 +10,7 @@ import './style.scss';
 import { Divider, TextField, Typography } from '@mui/material';
 import { TEMPLATE_SEARCH_TABS, TEMPLATE_TASK_TYPE_OPTIONS, TEMPLATE_STATUS_OPTIONS } from './constant';
 import { useState } from 'react';
-import { PrimaryButton } from '../components/Button/Button';
+import { PrimaryButton } from '../core/components/Button/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import type { SelectChangeEvent } from '@mui/material/Select';
