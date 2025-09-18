@@ -33,7 +33,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ThemeContext.Provider value={colorMode}>
       <MuiThemeProvider theme={theme}>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         {children}
       </MuiThemeProvider>
     </ThemeContext.Provider>

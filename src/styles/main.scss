@@ -1,8 +1,11 @@
-@use './_color-palettes'; 
-@use './border-radius';
-@use './font';
-@use './spacing';
-@use './border';
 @use './blurs';
+@use './border-radius';
+@use './border';
+@use './_color-palettes'; 
+@use './font';
 @use './opacity';
+@use './reset';
+@use './shadows';
+@use './spacing';
+@use './variables';
 
