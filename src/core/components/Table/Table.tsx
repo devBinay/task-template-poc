@@ -4,7 +4,7 @@ import type { MRT_RowData, MRT_Row } from "material-react-table";
 
 interface TableProps {
   tableProps;
-  isRowSelected?: (rowData: TemplateLibraryTableRowType) => boolean; // 👈 pass in from parent
+  isRowSelected?: (rowData: TemplateLibraryTableRowType) => boolean;
 }
 
 const Table = ({ tableProps, isRowSelected, ...props }: TableProps) => {

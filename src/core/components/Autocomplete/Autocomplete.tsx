@@ -1,7 +1,7 @@
 import useAutocomplete from "@mui/material/useAutocomplete";
 import { styled } from "@mui/material/styles";
 import { autocompleteClasses } from "@mui/material/Autocomplete";
-import SvgIcon from "../../core/components/Icon";
+import SvgIcon from "@/core/components/Icon";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Popper from "@mui/material/Popper";

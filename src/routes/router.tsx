@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AppShell from '@/layouts/AppShell';
 import About from '@/pages/About';
-import { IconsDemo } from '@/component-library/Icons';
-import { ComponentLibraryLandingPage } from '@/component-library/LandingPage';
+import { IconsDemo } from '@/dev-playbook/Icons';
+import { ComponentLibraryLandingPage } from '@/dev-playbook/LandingPage';
 import NoPageFound from '@/pages/NoPageFound';
 import TemplateLibrary from '@/pages/TemplateLibrary';
 
