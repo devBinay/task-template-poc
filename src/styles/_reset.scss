@@ -1,6 +1,7 @@
 html, body {
     --font-size-base: 10px; 
     --font-family: "Roboto";
+    --font-color: var(--gray-900); // TODO: need to change to text primary
     font-size: var(--font-size-base);
     font-family: var(--font-family);
     margin: 0;

@@ -161,14 +161,12 @@ $breakpoints: (
   
 }
 
-  // font-weight
-
+// font-weight
 :root {
   @each $name, $value in $font-weights {
     --weight-#{$name}: #{$value};
   }
 }
-
 
 // @media query override
 @each $bp, $width in $breakpoints {
