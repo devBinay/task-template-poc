@@ -3,7 +3,7 @@
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-base);
   
     .appShell__sideNavAndbody {
       display: flex;
@@ -16,9 +16,9 @@
       flex-grow: 1;
       overflow-y: hidden;
       overflow-x: hidden;
-      background-color: var(--bg-secondary); 
-      border-start-start-radius: var(--border-radius-md);
-      border-end-start-radius: var(--border-radius-md);
+      background-color: var(--bg-base); 
+      border-start-start-radius: var(-radius-m);
+      border-end-start-radius: var(--radius-m);
       margin-bottom: var(--space-2xl);
     
     }

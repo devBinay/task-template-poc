@@ -1,4 +1,9 @@
 :root{
+        // Base
+        --base-white: #FFFFFF;
+        --base-black: #000000;
+
+        // Blue
         --blue-50: #E4EFFE;
         --blue-100: #C9E0FD;
         --blue-200: #93C1FA;
@@ -48,7 +53,6 @@
         --gray-9a: rgba(var(--gray-900) / .70);
         --gray-10a: rgba(var(--gray-900) / .80);
         --gray-11a: rgba(var(--gray-900) / .90);
-
 
         // Orange
         --orange-50: #FFFCEA;

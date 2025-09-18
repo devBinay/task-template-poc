@@ -9,7 +9,7 @@
     word-break: keep-all;
     padding-right: 0px;
     scrollbar-width: none;
-    background-color:var(--bg-secondary);
+    background-color:var(--bg-base);
     width:0px;
     
     scrollbar-width: none;
@@ -54,7 +54,7 @@
         transition: all .2s ease-in-out;
         position: sticky;
         top: 0;
-        background-color: var(--bg-secondary);
+        background-color: var(--bg-base);
         z-index: 2;
         gap: var(--space-xs);
         font-size: 1.4rem;
