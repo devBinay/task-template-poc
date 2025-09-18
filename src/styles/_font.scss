@@ -146,14 +146,24 @@ $breakpoints: (
   "lg": 1920px,   
 );
 
+// font-size 
 :root {
-  // font-size & line-height
   @each $name, $config in $fonts {
     --size-#{$name}: #{map-get(map-get($config, "sizes"), "sm")};
+  }
+}
+
+// line-height
+:root {
+  @each $name, $config in $fonts {
     --line-height-#{$name}: #{map-get(map-get($config, "line-height"), "sm")};
   }
+  
+}
 
   // font-weight
+
+:root {
   @each $name, $value in $font-weights {
     --weight-#{$name}: #{$value};
   }
@@ -169,6 +179,17 @@ $breakpoints: (
           @if map-has-key(map-get($config, "sizes"), $bp) {
             --size-#{$name}: #{map-get(map-get($config, "sizes"), $bp)};
           }
+        }
+      }
+    }
+  }
+}
+
+@each $bp, $width in $breakpoints {
+  @if $bp != "sm" {
+    @media (min-width: #{$width}) {
+      :root {
+        @each $name, $config in $fonts {
           @if map-has-key(map-get($config, "line-height"), $bp) {
             --line-height-#{$name}: #{map-get(map-get($config, "line-height"), $bp)};
           }
