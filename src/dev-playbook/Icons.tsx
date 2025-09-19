@@ -1,4 +1,4 @@
-import SvgIcon from '@/core/components/Icon';
+import SvgIcon from '@/core/components/icon/Icon';
 import { icons } from '@/core/constants/Icons';
 import type { IconName } from '@/core/types/icon.type';
 
