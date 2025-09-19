@@ -2,8 +2,8 @@
     display:flex;
     flex-direction:row;
     border-radius: var(--space-md);
-    border: 1px solid var(--border-color-secondary);
-    background-color: var(--bg-Container-1);
+    border: 1px solid var(--border-secondary);
+    background-color: var(--bg-container-1);
     gap:.5rem;
     align-items:center;
     margin-left: var(--space-3xl);
@@ -46,5 +46,5 @@
    
 }
 .userProfileInfoCardSelected {
-    border: 1px solid var(--border-color-brand-primary);
+    border: 1px solid var(--border-brand-primary);
 }
