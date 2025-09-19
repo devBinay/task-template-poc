@@ -45,7 +45,7 @@ interface navSearchBarProps {
     flexGrow:1,
       borderRadius: theme.shape.borderRadius,
       backgroundColor:theme.palette.background.default,
-     border:"1px solid var(--border-color-tertiary)",
+     border:"1px solid var(--border-tertiary)",
       marginLeft: 0,
       overflow:"hidden",
       ...(iconPosition === 'left' && {

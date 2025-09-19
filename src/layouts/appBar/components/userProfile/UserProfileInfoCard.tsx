@@ -46,7 +46,7 @@ const UserProfileInfoCard: React.FC<UserProfileInfoCardProps> = ({user}) => {
           }}
          PaperProps={{
           sx: {
-            border: "1px solid var(--border-color-tertiary)",
+            border: "1px solid var(--border-tertiary)",
             width: "22.2rem", 
           },
         }}

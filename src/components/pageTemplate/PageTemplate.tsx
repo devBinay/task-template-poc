@@ -16,7 +16,7 @@ const Header: React.FC<SectionProps> = ({ children, style }) => {
       style={{
         position: "sticky",
         top: 0,
-        backgroundColor: "var(--bg-secondary)",
+        backgroundColor: "var(--bg-base)",
         height: "5rem",
         width: "100%",
         zIndex: 1000,
@@ -35,10 +35,10 @@ const Content: React.FC<SectionProps> = ({ children, style }) => {
   return (
     <div
       style={{
-        backgroundColor: "var(--bg-default)",
+        backgroundColor: "var(--bg-container-1)",
         flex: 1,
         marginTop: "0.6rem",
-        borderStartStartRadius:"var(--border-radius-md)",
+        borderStartStartRadius:"var(--radius-m)",
         ...style,
       }}
     >

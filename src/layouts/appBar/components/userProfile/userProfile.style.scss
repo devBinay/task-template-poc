@@ -2,8 +2,8 @@
     display:flex;
     flex-direction:row;
     border-radius: var(--space-md);
-    border: 1px solid var(--border-color-secondary);
-    background-color: var(--bg-default);
+    border: 1px solid var(--border-secondary);
+    background-color: var(--bg-container-1);
     gap:.5rem;
     align-items:center;
     margin-left: var(--space-3xl);
@@ -27,12 +27,13 @@
         align-items:start;
      
         & .userInfo-name{
-            font-size:1.5rem;
+            font-size:var(--size-secondary-text);
             font-weight:500;
             line-height: 2rem;
+            color:var(--text-primary)
         }
         & .userInfo-role{
-            font-size:1.5rem;
+            font-size:var(--size-secondary-text);
             color: var(--text-secondary);
             line-height: 2rem;
             font-weight: 500;
@@ -40,10 +41,10 @@
         }
     }
     .menubar-heading {
-        font-size: 1.5rem;
+        font-size: var(--size-secondary-text);
     }
    
 }
 .userProfileInfoCardSelected {
-    border: 1px solid var(--border-color-brand-primary);
+    border: 1px solid var(--border-brand-primary);
 }

@@ -1,6 +1,20 @@
+import PageTemplate from "@/components/pageTemplate/PageTemplate"
 const NoPageFound = () => {
   return (
-    <div>NoPageFound</div>
+    <PageTemplate>
+      <PageTemplate.Content>
+
+    <div style={{
+      display:"flex",
+      justifyContent:"center",
+      alignItems:'center',
+      height:'100%',
+      
+    }}>
+      <p>No Page Found</p></div>
+      </PageTemplate.Content>
+
+      </PageTemplate>
   )
 }
 

@@ -1,10 +1,11 @@
 // theme/ThemeProvider.tsx
 
-import { createContext, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { ThemeProvider as MuiThemeProvider, CssBaseline } from '@mui/material';
 import { getTheme } from './theme';
+import type { ThemeMode } from '@/core/types/theme.type';
 
-type ThemeMode = 'light' | 'dark';
+
 
 interface ThemeContextType {
   toggleColorMode: () => void;
@@ -28,12 +29,23 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     [mode]
   );
 
+  /**
+   * @param themeMode = theme mode name e.g. dark,light etc..
+   * 
+   * This method sets the data-theme attribute at the HTML Tag level
+   */
+  const updateHtmlTheme = (themeMode:ThemeMode)=>{
+   let htmlEle = document.querySelector('html');
+   htmlEle.setAttribute('data-theme',themeMode)
+  }
+
+  useEffect(()=> updateHtmlTheme(mode),[mode])
   const theme = useMemo(() => getTheme(mode), [mode]);
 
   return (
     <ThemeContext.Provider value={colorMode}>
       <MuiThemeProvider theme={theme}>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         {children}
       </MuiThemeProvider>
     </ThemeContext.Provider>
