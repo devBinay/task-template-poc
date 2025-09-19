@@ -1,8 +1,8 @@
 import React, { type ReactElement } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import SvgIcon from "@/core/components/Icon";
-import IconButton from '@/components/IconButton';
+import SvgIcon from "@/core/components/icon/Icon";
+import IconButton from '@/core/components/button/IconButton';
 
 interface CommonModalProps {
   open: boolean;

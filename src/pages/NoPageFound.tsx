@@ -1,4 +1,4 @@
-import PageTemplate from "@/components/pageTemplate/PageTemplate"
+import PageTemplate from "@/core/components/page-template/PageTemplate"
 const NoPageFound = () => {
   return (
     <PageTemplate>
