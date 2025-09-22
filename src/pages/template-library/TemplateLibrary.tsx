@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import DirectoryTree from "@/core/components/directory-tree/DirectoryTree";
 import { Button, Stack } from '@mui/material';
 import TextField from "@mui/material/TextField";
 import Typography from '@mui/material/Typography';
@@ -8,16 +7,16 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import LibraryTable from './TemplateTable';
-import PageTemplate from '../../core/components/page-template/PageTemplate';
+import PageTemplate from '../../layouts/PageTemplate';
 import IconButton from '@/core/components/button/IconButton';
 import SvgIcon from '@/core/components/icon/Icon';
-import { folderTreeData } from './tableData';
-import EmptyState from '../../core/components/empty-list/EmptyList';
+import NoDataTemplate from '../../core/components/no-data-template/NoDataTemplate';
 import SearchDrawer from '@/pages/template-library/components/search-drawer/SearchDrawer';
 import "./TemplateStyle.scss";
 import { getAllDirectories, getReportsByReportType, getTemplatesByTagId } from './services/template-library.service';
 import type { DirectoryType, TemplateType } from './types/template-library.type';
 import { renderDirectorySkelton } from './components/skeleton/Skeleton';
+import TreeView from '@/core/components/tree-view/TreeView';
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -193,12 +192,12 @@ const TemplateLibrary: React.FC = () => {
             <Box width={'20%'}>
               {
                 loading?.directory ? renderDirectorySkelton() :
-                <DirectoryTree data={directoryData?.data || []} handleClick={handleDirectoryClick} />
+                <TreeView data={directoryData?.data || []} handleClick={handleDirectoryClick} />
               }
             </Box>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
               {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
-                    <EmptyState
+                    <NoDataTemplate
                         title = "To view task templates, select a folder on the left or search above"
                         description = "Nothing is selected"
                         imageSrcName = "emptyState"

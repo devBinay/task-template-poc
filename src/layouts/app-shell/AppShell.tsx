@@ -2,7 +2,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import AppBar from '../app-bar/AppBar';
 import Sidebar from '../sidebar/Sidebar';
-import { defaultConstants } from '@/core/constants';
+import { defaultConstants } from '@/core/constants/app-constants';
 import './AppShell.style.scss'
 import { useEffect, useRef, useState } from 'react';
 import { useGetViewPortSize } from '@/utils/getViewPortSize';

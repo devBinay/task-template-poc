@@ -1,17 +1,17 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import SvgIcon from "@/core/components/icon/Icon";
-import "./EmptyList.scss";
+import "./NoDataTemplate.scss";
 import type { IconName } from "@/core/types/icon.type";
 
-interface EmptyStateProps {
+interface NoDataProps {
   imageSrcName: string; 
   title?: string; 
   description?: string;
   imageWidth?: number | string; 
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({
+const NoDataTemplate: React.FC<NoDataProps> = ({
   imageSrcName= "emptyState",
   title = "Nothing here yet",
   description,
@@ -34,4 +34,4 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   );
 };
 
-export default EmptyState;
+export default NoDataTemplate;

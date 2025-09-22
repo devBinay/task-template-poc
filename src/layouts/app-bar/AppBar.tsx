@@ -1,11 +1,11 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import { defaultConstants } from '@/core/constants';
-import clientLogo from "@/assets/Logile Logo.svg"
+import { defaultConstants } from '@/core/constants/app-constants';
+import clientLogo from "@/assets/logile-logo.svg"
 import { Badge, Box, Button, Stack } from '@mui/material';
 import IconButton from '@/core/components/button/IconButton';
 import UserProfileInfoCard from './components/user-profile/UserProfileInfoCard';
-import navAvatarPng from '@/assets/navbarAvatar.png'
+import navAvatarPng from '@/assets/navbar-avatar.png'
 import NavSearchBar from './components/search-bar/SearchBar';
 import SvgIcon from '@/core/components/icon/Icon';
 import { styled } from "@mui/material/styles";

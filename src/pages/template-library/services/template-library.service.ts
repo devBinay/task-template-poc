@@ -1,4 +1,4 @@
-import { get, post } from "@/core/services/httpBaseService";
+import { get, post } from "@/core/services/http-base-service";
 import type { PaginatedResponse } from "@/core/types/pagination.type";
 import type { DirectoryType, ReportType, TemplateType } from "../types/template-library.type";
 import { API_CONFIG } from "@/core/constants/api-config";

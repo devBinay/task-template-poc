@@ -11,7 +11,7 @@ type TreeNode = {
   children?: TreeNode[];
 };
 
-interface DirectoryTreeProps {
+interface TreeViewProps {
   data: TreeNode[];
   setSelectedData: React.Dispatch<React.SetStateAction<number | null>>;
   handleClick: (id: string) => void;
@@ -72,7 +72,7 @@ function getExpandedTagIds(nodes: any) {
   return result;
 }
 
-const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, handleClick }) => {
+const TreeView: React.FC<TreeViewProps> = ({ data, handleClick }) => {
 
   const renderTree = (nodes: TreeNode) => (
     <StyledTreeItem key={nodes.tagId} itemId={nodes.tagId} label={nodes.tagName} 
@@ -98,4 +98,4 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, handleClick }) => {
   );
 };
 
-export default DirectoryTree;
+export default TreeView;
