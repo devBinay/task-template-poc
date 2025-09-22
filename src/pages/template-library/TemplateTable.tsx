@@ -21,6 +21,8 @@ import type { SortOption } from "./types/template-constants.type";
 import { renderTemplateActionSkelton, renderTemplateCreatedSkelton, renderTemplateIconSkelton, renderTemplateNameSkelton, renderTemplateNameSkeltonDesktop, renderTemplateRowSkelton } from "./components/skeleton/Skeleton";
 import type { TemplateType } from "./types/template-library.type";
 import { Button } from "@mui/material";
+import { demoTableData } from "./tableData";
+import IconButton from "@/core/components/button/IconButton";
 
 export type TemplateLibrary = {
   template_icon: string;
@@ -324,8 +326,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
               {!isTableSelectable && <Box className="template-checkbox-container tablebody-col__checkbox--toggle" display='flex' 
                 >
                     <Box onClick={() => handleRowSelection(true, cell.row.original)} className="cursor-pointer icon-container" >
-                      <IconOutlined sx={{ pointerEvents: 'none' }} startIcon={
-                        data?.iconName === "v15-Shop-supply" ?
+                      <IconButton>
+                      { data?.iconName === "v15-Shop-supply" ?
                         <SvgIcon 
                             component="checkedList"
                             size={18}
@@ -338,8 +340,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
                             fill="#009B00"
                          />
                         }
-                        variant='outlined'
-                      />
+                      </IconButton>
                     </Box>
                     <FormControlLabel
                       className="form-control-label checkbox-wrapper"
@@ -362,7 +363,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
                      </Box>}
                {
                 isTableSelectable && <Box className="checkbox-container cursor-pointer"  >
-                        <FormControlLabel
+                    <FormControlLabel
                       className="form-control-label"
                       onChange={(event) => handleRowSelection((event.target as HTMLInputElement).checked, cell.row.original)}
                         control={
@@ -482,11 +483,11 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
       const disabledActions = selectedTemplate?.length > 1;
         return (
             <Box display="flex" alignItems="center">
-              <Button variant="primary" disabled={(disabledActions || status === "Incomplete") ? true : false} disableHover><SvgIcon component="send" size={20} /></Button>
-              <Button variant="primary" disabled={disabledActions} disableHover><SvgIcon component="copy" size={20} /></Button>
-              <Button variant="primary" disabled={disabledActions} disableHover><SvgIcon component="edit" size={20} /></Button>
-              <Button variant="primary" disabled={disabledActions} disableHover><SvgIcon component="download" size={20} /></Button>
-              <Button variant="primary" disabled={disabledActions} disableHover><SvgIcon component="delete" size={20} fill={disabledActions ? "#FFCCC8" : "#F4433D"}/></Button>
+              <IconButton disabled={(disabledActions || status === "Incomplete") ? true : false} disableHover><SvgIcon component="send" size={20} /></IconButton>
+              <IconButton disabled={disabledActions} disableHover><SvgIcon component="copy" size={20} /></IconButton>
+              <IconButton disabled={disabledActions} disableHover><SvgIcon component="edit" size={20} /></IconButton>
+              <IconButton disabled={disabledActions} disableHover><SvgIcon component="download" size={20} /></IconButton>
+              <IconButton disabled={disabledActions} disableHover><SvgIcon component="delete" size={20} fill={disabledActions ? "#FFCCC8" : "#F4433D"}/></IconButton>
             </Box>
         )
     }
@@ -584,8 +585,10 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
 
     const templateTableProps = {
     columns: getColumns(),
-    data: (loading?.templates || loading?.reports ) 
-          ? Array.from({ length: 10 }).map((_, idx) => ({ id: `skeleton-${idx}` })) : selectedDirectoryData,
+    data: demoTableData,
+    // TODO : NEED TO BE REMOVED WHEN BE IS WORKING FINE
+    // (loading?.templates || loading?.reports ) 
+          // ? Array.from({ length: 10 }).map((_, idx) => ({ id: `skeleton-${idx}` })) : selectedDirectoryData,
     enableColumnActions: false,
     enableColumnFilters: false,
     enablePagination: false,

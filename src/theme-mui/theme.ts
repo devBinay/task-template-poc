@@ -25,11 +25,11 @@ export const getTheme = (mode: 'light' | 'dark') =>
       MuiButton: {
         variants: [
           {
-            props: { variant: "primary" },
+            props: { variant: "primary-filled" },
             style: buttonConfig().primary,
           },
           {
-            props: { variant: "iconOutlined" },
+            props: { variant: "icon-outlined" },
             style: buttonConfig().iconOutlined,
           },
         ],

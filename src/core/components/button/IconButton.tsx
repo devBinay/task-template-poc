@@ -34,11 +34,11 @@ const IconButtonStyled = styled(ButtonBase, {
       backgroundColor: alpha(theme?.palette.secondary.main??"", 0.1),
     },
     outline: {
-      border: `1px solid var(--border-color-secondary)`,
+      border: `1px solid var(--border-secondary)`,
       ...(disableHover
         ? {}
         : {
-            border: `1px solid var(--border-color-brand-primary_subtle)`,
+            border: `1px solid var(--border-brand-primary-subtle)`,
             backgroundColor: alpha(theme?.palette.primary.main??"", 0.1),
             color: theme?.palette.primary.main,
           }),
@@ -47,10 +47,9 @@ const IconButtonStyled = styled(ButtonBase, {
 
   return {
     ...baseStyles,
-    ...(variant === "outline" && { border: `1px solid var(--border-color-secondary)` }),
+    ...(variant === "outline" && { border: `1px solid var(--border-secondary)` }),
     "&:hover": {
       cursor: "pointer",
-
       ...(!disableHover ? hoverStyles[variant] : {}),
     },
   };

@@ -17,6 +17,7 @@ import { getAllDirectories, getReportsByReportType, getTemplatesByTagId } from '
 import type { DirectoryType, TemplateType } from './types/template-library.type';
 import { renderDirectorySkelton } from './components/skeleton/Skeleton';
 import TreeView from '@/core/components/tree-view/TreeView';
+import { folderTreeData } from './tableData';
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -179,7 +180,7 @@ const TemplateLibrary: React.FC = () => {
                     />
                 </Box>
                 <Stack direction={"row"} alignItems="center" gap="12px">
-                <Box whiteSpace="nowrap">< Button variant="primary">Create Template</Button></Box>
+                <Box whiteSpace="nowrap"><Button variant="primary-filled">Create Template</Button></Box>
                 <IconButton variant='outline'><SvgIcon component="upload" size={20} /></IconButton>
                 <IconButton variant='outline'><SvgIcon component="moreOption" size={20} /></IconButton>
                 </Stack>
@@ -190,19 +191,21 @@ const TemplateLibrary: React.FC = () => {
 
         <Box display="flex"  overflow={'auto'} >
             <Box width={'20%'}>
-              {
+              {/* {  TODO : TO BE REMOVED WHEN BE IS WORKING FINE
                 loading?.directory ? renderDirectorySkelton() :
                 <TreeView data={directoryData?.data || []} handleClick={handleDirectoryClick} />
-              }
+              } */}
+              <TreeView data={folderTreeData?.data || []} handleClick={handleDirectoryClick} />
             </Box>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
+              {/* TODO : TO BE REMOVED WHEN BE IS WORKING FINE
               {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
                     <NoDataTemplate
                         title = "To view task templates, select a folder on the left or search above"
                         description = "Nothing is selected"
                         imageSrcName = "emptyState"
                         imageWidth={90}
-                    /> :
+                    /> : */}
                     <LibraryTable 
                       showCheckbox={showCheckbox}
                       setShowCheckbox={setShowCheckbox}
@@ -211,7 +214,7 @@ const TemplateLibrary: React.FC = () => {
                       selectedDirectoryData={selectedDirectoryData}
                       loading={loading}
                     />
-                }
+                {/* } */}
             </Box>
         </Box>
 

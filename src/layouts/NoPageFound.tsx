@@ -7,9 +7,9 @@ const NoPageFound = () => {
     <div style={{
       display:"flex",
       justifyContent:"center",
+      fontSize: '19px',
       alignItems:'center',
       height:'100%',
-      
     }}>
       <p>No Page Found</p></div>
       </PageTemplate.Content>
