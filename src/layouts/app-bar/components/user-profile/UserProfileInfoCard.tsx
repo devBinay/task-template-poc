@@ -1,7 +1,7 @@
  
 import { Divider, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material'
 import React, { useRef, type Ref } from 'react'
-import './UserProfile.style.scss'
+import './UserProfile.scss'
 import SvgIcon from '@/core/components/icon/Icon'
 interface UserProfileInfoCardProps {
     user: {name: string, role: string,avatar: string}

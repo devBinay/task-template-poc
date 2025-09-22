@@ -9,7 +9,7 @@ import navAvatarPng from '@/assets/navbar-avatar.png'
 import NavSearchBar from './components/search-bar/SearchBar';
 import SvgIcon from '@/core/components/icon/Icon';
 import { styled } from "@mui/material/styles";
-import "./AppBar.style.scss";
+import "./AppBar.scss";
 interface AppBarProps {
   drawerHeight: number;
   handleToggleMenu: () => void,
