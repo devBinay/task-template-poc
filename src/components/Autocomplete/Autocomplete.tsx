@@ -197,17 +197,27 @@ export default function StyledAutocomplete<T>(props: StyledAutocompleteProps<T>)
 
      {groupedOptions.length > 0 && (
   <Popper open placement="bottom-start"  anchorEl={anchorEl} style={{ zIndex: 2000 }}>
-    <Listbox {...getListboxProps()}>
-      {groupedOptions.map((option, index) => {
-        const { key, ...optionProps } = getOptionProps({ option, index });
-        return (
-          <li key={key} {...optionProps}>
-            <span>{props.getOptionLabel(option)}</span>
-            <SvgIcon component="check" size={16} fill="#000" />
-          </li>
-        );
-      })}
-    </Listbox>
+   <Listbox {...getListboxProps()}>
+    {groupedOptions.map((option, index) => {
+      const { key, ...optionProps } = getOptionProps({ option, index });
+      return (
+        <li
+          key={key}
+          {...optionProps}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            cursor: "pointer",
+          }}
+        >
+          <Typography fontSize={14}>{props.getOptionLabel(option)}</Typography>
+          {index === 2 && <Box sx={{transform: 'rotate(180deg)'}}><SvgIcon component="chevronLeft" size={16} fill="#000" /></Box>}
+        </li>
+      );
+    })}
+  </Listbox>
+   
   </Popper>
 )}
     </Root>

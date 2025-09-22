@@ -18,7 +18,8 @@ import SearchDrawer from '@/pages/SearchDrawer';
 import "./style.scss";
 import { getAllDirectories, getReportsByReportType, getTemplatesByTagId } from './services/template-library.service';
 import type { DirectoryType, TemplateType } from './types/template-library.type';
-import { renderDirectorySkelton } from './components/Skeleton';
+import { templateSkelton } from './components/Skeleton';
+import { useGetAllDirectories, useGetTemplatesByTagId } from './services/template-library-api-hooks';
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -55,6 +56,13 @@ const TemplateLibrary: React.FC = () => {
             pageSize: PAGE_SIZE,
     });
 
+    const { data: directoriesList, isLoading: isDirectoriesLoading, error: directoriesError } = useGetAllDirectories();
+    
+    const { data: templatesList, isLoading: isTemplatesLoading, error: templatesError} = useGetTemplatesByTagId(selectedDirectory?.tagId, paginationData);
+        const { data: reportsList, isLoading: isReportsLoading, error: reportsError} = useGetTemplatesByTagId(selectedDirectory?.reportType, paginationData);
+    console.log("===========templatesList",templatesList?.data)
+
+    const { renderDirectorySkelton } = templateSkelton;
     const openSearchDrawer = () => {
         setSearchDrawer((prev) => ({ ...prev, status: true }));
     };
@@ -92,30 +100,30 @@ const TemplateLibrary: React.FC = () => {
       })
     }
 
-    useEffect(()=>{
-      if(selectedDirectory) {
-        const tagId = selectedDirectory?.tagId;
-        const reportType = selectedDirectory?.reportType;
-        if(reportType !== undefined && reportType !== null) {
-          getAllReports(reportType);
-        }
-        else if(tagId !== undefined && tagId !== null) {
-          getAllTemplates(tagId);
-        }
-      }
-    },[selectedDirectory])
+    // useEffect(()=>{
+    //   if(selectedDirectory) {
+    //     const tagId = selectedDirectory?.tagId;
+    //     const reportType = selectedDirectory?.reportType;
+    //     if(reportType !== undefined && reportType !== null) {
+    //       getAllReports(reportType);
+    //     }
+    //     else if(tagId !== undefined && tagId !== null) {
+    //       getAllTemplates(tagId);
+    //     }
+    //   }
+    // },[selectedDirectory])
 
 
-    useEffect(()=>{
-      setLoading(prev=>({...prev, directory: true}));
-      getAllDirectories().then(res=>{
-        setLoading(prev=>({...prev, directory: false}));
-        setDirectoryData(res)
-      }).catch(error=>{
-        setLoading(prev=>({...prev, directory: false}));
-        console.log("error",error)
-      })
-    },[])
+    // useEffect(()=>{
+    //   setLoading(prev=>({...prev, directory: true}));
+    //   getAllDirectories().then(res=>{
+    //     setLoading(prev=>({...prev, directory: false}));
+    //     setDirectoryData(res)
+    //   }).catch(error=>{
+    //     setLoading(prev=>({...prev, directory: false}));
+    //     console.log("error",error)
+    //   })
+    // },[])
     
 
     return <PageTemplate>
@@ -195,12 +203,12 @@ const TemplateLibrary: React.FC = () => {
         <Box display="flex"  overflow={'auto'} >
             <Box width={'20%'}>
               {
-                loading?.directory ? renderDirectorySkelton() :
-                <DirectoryTree data={directoryData?.data || []} handleClick={handleDirectoryClick} />
+                isDirectoriesLoading ? renderDirectorySkelton() :
+                <DirectoryTree data={directoriesList?.data || []} handleClick={handleDirectoryClick} />
               }
             </Box>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
-              {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
+              {!isTemplatesLoading && !isReportsLoading  && (!templatesList?.data || templatesList?.data?.length == 0) ?  
                     <EmptyState
                         title = "To view task templates, select a folder on the left or search above"
                         description = "Nothing is selected"
@@ -212,8 +220,9 @@ const TemplateLibrary: React.FC = () => {
                       setShowCheckbox={setShowCheckbox}
                       setSelectedTemplate={setSelectedTemplate}
                       selectedTemplate={selectedTemplate}
-                      selectedDirectoryData={selectedDirectoryData}
+                      templatesList={templatesList}
                       loading={loading}
+                      isDataLoading={isTemplatesLoading || isReportsLoading}
                     />
                 }
             </Box>

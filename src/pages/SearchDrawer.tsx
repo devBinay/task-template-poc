@@ -121,14 +121,14 @@ const SearchDrawer = ({
     onClose
 }: SearchDrawerProps) => {
     const {RECENT, ADVANCE} = TEMPLATE_SEARCH_TABS;
-    const [currentTab, setCurrentTab] = useState(RECENT.value);
+    const [currentTab, setCurrentTab] = useState(ADVANCE.value);
     const handleTabChange = (e: React.SyntheticEvent, newValue: string) => {
         setCurrentTab(newValue);
     }
     return (
         <StyledDrawer
            anchor='top'
-           open={open}
+           open={true || open}
            onClose={onClose}
         >
             <Box className="template-library-search-drawer-main">

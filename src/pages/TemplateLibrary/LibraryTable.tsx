@@ -22,7 +22,9 @@ import { formatDate } from "@/pages/TemplateLibrary/components/DateFormat";
 import type { IconName } from "@/core/types/icon.type";
 import { TEMPLATE_SORTING } from "../constant";
 import type { SortOption } from "../types/constants.type";
-import { renderTemplateActionSkelton, renderTemplateCreatedSkelton, renderTemplateIconSkelton, renderTemplateNameSkelton, renderTemplateNameSkeltonDesktop, renderTemplateRowSkelton } from "./components/Skeleton";
+import { templateSkelton } from "./components/Skeleton";
+import type { PaginatedResponse } from "@/core/types/pagination.type";
+import type { ReportType, TemplateType } from "./types/template-library.type";
 
 export type TemplateLibrary = {
   template_icon: string;
@@ -91,6 +93,8 @@ type LibraryTableProps = {
   selectedTemplate: TemplateLibraryTableRowType[];
   setSelectedTemplate: (value: TemplateLibraryTableRowType[]) => void;
   hoveredRowId?: string | null;
+  templatesList: PaginatedResponse<TemplateType>,
+  isDataLoading: boolean,
   setHoveredRowId?: (value: string | null) => void;
 };
 
@@ -99,10 +103,9 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
   setShowCheckbox,
   selectedTemplate,
   setSelectedTemplate,
-  selectedDirectoryData=[],
-  loading,
+  templatesList,
+  isDataLoading,
 }) => {
-  const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
     const [tableActionMenu, setTableActionMenu] = useState<Record<"name" | "created" | "modified", MenuState>>({
         name: { status: false, anchorEl: null },
         created: { status: false, anchorEl: null },
@@ -117,6 +120,14 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
     });
     const viewportSize = useGetViewPortSize();
     const isDesktop = viewportSize === 'xl' || viewportSize === 'lg';
+    const {
+      renderTemplateActionSkelton, 
+      renderTemplateCreatedSkelton, 
+      renderTemplateIconSkelton, 
+      renderTemplateNameSkelton, 
+      renderTemplateNameSkeltonDesktop, 
+      renderTemplateRowSkelton,
+    } = templateSkelton;
 
     const handleRowSelection = (checked:boolean, rowData: TemplateLibraryTableRowType) => {
       let copyRowData = [...selectedTemplate];
@@ -145,9 +156,9 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
      * @returns void
     */
     const handleSelectAllRows = () => {
-      const isAllRowsSelected = selectedTemplate.length === selectedDirectoryData.length;
+      const isAllRowsSelected = selectedTemplate.length === templatesList?.data?.length;
       if(!isAllRowsSelected) {
-        setSelectedTemplate(selectedDirectoryData);
+        setSelectedTemplate(templatesList?.data);
       }
       else {
         setSelectedTemplate([]);
@@ -292,8 +303,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
                       padding: '0px 10px'
                     }
                   }}
-                  checked={selectedTemplate.length == selectedDirectoryData.length}
-                  indeterminate={selectedTemplate.length > 0 && showCheckbox && selectedTemplate.length !== selectedDirectoryData.length ? true : false }
+                  checked={selectedTemplate.length == templatesList?.data?.length}
+                  indeterminate={selectedTemplate.length > 0 && showCheckbox && selectedTemplate.length !== templatesList?.data?.length ? true : false }
                 />
               }
               label=""
@@ -388,6 +399,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
     }
 
     const renderTemplateNameCell = ({cell}: {cell: MRT_Cell<TemplateLibraryTableRowType>}) => {
+      console.log("====================cell",cell)
         const data = cell.row?.original;
         return (
                <Box minWidth="300px" display="flex" alignItems="center" gap="10px">
@@ -502,7 +514,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateIconHeader,
-        Cell: (loading?.templates || loading?.reports ) ? renderTemplateIconSkelton : renderTemplateIconCell,
+        Cell: isDataLoading ? renderTemplateIconSkelton : renderTemplateIconCell,
         muiTableHeadCellProps: () => ({className: "tableheader-checkbox__container", style:{width: "50px", padding: "0.8rem 0.6rem 0.8rem 1.6rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text", style: { padding: "0.8rem 0.6rem 0.8rem 1.6rem"} })
      },
@@ -513,7 +525,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateNameHeader,
-        Cell: (loading?.templates || loading?.reports ) ? isDesktop ? renderTemplateNameSkeltonDesktop : renderTemplateNameSkelton : renderTemplateNameCell,
+        Cell: isDataLoading ? isDesktop ? renderTemplateNameSkeltonDesktop : renderTemplateNameSkelton : renderTemplateNameCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding: "0.8rem 0.4rem 0.8rem 0.6rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text", style: {padding: "0.8rem 0.4rem 0.8rem 0.6rem"} })
       },
@@ -524,7 +536,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         header: "Type",
         Header: renderTemplateCommonHeader,
         size:1,
-        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateTypeCell,
+        Cell: isDataLoading ? renderTemplateRowSkelton : renderTemplateTypeCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
@@ -535,7 +547,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         header: "Status",
         size:1,
         Header: renderTemplateCommonHeader,
-        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateStatusCell,
+        Cell: isDataLoading ? renderTemplateRowSkelton : renderTemplateStatusCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },{
@@ -545,7 +557,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateCreatedHeader,
-        Cell: (loading?.templates || loading?.reports ) ? renderTemplateCreatedSkelton : renderTemplateCreatedCell,
+        Cell: isDataLoading ? renderTemplateCreatedSkelton : renderTemplateCreatedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
@@ -556,7 +568,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateModifiedHeader,
-        Cell: (loading?.templates || loading?.reports ) ? renderTemplateRowSkelton : renderTemplateModifiedCell,
+        Cell: isDataLoading ? renderTemplateRowSkelton : renderTemplateModifiedCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{width:"200px", padding:"1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text" })
       },
@@ -567,7 +579,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
         hide:false,
         size:1,
         Header: renderTemplateActionHeader,
-        Cell: (loading?.templates || loading?.reports ) ? renderTemplateActionSkelton : renderActionsCell,
+        Cell: isDataLoading ? renderTemplateActionSkelton : renderActionsCell,
         muiTableHeadCellProps: () => ({className: "template-head-text", style:{padding:"1rem 1.6rem 1rem 0.8rem"} }),
         muiTableBodyCellProps: () => ({className: "template-body-text", style:{paddingRight:"1.6rem"} })
       },
@@ -586,8 +598,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateL
 
     const templateTableProps = {
     columns: getColumns(),
-    data: (loading?.templates || loading?.reports ) 
-          ? Array.from({ length: 10 }).map((_, idx) => ({ id: `skeleton-${idx}` })) : selectedDirectoryData,
+    data: isDataLoading ? Array.from({ length: 10 }).map((_, idx) => ({ id: `skeleton-${idx}` })) : templatesList?.data,
     enableColumnActions: false,
     enableColumnFilters: false,
     enablePagination: false,
