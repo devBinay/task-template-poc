@@ -3,7 +3,7 @@ import { SimpleTreeView, TreeItem, treeItemClasses } from "@mui/x-tree-view";
 import { styled } from "@mui/material/styles";
 import SvgIcon from "@/core/components/icon/Icon";
 import Box from "@mui/material/Box";
-import "./style.scss";
+import "./TreeView.scss";
 
 type TreeNode = {
   tagId: number;
