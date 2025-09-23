@@ -59,7 +59,7 @@
     .text-field-input {
         width: 100%;
         input {
-            padding: 4px 8px;
+            padding: var(--space-md);
             border-radius: 8px;
             font-size: 15px;
             font-weight: 400;
@@ -72,7 +72,7 @@
     .dropdown-select {
         width: 100%;
         .MuiSelect-select {
-            padding: 4px 8px;
+            padding: var(--space-md);
             border-radius: 8px;
             font-size: 15px;
             font-weight: 400;
@@ -88,5 +88,6 @@
  .search-btn {
     width: 87px;
     height: 40px;;
+    // padding: var(--space-md);
  }
 }
