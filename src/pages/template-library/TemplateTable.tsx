@@ -102,7 +102,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
   selectedDirectoryData=[],
   loading,
 }) => {
-  const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
+
     const [tableActionMenu, setTableActionMenu] = useState<Record<"name" | "created" | "modified", MenuState>>({
         name: { status: false, anchorEl: null },
         created: { status: false, anchorEl: null },

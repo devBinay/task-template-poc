@@ -19,7 +19,7 @@
 }
 .template-library-table-container {
     overflow-y: auto;
-    height:80rem;
+    
     .MuiPaper-root {
         box-shadow: none;
         border-radius: 0px;
@@ -29,7 +29,6 @@
         width: auto;
     }
     .MuiTableHeadCell-root {
-        background-color: var(--bg-base);
         border-bottom: none;
         padding: 0.5rem 10rem;
     }
@@ -40,9 +39,6 @@
     .template-head-text {
         font-size: 15px;
         font-weight: 500;
-        color: #333333;
-        
-        background-color: #F4F5FA;
         &>div{
             min-width: fit-content;
             margin-top: 1rem;
@@ -50,7 +46,7 @@
      
     }
     .tableheader-checkbox__container{
-        background-color: #F4F5FA;
+    
         min-width: fit-content;
         .tableheader__checkbox{
             background-color: var(--bg-base);
@@ -70,13 +66,13 @@
     .template-body-text {
         font-size: var(--size-body);
         font-weight: 400;
-        color: #333333;
+        
         min-width: fit-content;
     }
     .template-title-text {
         font-size: 13px;
         font-weight: 400;
-        color: #5C5C5C;
+      
     }
     .cursor-pointer {
         cursor: pointer;

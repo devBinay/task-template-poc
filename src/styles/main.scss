@@ -8,5 +8,5 @@
 @use './shadows';
 @use './spacing';
 @use './variables';
-
+@use './app' as appConstants;
 @use './theme/index.scss' as theme

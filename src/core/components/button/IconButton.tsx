@@ -20,7 +20,7 @@ const IconButtonStyled = styled(ButtonBase, {
     border: "1px solid transparent",
     padding: "0.5rem",
     transition: "all 0.2s ease-in-out",
-    color: disabled ? "var(--gray-300)" : "#5C5C5C"
+    color: disabled ? "var(--gray-300)" : "var(--icon-secondary)"
   };
 
   const hoverStyles: Record<Variant, object> = {

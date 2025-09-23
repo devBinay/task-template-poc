@@ -12,7 +12,6 @@ import { styled } from "@mui/material/styles";
 import "./AppBar.scss";
 import { ThemeContext } from '@/theme-mui/ThemeProvider';
 interface AppBarProps {
-  drawerHeight: number;
   handleToggleMenu: () => void,
 }
 
@@ -30,7 +29,7 @@ const MainMenu = styled(Button)(() => ({
   }
 }));
 
-const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
+const AppBar: React.FC<AppBarProps> = ({  handleToggleMenu }) => {
   const { mode, toggleColorMode } = useContext(ThemeContext);
 
   const handleThemeToggle = () => {
@@ -41,7 +40,6 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
     console.log(value)
   }
   return <Stack className='app-bar-main-container' component={"header"}
-    sx={{ height: drawerHeight }}
   >
     <div className='logo-section'>
       {/* Logo Section */}

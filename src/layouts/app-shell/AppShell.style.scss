@@ -8,7 +8,7 @@
     .appShell__sideNavAndbody {
       display: flex;
       flex-grow: 1;
-      max-height: calc(100vh - var(--topBarHeight, 0px));
+      max-height: calc(100vh - var(--app-bar-height));
       overflow: hidden;
     }
   

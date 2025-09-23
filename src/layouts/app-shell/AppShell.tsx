@@ -2,11 +2,9 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import AppBar from '../app-bar/AppBar';
 import Sidebar from '../sidebar/Sidebar';
-import { defaultConstants } from '@/core/constants/app-constants';
 import './AppShell.style.scss'
 import { useEffect, useRef, useState } from 'react';
 import { useGetViewPortSize } from '@/utils/get-viewport-size';
-const topBarHeight = defaultConstants.topBarHeight;
 
 export default function AppShell() {
   const location = useLocation();
@@ -48,7 +46,7 @@ export default function AppShell() {
   
   return (
     <div className='appShell__container'>
-      <AppBar drawerHeight={topBarHeight} handleToggleMenu={handleToggleMenu}/>
+      <AppBar  handleToggleMenu={handleToggleMenu}/>
       <div className='appShell__sideNavAndbody'>
             <Sidebar activePath={activePath} sidebarRef={sidebarRef}/>
       <main
