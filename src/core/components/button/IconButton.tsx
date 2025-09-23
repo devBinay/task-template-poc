@@ -25,9 +25,8 @@ const IconButtonStyled = styled(ButtonBase, {
 
   const hoverStyles: Record<Variant, object> = {
     primary: {
-          color: theme?.palette.primary.main,
-          backgroundColor: alpha(theme?.palette.primary.main??"", 0.1),
-
+      color: theme?.palette.primary.main,
+        backgroundColor: alpha(theme?.palette.primary.main??"", 0.1),
     },
     secondary: {
       color: theme?.palette.secondary.main,

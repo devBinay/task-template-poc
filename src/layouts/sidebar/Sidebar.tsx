@@ -76,13 +76,14 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
  <Stack className='sidebar__container' ref={sidebarRef}>
   <div className='sidebar__switch'>
     <ButtonBase  disableRipple disableTouchRipple onClick={handleSwitchAppName}>
-    <SvgIcon component='exchange' size={18} fill={'currentColor'}/>
+    <SvgIcon component='exchange' size={18} fill="var(--icon-secondary)"/>
     <Typography sx={()=>({
       textAlign:'center',
       fontWeight:500,
       lineHeight:'2.2rem',
       transition:'ease-in-out 1s',
-      fontSize:"1.7rem"
+      fontSize:"1.7rem",
+      color: "var(--text-secondary)"
     })}>{appSwitchValue}</Typography>
     </ButtonBase>
     </div>
@@ -92,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
         const isActive = activePath === item.path;  
         const isLargeView = viewportSize === 'xl';
           return <StyledListItemButton component={Link} to={item.path} activePath={isActive}>
-            <SvgIcon component={item.icon} size={24} fill={isActive ? 'currentColor' : 'var(--icon-color-secondary)'}/>
+            <SvgIcon component={item.icon} size={24} fill={isActive ? 'currentColor' : 'var(--icon-secondary)'}/>
                 <Typography sx={()=>({
                   textAlign:'center',
                   fontSize: isLargeView ? "1.2rem": "1rem",
@@ -101,6 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
                   textOverflow: !isLargeView ? "ellipsis": "unset",
                   overflow:"hidden",
                   transition:'ease-in-out 1s',
+                  color: "var(--text-secondary)"
                 })}>{item.text}</Typography>
           </StyledListItemButton>
       

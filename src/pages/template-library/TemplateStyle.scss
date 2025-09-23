@@ -1,9 +1,9 @@
 .template-library-container {
-    & .template-library__header{
+    & .template-library-header{
         display: flex;
         align-items: center;
-       padding: var(--space-md) var(--space-xl);
-
+        padding: var(--space-md) var(--space-xl);
+        color: var(--text-primary);
     }
    
     .MuiOutlinedInput-root {
@@ -68,7 +68,7 @@
     }
    
     .template-body-text {
-        font-size: 15px;
+        font-size: var(--size-body);
         font-weight: 400;
         color: #333333;
         min-width: fit-content;

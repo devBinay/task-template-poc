@@ -125,24 +125,24 @@ const TemplateLibrary: React.FC = () => {
                backgroundColor:'var(--bg-container-1)',
                padding:'.8rem'
           }}>
-          <SvgIcon component={"chevronLeft"} fill='var(--icon-color-secondary)' size={18}/>
+          <SvgIcon component={"chevronLeft"} fill='var(--icon-secondary)' size={18}/>
           </IconButton>
-          <Typography variant='h2'>Template</Typography>
+          <Typography color="var(--text-primary)" variant='h2'>Template</Typography>
         </Stack>
         </PageTemplate.Header>
       <PageTemplate.Content>
       <Box className="template-library-container">
-         <Box display="flex"  alignItems="center" className='template-library__header'>
-            <Box width="19.2%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
+         <Box display="flex"  alignItems="center" className='template-library-header'>
+            <Box width="19.2%" fontSize="var(--size-secondary-heading)" fontWeight={500}>Folder Tree</Box>
             { selectedTemplate.length > 0 ?
-              <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize={'19px'} fontWeight={500}>
+              <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize="var(--size-secondary-heading)" fontWeight={500}>
                 <Box display="flex" alignItems="center" gap="1rem">
                   <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}} >
                   <IconButton variant='primary' disableHover disableRipple disableTouchRipple sx={{padding:0, minWidth:0}} onClick={() => setSelectedTemplate([])}>
                     <SvgIcon component="arrowUp" size={24} fill="#333333" />
                   </IconButton>
                   </Box>
-                  <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="1px">
+                  <Box fontSize="var(--size-secondary-heading)" fontWeight={500} whiteSpace="nowrap" mr="1px">
                     {selectedTemplate.length} Selected
                   </Box>
                 </Box>  
@@ -156,7 +156,7 @@ const TemplateLibrary: React.FC = () => {
                 </Box>
               </Box> :
               <Box width="80%" height="36px" display="flex" alignItems="center" gap='12px' justifyContent={"space-between"} flexGrow={1}>
-                <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="16px">
+                <Box fontSize="var(--size-secondary-heading)" fontWeight={500} whiteSpace="nowrap" mr="16px">
                     Template Library
                 </Box>
                 <Box sx={{

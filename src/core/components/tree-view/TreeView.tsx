@@ -19,9 +19,9 @@ interface TreeViewProps {
 
 const StyledTreeItem = styled(TreeItem)(() => ({
   [`& .${treeItemClasses.label}`]: {
-    fontSize: "17px",
+    fontSize: "var(--size-body)",
     fontWeight: 400,
-    color: "#333333",
+    color: "var(--text-primary)",
     borderRadius: "0px",
   },
   [`& .${treeItemClasses.content}`]: {
@@ -48,11 +48,11 @@ const StyledTreeItem = styled(TreeItem)(() => ({
 }));
 
 const ArrowRightIcon = () => (
-  <SvgIcon component="arrowRightFill" size={24} fill="#5C5C5C" />
+  <SvgIcon component="arrowRightFill" size={24} fill="var(--icon-primary)" />
 );
 
 const ArrowDownIcon = () => (
-  <SvgIcon component="arrowDownFill" size={24} fill="#5C5C5C" />
+  <SvgIcon component="arrowDownFill" size={24} fill="var(--icon-primary)" />
 );
 
 const BlankIcon = () => (<Box height="24px" width="24px"></Box>)
