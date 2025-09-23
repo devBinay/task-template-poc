@@ -1,10 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
-import AppShell from '@/layouts/AppShell';
-import About from '@/pages/About';
-import { IconsDemo } from '@/component-library/Icons';
-import { ComponentLibraryLandingPage } from '@/component-library/LandingPage';
-import NoPageFound from '@/pages/NoPageFound';
-import TemplateLibrary from '@/pages/TemplateLibrary';
+import AppShell from '@/layouts/app-shell/AppShell';
+import { IconsDemo } from '@/dev-playground/Icons';
+import { ComponentLibraryLandingPage } from '@/dev-playground/LandingPage';
+import NoPageFound from '@/layouts/NoPageFound';
+import TemplateLibrary from '@/pages/template-library';
 
 
 const getDevRoutes = ()=>{
@@ -33,7 +32,6 @@ const router = createBrowserRouter([
     element: <AppShell />,
     children: [
       { index: true, element: <TemplateLibrary /> },
-      { path: 'about', element: <About /> },
        { path: '*', element: <NoPageFound /> }
     ],
   },
