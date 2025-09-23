@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { alpha, ButtonBase, ListItemButton, Stack, styled, Typography } from '@mui/material';
 import './Sidebar.scss';
 import SvgIcon from '@/core/components/icon/Icon';
-import type { icons } from '@/core/constants/Icons';
+import type { icons } from '@/core/constants/icons';
 import { useGetViewPortSize } from '@/utils/get-viewport-size';
 
 interface SidebarProps {
