@@ -24,9 +24,10 @@ const Label = styled("label")`
 
 const InputWrapper = styled("div")(({ theme }) => ({
   width: "200px",
+  height:"36px",
   border: "1px solid #d9d9d9",
   backgroundColor: "#fff",
-  borderRadius: "4px",
+  borderRadius: "var(--space-md)",
   padding: "1px",
   display: "flex",
   flexWrap: "nowrap",
@@ -52,7 +53,6 @@ const InputWrapper = styled("div")(({ theme }) => ({
   "& input": {
     backgroundColor: "#fff",
     color: "rgba(0,0,0,.85)",
-    height: "30px",
     padding: "4px 6px",
     flexGrow: 1,
     border: 0,

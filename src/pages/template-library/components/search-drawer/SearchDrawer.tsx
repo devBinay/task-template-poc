@@ -103,7 +103,7 @@ function StyledDropdown ({
          <Select
          className='dropdown-select'
          onChange={handleChange}
-         IconComponent={()=><Box sx={{transform: `rotate(-90deg)`}}><SvgIcon component='chevronLeft' size={18} fill='#5C5C5C' /></Box>}
+         IconComponent={()=><Box sx={{transform: `rotate(-90deg)`, display:'flex'}}><SvgIcon component='chevronLeft' size={18} fill='#5C5C5C' /></Box>}
         >
             {
                options && options.length > 0 && options.map((option) => (
@@ -139,7 +139,7 @@ const SearchDrawer = ({
     return (
         <StyledDrawer
            anchor='top'
-           open={open}
+           open={true || open}
            onClose={onClose}
         >
             <Box className="template-library-search-drawer-main">
@@ -261,7 +261,7 @@ const SearchDrawer = ({
                             </Box>
                             <Box mt="25px" width="100%" display="flex" justifyContent="center" alignItems="center" gap="20px">
                                 <Button className='clear-btn'>Clear All</Button>
-                                <Button variant='primary' className='search-btn'>Search</Button>
+                                <Button variant='primary-filled' className='search-btn'>Search</Button>
                             </Box>
                         </Box>
                     </TabPanel>

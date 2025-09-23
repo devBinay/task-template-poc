@@ -68,11 +68,18 @@
     }
     .days-text-field {
         width:81px;
+        .MuiInputBase-formControl {
+            height: 36px;
+        }
+        input {
+            padding: var(--space-md);
+        }
     }
     .dropdown-select {
         width: 100%;
+        padding: var(--space-md);
         .MuiSelect-select {
-            padding: var(--space-md);
+            padding: 0px;
             border-radius: 8px;
             font-size: 15px;
             font-weight: 400;
