@@ -15,9 +15,10 @@ import SearchDrawer from '@/pages/template-library/components/search-drawer/Sear
 import "./TemplateStyle.scss";
 import { getAllDirectories, getReportsByReportType, getTemplatesByTagId } from './services/template-library.service';
 import type { DirectoryType, TemplateType } from './types/template-library.type';
-import { renderDirectorySkelton } from './components/skeleton/Skeleton';
 import TreeView from '@/core/components/tree-view/TreeView';
 import { folderTreeData } from './tableData';
+import { templateSkelton } from './components/skeleton/Skeleton';
+import { useGetAllDirectories, useGetTemplatesByTagId } from './services/template-library-api-hooks';
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -47,12 +48,16 @@ const TemplateLibrary: React.FC = () => {
     });
     const [showCheckbox, setShowCheckbox] = useState(false);
     const [selectedTemplate, setSelectedTemplate] = useState<any[]>([]);
-    const [directoryData, setDirectoryData] = useState<DirectoryType[]>();
-    const [selectedDirectoryData, setSelectedDirectoryData] = useState<TemplateType>();
+    // const [directoryData, setDirectoryData] = useState<DirectoryType[]>();
+    // const [selectedDirectoryData, setSelectedDirectoryData] = useState<TemplateType>();
     const [paginationData, setPaginationData] = useState<any>({
             currentPage: 1,
             pageSize: PAGE_SIZE,
     });
+    const { data: directoriesList, isLoading: isDirectoriesLoading, error: directoriesError } = useGetAllDirectories();
+    const { data: templatesList, isLoading: isTemplatesLoading, error: templatesError} = useGetTemplatesByTagId(selectedDirectory?.tagId, paginationData);
+    const { data: reportsList, isLoading: isReportsLoading, error: reportsError} = useGetTemplatesByTagId(selectedDirectory?.reportType, paginationData);
+    const { renderDirectorySkelton } = templateSkelton;
 
     const openSearchDrawer = () => {
         setSearchDrawer((prev) => ({ ...prev, status: true }));
@@ -66,56 +71,6 @@ const TemplateLibrary: React.FC = () => {
       event?.stopPropagation();
       setSelectedDirectory(directory);
     }
-
-    const getAllTemplates = (tagId: number) => {
-        const payload = paginationData;
-     setLoading(prev=>({...prev, templates: true}));
-          getTemplatesByTagId(tagId, payload).then(res=>{
-            setLoading(prev=>({...prev, templates: false}));
-            setSelectedDirectoryData(res?.data || []);
-        }).catch(error=>{
-            console.log("error", error)
-            setLoading(prev=>({...prev, templates: false}));
-        })
-    }
-
-    const getAllReports = (reportType: number) => {
-      setLoading(prev=>({...prev, reports: true}));
-      const payload = paginationData;
-      getReportsByReportType(reportType, payload).then(res=>{
-        setLoading(prev=>({...prev, reports: false}));
-        setSelectedDirectoryData(res?.data || []);
-      }).catch(error=>{
-        console.log("error", error)
-        setLoading(prev=>({...prev, reports: false}));
-      })
-    }
-
-    useEffect(()=>{
-      if(selectedDirectory) {
-        const tagId = selectedDirectory?.tagId;
-        const reportType = selectedDirectory?.reportType;
-        if(reportType !== undefined && reportType !== null) {
-          getAllReports(reportType);
-        }
-        else if(tagId !== undefined && tagId !== null) {
-          getAllTemplates(tagId);
-        }
-      }
-    },[selectedDirectory])
-
-
-    useEffect(()=>{
-      setLoading(prev=>({...prev, directory: true}));
-      getAllDirectories().then(res=>{
-        setLoading(prev=>({...prev, directory: false}));
-        setDirectoryData(res)
-      }).catch(error=>{
-        setLoading(prev=>({...prev, directory: false}));
-        console.log("error",error)
-      })
-    },[])
-    
 
     return <PageTemplate>
         <PageTemplate.Header>
@@ -192,14 +147,14 @@ const TemplateLibrary: React.FC = () => {
         <Box display="flex"  overflow={'auto'} >
             <Box width={'20%'}>
               {/* {  TODO : TO BE REMOVED WHEN BE IS WORKING FINE
-                loading?.directory ? renderDirectorySkelton() :
-                <TreeView data={directoryData?.data || []} handleClick={handleDirectoryClick} />
+                isDirectoriesLoading ? renderDirectorySkelton() :
+                <TreeView data={directoriesList?.data || []} handleClick={handleDirectoryClick} />
               } */}
               <TreeView data={folderTreeData?.data || []} handleClick={handleDirectoryClick} />
             </Box>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
               {/* TODO : TO BE REMOVED WHEN BE IS WORKING FINE
-              {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
+              {!isTemplatesLoading && !isReportsLoading  && (!templatesList?.data || templatesList?.data?.length == 0) ?  
                     <NoDataTemplate
                         title = "To view task templates, select a folder on the left or search above"
                         description = "Nothing is selected"
@@ -211,8 +166,8 @@ const TemplateLibrary: React.FC = () => {
                       setShowCheckbox={setShowCheckbox}
                       setSelectedTemplate={setSelectedTemplate}
                       selectedTemplate={selectedTemplate}
-                      selectedDirectoryData={selectedDirectoryData}
-                      loading={loading}
+                      templatesList={templatesList}
+                      isDataLoading={isTemplatesLoading || isReportsLoading}
                     />
                 {/* } */}
             </Box>

@@ -16,9 +16,13 @@ import type { SelectChangeEvent } from '@mui/material/Select';
 import StyledAutocomplete from '@/core/components/auto-complete/AutoComplete';
 
 const SearchField = styled(TextField)(( ) => ({
+    "& input": {
+        padding: "var(--space-md)",
+    },
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
     fontWeight: "400",
+    height: "36px",
     "& fieldset": {
       border: "1px solid lightgray",
     },
@@ -120,9 +124,17 @@ const SearchDrawer = ({
     onClose
 }: SearchDrawerProps) => {
     const {RECENT, ADVANCE} = TEMPLATE_SEARCH_TABS;
-    const [currentTab, setCurrentTab] = useState(RECENT.value);
+    const [currentTab, setCurrentTab] = useState(ADVANCE.value);
+    const [searchText, setSearchText] = useState("");
     const handleTabChange = (e: React.SyntheticEvent, newValue: string) => {
         setCurrentTab(newValue);
+    }
+    const handleSearch = (e) => {
+        setSearchText(e.target.value )
+    }
+
+    const handleClearSearch = () => {
+        setSearchText("")
     }
     return (
         <StyledDrawer
@@ -138,11 +150,13 @@ const SearchDrawer = ({
                         variant="outlined"
                         placeholder="Search by template name"
                         size="small"
+                        value={searchText}
+                        onChange={handleSearch}
                         fullWidth
                         InputProps={{
                             endAdornment: (
-                                <InputAdornment position="end">
-                                  <SvgIcon component="search" size={20} />
+                                <InputAdornment position="end" sx={{cursor:'pointer'}} onClick={searchText?.length > 0 ? handleClearSearch : null} >
+                                  <SvgIcon component={!searchText ||  searchText?.length == 0 ? "search": "close"} size={20} />
                                 </InputAdornment>
                             ),
                         }}

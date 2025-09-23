@@ -2,6 +2,7 @@
 import { createContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { ThemeProvider as MuiThemeProvider, type ThemeContextType } from '@mui/material';
 import { getTheme } from './theme';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import type { ThemeMode } from '@/core/types/theme.type';
 
 export const ThemeContext = createContext<ThemeContextType>({
@@ -11,6 +12,7 @@ export const ThemeContext = createContext<ThemeContextType>({
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<ThemeMode>('light');
+  const queryClient = new QueryClient()
 
   const colorMode = useMemo(
     () => ({
@@ -38,7 +40,9 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     <ThemeContext.Provider value={colorMode}>
       <MuiThemeProvider theme={theme}>
         {/* <CssBaseline /> */}
+        <QueryClientProvider client={queryClient}>
         {children}
+        </QueryClientProvider>
       </MuiThemeProvider>
     </ThemeContext.Provider>
   );

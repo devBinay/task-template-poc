@@ -2,9 +2,7 @@ import useAutocomplete from "@mui/material/useAutocomplete";
 import { styled } from "@mui/material/styles";
 import { autocompleteClasses } from "@mui/material/Autocomplete";
 import SvgIcon from "@/core/components/icon/Icon";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Popper from "@mui/material/Popper";
+import { Box, Typography, Popper} from "@mui/material";
 
 /* ---------- Styled Components ---------- */
 const Root = styled("div")(({ theme }) => ({
@@ -69,8 +67,7 @@ const InputWrapper = styled("div")(({ theme }) => ({
 /* ---------- Tag Item ---------- */
 interface ItemProps {
   label: string;
-  onDelete?: (event?: any) => void;
-  [key: string]: any;
+  onDelete?: (event?: React.MouseEvent<HTMLElement>) => void;
 }
 
 function Item(props: ItemProps) {
@@ -78,7 +75,7 @@ function Item(props: ItemProps) {
   return (
     <Box display="flex" alignItems="center" gap="6px" {...other}>
         <Typography fontSize="13px" fontWeight={400}>{label}</Typography>
-        <Box height="16px">
+        <Box onClick={onDelete} height="16px">
             <SvgIcon component="close" size={16} fill="#000" />
         </Box>
     </Box>
@@ -195,19 +192,28 @@ export default function StyledAutocomplete<T>(props: StyledAutocompleteProps<T>)
       </div>
 
      {groupedOptions.length > 0 && (
-  <Popper open placement="bottom-start"  anchorEl={anchorEl} style={{ zIndex: 2000 }}>
-    <Listbox {...getListboxProps()}>
+    <Popper open placement="bottom-start"  anchorEl={anchorEl} style={{ zIndex: 2000 }}>
+      <Listbox {...getListboxProps()}>
       {groupedOptions.map((option, index) => {
         const { key, ...optionProps } = getOptionProps({ option, index });
         return (
-          <li key={key} {...optionProps}>
-            <span>{props.getOptionLabel(option)}</span>
-            <SvgIcon component="check" size={16} fill="#000" />
+          <li
+            key={key}
+            {...optionProps}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              cursor: "pointer",
+            }}
+          >
+            <Typography fontSize={14}>{props.getOptionLabel(option)}</Typography>
+            {index === 2 && <Box sx={{transform: 'rotate(180deg)'}}><SvgIcon component="chevronLeft" size={16} fill="#000" /></Box>}
           </li>
         );
       })}
-    </Listbox>
-  </Popper>
+      </Listbox>
+    </Popper>
 )}
     </Root>
   );
