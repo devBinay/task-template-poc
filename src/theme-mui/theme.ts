@@ -22,6 +22,11 @@ export const getTheme = (mode: "light" | "dark") => {
   return createTheme(baseTheme, {
     components: {
       MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: "none",
+          },
+        },
         variants: [
           {
             props: { variant: "primary-filled" },
