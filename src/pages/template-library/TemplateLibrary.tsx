@@ -118,7 +118,9 @@ const TemplateLibrary: React.FC = () => {
     
 
     return <PageTemplate>
-        <PageTemplate.Header>
+        <PageTemplate.Header style={{
+          height:'5rem'
+        }}>
         <Stack direction={"row"} alignItems={'center'}>
           <IconButton variant="outline" disableHover={true} disableTouchRipple sx={{
                marginRight:'var(--space-lg)',
@@ -130,7 +132,9 @@ const TemplateLibrary: React.FC = () => {
           <Typography color="var(--text-primary)" variant='h2'>Template</Typography>
         </Stack>
         </PageTemplate.Header>
-      <PageTemplate.Content>
+      <PageTemplate.Content style={{
+        height:'calc(var(--app-content-height) - 5rem)'
+      }}>
       <Box className="template-library-container">
          <Box display="flex"  alignItems="center" className='template-library-header'>
             <Box width="19.2%" fontSize="var(--size-secondary-heading)" fontWeight={500}>Folder Tree</Box>
@@ -190,13 +194,15 @@ const TemplateLibrary: React.FC = () => {
         <Divider sx={{ borderBottomWidth: 1}} />
 
         <Box display="flex"  overflow={'auto'} >
-            <Box width={'20%'}>
+           
+          <div className="directory-tree__container">
+
               {/* {  TODO : TO BE REMOVED WHEN BE IS WORKING FINE
                 loading?.directory ? renderDirectorySkelton() :
                 <TreeView data={directoryData?.data || []} handleClick={handleDirectoryClick} />
               } */}
               <TreeView data={folderTreeData?.data || []} handleClick={handleDirectoryClick} />
-            </Box>
+          </div>
             <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
               {/* TODO : TO BE REMOVED WHEN BE IS WORKING FINE
               {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  

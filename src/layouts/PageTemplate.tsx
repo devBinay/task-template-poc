@@ -56,8 +56,9 @@ const CommonContentActionBar: React.FC<CommonContentActionBarProps> & {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100%",
+        height:'calc(100vh - var(--app-bar-height) - var(--pagetemplate-bottom-margin))',
         width: "100%",
+        
         ...style,
       }}
     >

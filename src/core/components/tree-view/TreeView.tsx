@@ -85,7 +85,7 @@ const TreeView: React.FC<TreeViewProps> = ({ data, handleClick }) => {
   );
 
   return (
-    <div className="template-directory-tree-main-container">
+   
     <SimpleTreeView
       aria-label="directory tree"
       slots={{ expandIcon: ArrowRightIcon, collapseIcon: ArrowDownIcon, endIcon: BlankIcon }}
@@ -94,7 +94,7 @@ const TreeView: React.FC<TreeViewProps> = ({ data, handleClick }) => {
     >
       {data.map((tree) => renderTree(tree))}
     </SimpleTreeView>
-    </div>
+
   );
 };
 

@@ -273,7 +273,7 @@ const renderTemplateCreatedHeader = ({ column }: { column: MRT_Column<TemplateTy
 const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateType> }) => renderHeaderWithMenu(column, "modified", TEMPLATE_SORTING.MODIFIED);
 
     const renderTemplateIconHeader = () => {
-      return <Box className="template-checkbox-container icon-header-container" >
+      return <Box className="tableheader__checkbox-container" >
         { selectedTemplate.length > 0 ?
           <FormControlLabel
               className="tableheader__checkbox cursor-pointer"
@@ -284,14 +284,15 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
                   size="small"
                   sx={{
                     '& .MuiSvgIcon-root': { fontSize: 20 },
-                      color: '#5C5C5C',
+                      color: 'var(--icon-secondary)',
                     '&.Mui-checked': {
-                      color: '#0A68DB',
-                    },
-                    '&.MuiFormControlLabel-root': {
-                      padding: '0px 10px'
-                    }
-                  }}
+                        color: 'var(--bg-primary)',
+                      },
+                      '&.MuiFormControlLabel-root': {
+                        padding: '0px 10px'
+                      }
+                    }}
+                
                   checked={selectedTemplate.length == selectedDirectoryData.length}
                   indeterminate={selectedTemplate.length > 0 && showCheckbox && selectedTemplate.length !== selectedDirectoryData.length ? true : false }
                 />
@@ -348,17 +349,18 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
                         control={
                             <Checkbox
                               size="small"
+                              aria-label="select template"
                               checked={isRowSelected(cell.row.original)}
                               sx={{
                                 '& .MuiSvgIcon-root': { fontSize: 20 },
-                                  color: '#5C5C5C',
+                                  color: 'var(--icon-secondary)',
                                 '&.Mui-checked': {
-                                    color: '#0A68DB',
+                                    color: 'var(--bg-primary)',
                                   },
                                 }}
                             />
                         }
-                      label=""
+                 
                     /> 
                      </Box>}
                {
@@ -372,9 +374,9 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
                               checked={isRowSelected(cell.row.original)}
                               sx={{
                                 '& .MuiSvgIcon-root': { fontSize: 20 },
-                                  color: '#5C5C5C',
+                                  color: 'var(--icon-secondary)',
                                 '&.Mui-checked': {
-                                    color: '#0A68DB',
+                                    color: 'var(--bg-primary)',
                                   },
                                 }}
                             />
@@ -604,6 +606,9 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
             <Table 
                 tableProps={templateTableProps}
                 isRowSelected={isRowSelected}
+                muiTableStyleProps={{
+                    height:'calc(var(--app-content-height) - 11rem)'
+                }}
             />
 
            {/* Template Preview Popup */}

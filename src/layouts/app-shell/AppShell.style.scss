@@ -1,26 +1,26 @@
-.appShell__container {
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-base);
+
+  .app-shell__layout {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
+    flex-grow: 1;
+    max-height: calc(100vh - var(--app-bar-height));
     overflow: hidden;
-    background-color: var(--bg-base);
-  
-    .appShell__sideNavAndbody {
-      display: flex;
-      flex-grow: 1;
-      max-height: calc(100vh - var(--app-bar-height));
-      overflow: hidden;
-    }
-  
-    & .appShell__body {
-      flex-grow: 1;
-      overflow-y: hidden;
-      overflow-x: hidden;
-      background-color: var(--bg-base); 
-      border-start-start-radius: var(-radius-m);
-      border-end-start-radius: var(--radius-m);
-      margin-bottom: var(--space-2xl);
-    
-    }
   }
+
+  & .app-shell__content {
+    height: var(--app-content-height);
+    flex-grow: 1;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background-color: var(--bg-base); 
+    border-start-start-radius: var(-radius-m);
+    border-end-start-radius: var(--radius-m);
+    margin-bottom: var(--space-2xl);
   
+  }
+}

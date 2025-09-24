@@ -45,12 +45,12 @@ export default function AppShell() {
   }, [isDesktop]);
   
   return (
-    <div className='appShell__container'>
+    <div className='app-shell'>
       <AppBar  handleToggleMenu={handleToggleMenu}/>
-      <div className='appShell__sideNavAndbody'>
+      <div className='app-shell__layout'>
             <Sidebar activePath={activePath} sidebarRef={sidebarRef}/>
       <main
-        className='appShell__body'
+        className='app-shell__content'
       >
         <Outlet />
       </main>
