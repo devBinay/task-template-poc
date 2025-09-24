@@ -23,7 +23,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-
+// Buttons
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     "primary-filled": true;

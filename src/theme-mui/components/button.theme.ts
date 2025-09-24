@@ -11,7 +11,7 @@ export const buttonConfig = (theme: Theme) => ({
     border: "1px solid lightgray",
     textTransform: "none" as const,
     "&:hover": {
-      backgroundColor: "#0859c5",
+      backgroundColor: theme.palette.primary.dark,
     },
   },
   iconOutlined: {

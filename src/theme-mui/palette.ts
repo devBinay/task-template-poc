@@ -1,9 +1,10 @@
-// theme/palette.ts
+const getCssVar = (name: string) =>
+  getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 const lightPalette = {
     mode: 'light' as const,
     primary: {
-      main: '#0A68DB',
+      main: getCssVar('--blue-500'),
     },
     secondary: {
       main: '#9c27b0',
@@ -38,4 +39,3 @@ const lightPalette = {
   };
   
   export { lightPalette, darkPalette };
-  
