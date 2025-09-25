@@ -63,8 +63,8 @@ const StyledMenu = styled((props: MenuProps) => (
     boxShadow: 'none',
     '& .MuiMenuItem-root': {
         fontSize:'15px',
-        fontWeight: 400,
-        color: '#333333',
+        fontWeight: "var(--weight-400)",
+        color: 'var(--text-primary)',
         padding: '4px 12px',
       '& .MuiSvgIcon-root': {
         fontSize: 18,
@@ -209,8 +209,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
           <Box>{column.columnDef.header}</Box>
 
           {selected ? <Box className="cursor-pointer" height="20px">
-            {isAscending ? <SvgIcon component="arrowDown" size={20} fill="#5C5C5C" /> :
-              <SvgIcon component="arrowUp" size={20} fill="#5C5C5C" />}
+            {isAscending ? <SvgIcon component="arrowDown" size={20} fill="var(--icon-secondary)" /> :
+              <SvgIcon component="arrowUp" size={20} fill="var(--icon-secondary)" />}
           </Box>: <Box ></Box>}
 
           <Box
@@ -219,9 +219,9 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
             onClick={(e) => handleMenuClick(e, type)}
           >
             {tableActionMenu[type].status ? (
-              <SvgIcon component="arrowUpFill" size={20} fill="#5C5C5C" />
+              <SvgIcon component="arrowUpFill" size={20} fill="var(--icon-secondary)" />
             ) : (
-              <SvgIcon component="arrowDownFill" size={20} fill="#5C5C5C" />
+              <SvgIcon component="arrowDownFill" size={20} fill="var(--icon-secondary)" />
             )}
           </Box>
 
@@ -240,8 +240,8 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                   selected={isSelected} 
                   onClick={() => handleSortSelect(type, item)}
                   sx={{
-                    color: isSelected ? "#0A68DB" : "#333333",
-                    fontWeight: isSelected ? 500 : 400,
+                    color: isSelected ? "#0A68DB" : "var(--text-primary)",
+                    fontWeight: isSelected ? "var(--weight-500)" : "var(--weight-400)",
                     "&:hover": { backgroundColor: "transparent" },
                     "&.Mui-selected": {
                       backgroundColor: "transparent",
@@ -249,7 +249,7 @@ const LibraryTable: React.FC<LibraryTableProps> = ({
                     },
                   }}
                 >
-                  <Box display="flex" alignItems="center" width="100%" color={isSelected ? "#0A68DB" : "#333333"} justifyContent="space-between">
+                  <Box display="flex" alignItems="center" width="100%" color={isSelected ? "#0A68DB" : "var(--text-primary)"} justifyContent="space-between">
                     {item?.getLabel() || ""}
                     {isSelected && (
                       <SvgIcon
@@ -464,7 +464,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
                     className="cursor-pointer"
                     onClick={() => handleTooltip(templateData.templateId)}
                   >
-                    <SvgIcon component="infoCircle" size={18} fill="#5C5C5C" />
+                    <SvgIcon component="infoCircle" size={18} fill="var(--icon-secondary)" />
                   </Box>
                 </Tooltip>
               </Box>
@@ -626,7 +626,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
               showActions={false}
             >
               <Box sx={{ borderRadius: "8px", border: "1px solid #DCDCDC"}}>
-                <Box sx={{ padding: "16px", backgroundColor: "#F4F5FA", display: "flex", gap: "10px", fontWeight: "500"}}>
+                <Box sx={{ padding: "16px", backgroundColor: "#F4F5FA", display: "flex", gap: "10px", fontWeight: "var(--weight-500)", color: "var(--base-black)"}}>
                   <Box width="70%">Question</Box>
                   <Box width="30%" ml="30px">Answer</Box>
                 </Box>

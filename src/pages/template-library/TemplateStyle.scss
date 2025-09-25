@@ -56,10 +56,9 @@
     }
 
     .template-head-text {
-        font-size: 15px;
-        font-weight: 500;
-
-        &>div {
+        font-size: var(--size-body);
+        font-weight: var(--weight-500);
+        &>div{
             min-width: fit-content;
             margin-top: 1rem;
         }
@@ -89,15 +88,15 @@
 
     .template-body-text {
         font-size: var(--size-body);
-        font-weight: 400;
-
+        font-weight: var(--weight-400);
+        
         min-width: fit-content;
     }
 
     .template-title-text {
         font-size: 13px;
-        font-weight: 400;
-
+        font-weight: var(--weight-400);
+      
     }
 
     .cursor-pointer {

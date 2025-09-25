@@ -28,7 +28,7 @@
      
         & .userInfo-name{
             font-size:var(--size-secondary-text);
-            font-weight:500;
+            font-weight:var(--weight-500);
             line-height: 2rem;
             color:var(--text-primary)
         }
@@ -36,14 +36,14 @@
             font-size:var(--size-secondary-text);
             color: var(--text-secondary);
             line-height: 2rem;
-            font-weight: 500;
+            font-weight: var(--weight-500);
             
         }
     }
     .menubar-heading {
         font-size: var(--size-secondary-text);
         color: var(--text-primary);
-        font-weight: 400;
+        font-weight: var(--weight-400);
     }
    
 }

@@ -22,12 +22,12 @@ import { folderTreeData } from './tableData';
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
-    fontWeight: "400",
+    fontWeight: "var(--weight-400)",
     "& fieldset": {
-      border: "1px solid lightgray",
+      border: "1px solid var(--border-secondary)",
     },
     "&:hover fieldset": {
-      border: "1px solid lightgray",
+      border: "1px solid var(--border-secondary)",
     },
     "&.Mui-focused fieldset": {
       border: "1px solid gray",
@@ -143,7 +143,7 @@ const TemplateLibrary: React.FC = () => {
                 <Box display="flex" alignItems="center" gap="1rem">
                   <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}} >
                   <IconButton variant='primary' disableHover disableRipple disableTouchRipple sx={{padding:0, minWidth:0}} onClick={() => setSelectedTemplate([])}>
-                    <SvgIcon component="arrowUp" size={24} fill="#333333" />
+                    <SvgIcon component="arrowUp" size={24} fill="var(--icon-primary)" />
                   </IconButton>
                   </Box>
                   <Box fontSize="var(--size-secondary-heading)" fontWeight={500} whiteSpace="nowrap" mr="1px">
@@ -202,8 +202,8 @@ const TemplateLibrary: React.FC = () => {
                 <TreeView data={directoryData?.data || []} handleClick={handleDirectoryClick} />
               } */}
               <TreeView data={folderTreeData?.data || []} handleClick={handleDirectoryClick} />
-          </div>
-            <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
+            </div>
+            <Box width={"80%"} borderLeft={"1px solid var(--border-secondary)"}>
               {/* TODO : TO BE REMOVED WHEN BE IS WORKING FINE
               {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
                     <NoDataTemplate

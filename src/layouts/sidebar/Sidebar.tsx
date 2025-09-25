@@ -79,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
     <SvgIcon component='exchange' size={18} fill="var(--icon-secondary)"/>
     <Typography sx={()=>({
       textAlign:'center',
-      fontWeight:500,
+      fontWeight: "var(--weight-500)",
       lineHeight:'2.2rem',
       transition:'ease-in-out 1s',
       fontSize:"1.7rem",

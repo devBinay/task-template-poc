@@ -61,7 +61,7 @@ const AppBar: React.FC<AppBarProps> = ({  handleToggleMenu }) => {
           color: theme.palette.primary.main,
           marginLeft: ".8rem",
           fontSize: "1.5rem",
-          fontWeight: 500,
+          fontWeight: "var(--weight-500)",
           lineHeight: '2rem',
           
         })}>
@@ -80,9 +80,9 @@ const AppBar: React.FC<AppBarProps> = ({  handleToggleMenu }) => {
       <Stack sx={{ marginLeft: "var(--space-4xl)", gap: "var(--space-xs)", flexDirection: "row" }}>
         <IconButton variant="primary" style={{padding:"1rem"}} onClick={handleThemeToggle}>
           {mode === "light" ? (
-            <SvgIcon component="sun" fill={"var(--icon-state-warning)"} size={20} />
-          ) : (
             <SvgIcon component="moon" fill={"var(--icon-secondary)"} size={18} />
+          ) : (
+            <SvgIcon component="sun" fill={"var(--icon-state-warning)"} size={20} />
           )}
         </IconButton>
         <IconButton variant="primary" style={{
@@ -108,7 +108,7 @@ const AppBar: React.FC<AppBarProps> = ({  handleToggleMenu }) => {
         <Badge badgeContent={'59+'}  sx={{
     "& .MuiBadge-badge": {
       top:".4rem", 
-      fontWeight: 400,
+      fontWeight: "var(--weight-400)",
       fontSize: "1.5rem",
     },
   }}color="error" overlap="rectangular" >

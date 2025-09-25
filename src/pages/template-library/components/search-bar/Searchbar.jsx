@@ -7,16 +7,15 @@ import IconButton from "@mui/material/IconButton";
 const SearchField = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
-    // fontSize: "12px",
-    fontWeight: "400",
+    fontWeight: "var(--weight-400)",
     "& fieldset": {
-      border: "1px solid lightgray",
+      border: "1px solid var(--border-secondary)",
     },
     "&:hover fieldset": {
-      border: "1px solid lightgray",
+      border: "1px solid var(--border-secondary)",
     },
     "&.Mui-focused fieldset": {
-      border: "1px solid gray",
+      border: "1px solid var(--border-secondary)",
     },
   },
 }));

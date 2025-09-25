@@ -20,8 +20,8 @@ const Label = styled("label")`
   line-height: 1.5;
   display: block;
   font-size: 13px;
-  font-weight: 400;
-  color: #5C5C5C;
+  font-weight: var(--weight-400);
+  color: var(--text-primary);
 `;
 
 const InputWrapper = styled("div")(({ theme }) => ({
@@ -36,7 +36,7 @@ const InputWrapper = styled("div")(({ theme }) => ({
   whiteSpace: "nowrap",
   ...theme.applyStyles?.("dark", {
     borderColor: "#434343",
-    backgroundColor: "#141414",
+    // backgroundColor: "#141414",
   }),
   "&:hover": {
     borderColor: "#40a9ff",
@@ -61,7 +61,7 @@ const InputWrapper = styled("div")(({ theme }) => ({
     outline: 0,
     ...theme.applyStyles?.("dark", {
       color: "rgba(255,255,255,0.65)",
-      backgroundColor: "#141414",
+      // backgroundColor: "#141414",
     }),
   },
 }));
@@ -123,7 +123,6 @@ const Listbox = styled("ul")(({ theme }) => ({
   boxShadow: "0 2px 8px rgb(0 0 0 / 0.15)",
   zIndex: 2000,
   ...theme.applyStyles?.("dark", {
-    backgroundColor: "#141414",
   }),
   "& li": {
     padding: "5px 12px",
@@ -137,7 +136,7 @@ const Listbox = styled("ul")(({ theme }) => ({
   },
   "& li[aria-selected='true']": {
     backgroundColor: "#fafafa",
-    fontWeight: 600,
+    fontWeight: "var(--weight-600)",
     "& svg": { color: "#1890ff" },
   },
   [`& li.${autocompleteClasses.focused}`]: {

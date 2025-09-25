@@ -18,12 +18,12 @@ import StyledAutocomplete from '@/core/components/auto-complete/AutoComplete';
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
-    fontWeight: "400",
+    fontWeight: "var(--weight-400)",
     "& fieldset": {
-      border: "1px solid lightgray",
+      border: "1px solid var(--border-secondary)",
     },
     "&:hover fieldset": {
-      border: "1px solid lightgray",
+      border: "1px solid var(--border-secondary)",
     },
     "&.Mui-focused fieldset": {
       border: "1px solid gray",
@@ -43,15 +43,15 @@ const StyledDrawer = styled(Drawer)(() => ({
 }))
 
 const StyledTabs = styled(Tabs)(() => ({
-    borderBottom: '1px solid #DCDCDC',
+    borderBottom: '1px solid var(--border-secondary)',
     minHeight: 'auto',
     '& .MuiButtonBase-root': {
-        padding:"4px 12px",
+        padding:"10px 12px",
         minHeight:"auto",
         textTransform:'capitalize',
         fontSize:'15px',
-        fontWeight:400,
-        color:'#5C5C5C',
+        fontWeight:'var(--weight-400)',
+        color:'var(--text-primary)',
     }
 }));
 
@@ -99,7 +99,7 @@ function StyledDropdown ({
          <Select
          className='dropdown-select'
          onChange={handleChange}
-         IconComponent={()=><Box sx={{transform: `rotate(-90deg)`}}><SvgIcon component='chevronLeft' size={18} fill='#5C5C5C' /></Box>}
+         IconComponent={()=><Box sx={{transform: `rotate(-90deg)`}}><SvgIcon component='chevronLeft' size={18} fill='var(--icon-secondary)' /></Box>}
         >
             {
                options && options.length > 0 && options.map((option) => (
@@ -132,7 +132,7 @@ const SearchDrawer = ({
         >
             <Box className="template-library-search-drawer-main">
                 <Box display="flex" alignItems="center" padding="12px 12px 4px 12px">
-                    <Button className='back-btn' startIcon={<SvgIcon component='chevronLeft' fill='#000' size="24px"/>}></Button>
+                    <Button className='back-btn' onClick={onClose} startIcon={<SvgIcon component='chevronLeft' fill="var(--icon-secondary)" size="24px"/>}></Button>
                      <SearchField
                         className="search-bar"
                         variant="outlined"
@@ -142,13 +142,13 @@ const SearchDrawer = ({
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                  <SvgIcon component="search" size={20} />
+                                  <SvgIcon component="search" size={20} fill="var(--icon-secondary)" />
                                 </InputAdornment>
                             ),
                         }}
                     />
                 </Box>
-                <Divider color='#DCDCDC'/>
+                <Divider />
                 <Box className="tab-container">
                     <StyledTabs onChange={handleTabChange} value={currentTab}>
                         <Tab label={RECENT.label} value={RECENT.value}/>
@@ -159,7 +159,7 @@ const SearchDrawer = ({
                             <Box className="recent-search-main">
                                 <Box className="recent-search-item">
                                     <Box height="24px">
-                                        <SvgIcon component='history' size={24} fill='#5C5C5C' />
+                                        <SvgIcon component='history' size={24} fill='var(--icon-secondary)' />
                                     </Box>
                                     <Box>
                                         <Typography className='template-name'>Bakery Cleaning <span className='template-code'>(TT-59141)</span></Typography>
@@ -174,7 +174,7 @@ const SearchDrawer = ({
                              <Box className="recent-search-main">
                                 <Box className="recent-search-item">
                                     <Box height="24px">
-                                        <SvgIcon component='history' size={24} fill='#5C5C5C' />
+                                        <SvgIcon component='history' size={24} fill='var(--icon-secondary)' />
                                     </Box>
                                     <Box>
                                         <Typography className='template-name'>Bakery Annual Safety Training 2021 <span className='template-code'>(TT-59142)</span></Typography>
@@ -189,7 +189,7 @@ const SearchDrawer = ({
                              <Box className="recent-search-main">
                                 <Box className="recent-search-item">
                                     <Box height="24px">
-                                        <SvgIcon component='history' size={24} fill='#5C5C5C' />
+                                        <SvgIcon component='history' size={24} fill='var(--icon-secondary)' />
                                     </Box>
                                     <Box>
                                         <Typography className='template-name'>Bakery Annual Safety Training 2021 <span className='template-code'>(TT-59142)</span></Typography>

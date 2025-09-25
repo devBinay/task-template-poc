@@ -20,7 +20,7 @@ interface TreeViewProps {
 const StyledTreeItem = styled(TreeItem)(() => ({
   [`& .${treeItemClasses.label}`]: {
     fontSize: "var(--size-body)",
-    fontWeight: 400,
+    fontWeight: "var(--weight-400)",
     color: "var(--text-primary)",
     borderRadius: "0px",
   },
@@ -40,7 +40,7 @@ const StyledTreeItem = styled(TreeItem)(() => ({
   },
   [`& .${treeItemClasses.content}.${treeItemClasses.selected} .${treeItemClasses.label}`]: {
     color: "#0A68DB",
-    fontWeight: 500,
+    fontWeight: "var(--weight-500)",
   },
   [`& .MuiTreeItem-iconContainer`]: {
     width: "auto",
