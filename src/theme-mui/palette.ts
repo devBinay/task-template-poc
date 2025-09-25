@@ -1,9 +1,13 @@
-const getCssVar = (name: string) =>
-  getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+import { buttonPalette } from "./components/button/button.palette";
+
+export function getCssVar(name: string) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+  
 
 const lightPalette = {
     mode: 'light' as const,
-    primary: {
+    base: {
       main: getCssVar('--blue-500'),
     },
     secondary: {
@@ -21,7 +25,7 @@ const lightPalette = {
   
   const darkPalette = {
     mode: 'dark' as const,
-    primary: {
+    base: {
       main: '#90caf9',
     },
     secondary: {

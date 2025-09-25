@@ -89,13 +89,15 @@ interface StyledDropdownProps {
   value?: string | number;
   width?: string;
   options?: DropdownOption[];
+  placeholder?: string;
 }
 
 function StyledDropdown ({
   label = "",
   handleChange = () => {},
   width = "100%",
-  options = []
+  options = [],
+  placeholder="",
 }: StyledDropdownProps) {
     return (
       <Box width={width}>
@@ -103,6 +105,14 @@ function StyledDropdown ({
          <Select
          className='dropdown-select'
          onChange={handleChange}
+         defaultValue=""
+        displayEmpty
+        renderValue={(selected) => {
+            if (!selected) {
+            return <span style={{fontSize:"15px", fontWeight:400, color: "#888888" }}>{placeholder}</span>;
+            }
+    return options.find((opt) => opt.value === selected)?.label;
+  }}
          IconComponent={()=><Box sx={{transform: `rotate(-90deg)`, display:'flex'}}><SvgIcon component='chevronLeft' size={18} fill='#5C5C5C' /></Box>}
         >
             {
@@ -228,6 +238,7 @@ const SearchDrawer = ({
                                 label='Task Type'
                                 width="15%"
                                 options={TEMPLATE_TASK_TYPE_OPTIONS}
+                                placeholder="Select Task Type"
                                 />
 
                                  <StyledDropdown
@@ -240,7 +251,7 @@ const SearchDrawer = ({
                                 <Box display="flex" alignItems="center" gap="8px" mt="25px">
                                     <Typography className='text-label'>Show tasks modified in last:</Typography>
                                     <Box>
-                                        <TextField type='number' className='text-field-input days-text-field' fullWidth variant='outlined'/>
+                                        <TextField  className='text-field-input days-text-field' fullWidth variant='outlined'/>
                                     </Box>
                                     <Typography className='text-label'>days</Typography>
                                 </Box>
@@ -261,7 +272,8 @@ const SearchDrawer = ({
                             </Box>
                             <Box mt="25px" width="100%" display="flex" justifyContent="center" alignItems="center" gap="20px">
                                 <Button className='clear-btn'>Clear All</Button>
-                                <Button variant='primary-filled' className='search-btn'>Search</Button>
+                                <Button variant='primary' btnType="default" className='search-btn'>Search</Button>
+                                <Button variant="primary" btnType="danger" size="small">Delete</Button>
                             </Box>
                         </Box>
                     </TabPanel>

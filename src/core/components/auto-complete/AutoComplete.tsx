@@ -110,20 +110,20 @@ const StyledItem = styled(Item)<ItemProps>(({ theme }) => ({
 const Listbox = styled("ul")(({ theme }) => ({
   width: "200px",
   margin: "2px 0 0",
-  padding: 0,
+  padding: "6px",
   position: "absolute",
   listStyle: "none",
   backgroundColor: "#fff",
   maxHeight: "250px",
   overflow: "auto",
-  borderRadius: "4px",
+  borderRadius: "8px",
   boxShadow: "0 2px 8px rgb(0 0 0 / 0.15)",
   zIndex: 2000,
   ...theme.applyStyles?.("dark", {
     backgroundColor: "#141414",
   }),
   "& li": {
-    padding: "5px 12px",
+    padding: "8px 12px",
     display: "flex",
     "& span": {
       flexGrow: 1,
@@ -138,7 +138,8 @@ const Listbox = styled("ul")(({ theme }) => ({
     "& svg": { color: "#1890ff" },
   },
   [`& li.${autocompleteClasses.focused}`]: {
-    backgroundColor: "#e6f7ff",
+    backgroundColor: "var(--blue-50)",
+    borderRadius: "6px",
     cursor: "pointer",
     "& svg": { color: "currentColor" },
   },
