@@ -2,9 +2,7 @@ import useAutocomplete from "@mui/material/useAutocomplete";
 import { styled } from "@mui/material/styles";
 import { autocompleteClasses } from "@mui/material/Autocomplete";
 import SvgIcon from "@/core/components/icon/Icon";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Popper from "@mui/material/Popper";
+import { Box, Typography, Popper} from "@mui/material";
 
 /* ---------- Styled Components ---------- */
 const Root = styled("div")(({ theme }) => ({
@@ -26,9 +24,10 @@ const Label = styled("label")`
 
 const InputWrapper = styled("div")(({ theme }) => ({
   width: "200px",
+  height:"36px",
   border: "1px solid #d9d9d9",
   backgroundColor: "#fff",
-  borderRadius: "4px",
+  borderRadius: "var(--space-md)",
   padding: "1px",
   display: "flex",
   flexWrap: "nowrap",
@@ -36,7 +35,7 @@ const InputWrapper = styled("div")(({ theme }) => ({
   whiteSpace: "nowrap",
   ...theme.applyStyles?.("dark", {
     borderColor: "#434343",
-    // backgroundColor: "#141414",
+    backgroundColor: "#141414",
   }),
   "&:hover": {
     borderColor: "#40a9ff",
@@ -52,16 +51,15 @@ const InputWrapper = styled("div")(({ theme }) => ({
     }),
   },
   "& input": {
-    backgroundColor: "#fff",
+    backgroundColor: "var(--bg-container-1)",
     color: "rgba(0,0,0,.85)",
-    height: "30px",
     padding: "4px 6px",
     flexGrow: 1,
     border: 0,
     outline: 0,
     ...theme.applyStyles?.("dark", {
       color: "rgba(255,255,255,0.65)",
-      // backgroundColor: "#141414",
+      backgroundColor: "var(--bg-container-1)",
     }),
   },
 }));
@@ -69,8 +67,7 @@ const InputWrapper = styled("div")(({ theme }) => ({
 /* ---------- Tag Item ---------- */
 interface ItemProps {
   label: string;
-  onDelete?: (event?: any) => void;
-  [key: string]: any;
+  onDelete?: (event?: React.MouseEvent<HTMLElement>) => void;
 }
 
 function Item(props: ItemProps) {
@@ -78,7 +75,7 @@ function Item(props: ItemProps) {
   return (
     <Box display="flex" alignItems="center" gap="6px" {...other}>
         <Typography fontSize="13px" fontWeight={400}>{label}</Typography>
-        <Box height="16px">
+        <Box onClick={onDelete} height="16px">
             <SvgIcon component="close" size={16} fill="#000" />
         </Box>
     </Box>
@@ -110,22 +107,26 @@ const StyledItem = styled(Item)<ItemProps>(({ theme }) => ({
 }));
 
 /* ---------- Listbox ---------- */
-const Listbox = styled("ul")(({ theme }) => ({
+const Listbox = styled("ul")(({ theme }) => {
+  console.log("theme",theme)
+  return {
   width: "200px",
   margin: "2px 0 0",
-  padding: 0,
+  padding: "6px",
   position: "absolute",
   listStyle: "none",
   backgroundColor: "#fff",
   maxHeight: "250px",
   overflow: "auto",
-  borderRadius: "4px",
+  borderRadius: "8px",
   boxShadow: "0 2px 8px rgb(0 0 0 / 0.15)",
   zIndex: 2000,
   ...theme.applyStyles?.("dark", {
+    backgroundColor: "var(--bg-container-1)",
+    color: "var(--text-primary)"
   }),
   "& li": {
-    padding: "5px 12px",
+    padding: "8px 12px",
     display: "flex",
     "& span": {
       flexGrow: 1,
@@ -140,11 +141,14 @@ const Listbox = styled("ul")(({ theme }) => ({
     "& svg": { color: "#1890ff" },
   },
   [`& li.${autocompleteClasses.focused}`]: {
-    backgroundColor: "#e6f7ff",
+    backgroundColor: "var(--bg-primary-x-subtle)",
+    borderRadius: "6px",
     cursor: "pointer",
     "& svg": { color: "currentColor" },
   },
-}));
+}
+}
+);
 
 /* ---------- Props ---------- */
 export type StyledAutocompleteProps<T> = {
@@ -194,19 +198,28 @@ export default function StyledAutocomplete<T>(props: StyledAutocompleteProps<T>)
       </div>
 
      {groupedOptions.length > 0 && (
-  <Popper open placement="bottom-start"  anchorEl={anchorEl} style={{ zIndex: 2000 }}>
-    <Listbox {...getListboxProps()}>
+    <Popper open placement="bottom-start"  anchorEl={anchorEl} style={{ zIndex: 2000 }}>
+      <Listbox {...getListboxProps()}>
       {groupedOptions.map((option, index) => {
         const { key, ...optionProps } = getOptionProps({ option, index });
         return (
-          <li key={key} {...optionProps}>
-            <span>{props.getOptionLabel(option)}</span>
-            <SvgIcon component="check" size={16} fill="#000" />
+          <li
+            key={key}
+            {...optionProps}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              cursor: "pointer",
+            }}
+          >
+            <Typography fontSize={14}>{props.getOptionLabel(option)}</Typography>
+            {index === 2 && <Box sx={{transform: 'rotate(180deg)'}}><SvgIcon component="chevronLeft" size={16} fill="#000" /></Box>}
           </li>
         );
       })}
-    </Listbox>
-  </Popper>
+      </Listbox>
+    </Popper>
 )}
     </Root>
   );

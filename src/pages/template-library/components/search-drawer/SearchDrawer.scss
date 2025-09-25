@@ -59,20 +59,7 @@
     .text-field-input {
         width: 100%;
         input {
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: var(--weight-400);
-            color: var(--text-primary);
-        }
-    }
-    .days-text-field {
-        width:81px;
-    }
-    .dropdown-select {
-        width: 100%;
-        .MuiSelect-select {
-            padding: 4px 8px;
+            padding: var(--space-md);
             border-radius: 8px;
             font-size: 15px;
             font-weight: var(--weight-400);
@@ -80,7 +67,31 @@
             background-color: var(--bg-container-1);
         }
     }
- }
+    .days-text-field {
+        width:81px;
+        .MuiInputBase-formControl {
+            height: 36px;
+        }
+        input {
+            padding: var(--space-md);
+        }
+    }
+    .dropdown-select {
+        width: 100%;
+        padding: var(--space-md);
+        background-color: var(--bg-container-1);
+
+        .MuiSelect-select {
+            padding: 0px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: var(--weight-400);
+            color: var(--text-primary);
+            // background-color: var(--bg-primary-x-subtle);
+        }
+    }
+}
+
  .clear-btn {
     color: #0A68DB;
     font-size: 15px;
@@ -89,5 +100,9 @@
  .search-btn {
     width: 87px;
     height: 40px;
+    font-size: var(--size-body);
+    font-weight: var(--weight-400);
+    background-color: var(--bg-primary);
  }
+
 }
