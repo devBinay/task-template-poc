@@ -76,14 +76,14 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
  <Stack className='sidebar__container' ref={sidebarRef}>
   <div className='sidebar__switch'>
     <ButtonBase  disableRipple disableTouchRipple onClick={handleSwitchAppName}>
-    <SvgIcon component='exchange' size={18} fill="var(--icon-secondary)"/>
+    <SvgIcon component='exchange' size={18} fill="var(--icon-state-information)"/>
     <Typography sx={()=>({
       textAlign:'center',
       fontWeight: "var(--weight-500)",
       lineHeight:'2.2rem',
       transition:'ease-in-out 1s',
       fontSize:"1.7rem",
-      color: "var(--text-secondary)"
+      color: "var(--text-state-Navbar_active)"
     })}>{appSwitchValue}</Typography>
     </ButtonBase>
     </div>
