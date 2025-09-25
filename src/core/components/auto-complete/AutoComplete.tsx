@@ -19,7 +19,7 @@ const Label = styled("label")`
   display: block;
   font-size: 13px;
   font-weight: var(--weight-400);
-  color: var(--text-primary);
+  color: var(--text-secondary);
 `;
 
 const InputWrapper = styled("div")(({ theme }) => ({
