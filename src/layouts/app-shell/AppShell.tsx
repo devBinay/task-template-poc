@@ -5,7 +5,7 @@ import Sidebar from '../sidebar/Sidebar';
 import { defaultConstants } from '@/core/constants/app-constants';
 import './AppShell.style.scss'
 import { useEffect, useRef, useState } from 'react';
-import { useGetViewPortSize } from '@/utils/getViewPortSize';
+import { useGetViewPortSize } from '@/utils/get-viewport-size';
 const topBarHeight = defaultConstants.topBarHeight;
 
 export default function AppShell() {

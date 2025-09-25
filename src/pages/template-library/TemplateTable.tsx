@@ -11,7 +11,7 @@ import Table from "@/core/components/table/Table";
 import SvgIcon from "@/core/components/icon/Icon";
 import CommonModal from "@/core/components/modal/Modal";
 import { renderPreviewPopupRow, renderPreviewHeading } from "@/pages/template-library/components/preview-type/PreviewType";
-import { useGetViewPortSize } from "@/utils/getViewPortSize";
+import { useGetViewPortSize } from "@/utils/get-viewport-size";
 import "./TemplateStyle.scss";
 import type { MRT_Cell, MRT_Column } from "material-react-table";
 import { formatDate } from "@/pages/template-library/constants/constant";

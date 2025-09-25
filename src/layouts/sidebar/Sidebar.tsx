@@ -4,7 +4,7 @@ import { alpha, ButtonBase, ListItemButton, Stack, styled, Typography } from '@m
 import './Sidebar.scss';
 import SvgIcon from '@/core/components/icon/Icon';
 import type { icons } from '@/core/constants/Icons';
-import { useGetViewPortSize } from '@/utils/getViewPortSize';
+import { useGetViewPortSize } from '@/utils/get-viewport-size';
 
 interface SidebarProps {
   activePath: string;

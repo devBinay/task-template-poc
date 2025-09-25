@@ -1,7 +1,8 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import type { ViewportSize } from '@/core/types/viewport.type';
 
-export type ViewportSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
 
 export const useGetViewPortSize = (): ViewportSize => {
     const theme = useTheme();
