@@ -1,5 +1,5 @@
 import React from "react";
-import { icons } from "@/core/constants/Icons";
+import { icons } from "@/core/constants/icons";
 import Box from "@mui/material/Box";
 import type { IconName } from "@/core/types/icon.type";
 

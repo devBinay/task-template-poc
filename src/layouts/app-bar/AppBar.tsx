@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import { defaultConstants } from '@/core/constants/app-constants';
 import clientLogo from "@/assets/logile-logo.svg"
@@ -10,8 +10,8 @@ import NavSearchBar from './components/search-bar/SearchBar';
 import SvgIcon from '@/core/components/icon/Icon';
 import { styled } from "@mui/material/styles";
 import "./AppBar.scss";
+import { ThemeContext } from '@/theme-mui/ThemeProvider';
 interface AppBarProps {
-  drawerHeight: number;
   handleToggleMenu: () => void,
 }
 
@@ -29,12 +29,17 @@ const MainMenu = styled(Button)(() => ({
   }
 }));
 
-const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
+const AppBar: React.FC<AppBarProps> = ({  handleToggleMenu }) => {
+  const { mode, toggleColorMode } = useContext(ThemeContext);
+
+  const handleThemeToggle = () => {
+    toggleColorMode();
+  };
+
   const handleSearch = (value: string) => {
     console.log(value)
   }
   return <Stack className='app-bar-main-container' component={"header"}
-    sx={{ height: drawerHeight }}
   >
     <div className='logo-section'>
       {/* Logo Section */}
@@ -44,7 +49,7 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
       }}>
             <Box sx={{marginRight: "2.4rem"}}>
           <MainMenu onClick={handleToggleMenu} startIcon={
-            <SvgIcon component="hamburger" size={24} />
+            <SvgIcon component="hamburger" size={24} fill="var(--icon-primary)" />
           }>
 
           </MainMenu>
@@ -56,7 +61,7 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
           color: theme.palette.primary.main,
           marginLeft: ".8rem",
           fontSize: "1.5rem",
-          fontWeight: 500,
+          fontWeight: "var(--weight-500)",
           lineHeight: '2rem',
           
         })}>
@@ -73,30 +78,37 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
       </Stack>
       {/* Icons Section */}
       <Stack sx={{ marginLeft: "var(--space-4xl)", gap: "var(--space-xs)", flexDirection: "row" }}>
-        <IconButton variant="primary" style={{
-          padding:"1rem"
-        }}>
-          <SvgIcon component="calendarBlank" fill={"var(--icon-color-secondary)"} size={20}  />
+        <IconButton variant="primary" style={{padding:"1rem"}} onClick={handleThemeToggle}>
+          {mode === "light" ? (
+            <SvgIcon component="moon" fill={"var(--icon-secondary)"} size={18} />
+          ) : (
+            <SvgIcon component="sun" fill={"var(--icon-state-warning)"} size={20} />
+          )}
         </IconButton>
         <IconButton variant="primary" style={{
           padding:"1rem"
         }}>
-          <SvgIcon component="clipboardToDo" fill={"var(--icon-color-secondary)"} size={20} />
+          <SvgIcon component="calendarBlank" fill={"var(--icon-secondary)"} size={20}  />
         </IconButton>
         <IconButton variant="primary" style={{
           padding:"1rem"
         }}>
-          <SvgIcon component="envelope" fill={"var(--icon-color-secondary)"} size={20} />
+          <SvgIcon component="clipboardToDo" fill={"var(--icon-secondary)"} size={20} />
+        </IconButton>
+        <IconButton variant="primary" style={{
+          padding:"1rem"
+        }}>
+          <SvgIcon component="envelope" fill={"var(--icon-secondary)"} size={20} />
         </IconButton>
         <IconButton variant="primary"  style={{
           padding:"1rem"
         }}>
-          <SvgIcon component="comment" fill={"var(--icon-color-secondary)"} size={20} />
+          <SvgIcon component="comment" fill={"var(--icon-secondary)"} size={20} />
         </IconButton>
         <Badge badgeContent={'59+'}  sx={{
     "& .MuiBadge-badge": {
       top:".4rem", 
-      fontWeight: 400,
+      fontWeight: "var(--weight-400)",
       fontSize: "1.5rem",
     },
   }}color="error" overlap="rectangular" >
@@ -104,7 +116,7 @@ const AppBar: React.FC<AppBarProps> = ({ drawerHeight, handleToggleMenu }) => {
           padding:"1rem",
           
         }}>
-          <SvgIcon component="notification" fill={"var(--icon-color-secondary)"} size={20} />
+          <SvgIcon component="notification" fill={"var(--icon-secondary)"} size={20} />
         </IconButton>
           </Badge>
       </Stack>

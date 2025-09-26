@@ -75,10 +75,9 @@ interface navSearchBarProps {
       value={value} 
       onChange={onChange} 
       onKeyDown={checkForEnter}
-
       />
        <SearchIconWrapper>
-      <SvgIcon component={props.icon as IconName} fill={"var(--icon-color-secondary)"} size={18}/>
+      <SvgIcon component={props.icon as IconName} fill={"var(--icon-secondary)"} size={18}/>
       </SearchIconWrapper>
       </Search>
   }

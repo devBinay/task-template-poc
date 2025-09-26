@@ -1,5 +1,10 @@
 import PageTemplate from "@/layouts/PageTemplate"
+
+
 const NoPageFound = () => {
+
+
+  
   return (
     <PageTemplate>
       <PageTemplate.Content>

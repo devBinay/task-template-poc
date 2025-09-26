@@ -19,9 +19,9 @@ interface TreeViewProps {
 
 const StyledTreeItem = styled(TreeItem)(() => ({
   [`& .${treeItemClasses.label}`]: {
-    fontSize: "17px",
-    fontWeight: 400,
-    color: "#333333",
+    fontSize: "var(--size-body)",
+    fontWeight: "var(--weight-400)",
+    color: "var(--text-primary)",
     borderRadius: "0px",
   },
   [`& .${treeItemClasses.content}`]: {
@@ -40,7 +40,7 @@ const StyledTreeItem = styled(TreeItem)(() => ({
   },
   [`& .${treeItemClasses.content}.${treeItemClasses.selected} .${treeItemClasses.label}`]: {
     color: "#0A68DB",
-    fontWeight: 500,
+    fontWeight: "var(--weight-500)",
   },
   [`& .MuiTreeItem-iconContainer`]: {
     width: "auto",
@@ -48,11 +48,11 @@ const StyledTreeItem = styled(TreeItem)(() => ({
 }));
 
 const ArrowRightIcon = () => (
-  <SvgIcon component="arrowRightFill" size={24} fill="#5C5C5C" />
+  <SvgIcon component="arrowRightFill" size={24} fill="var(--icon-primary)" />
 );
 
 const ArrowDownIcon = () => (
-  <SvgIcon component="arrowDownFill" size={24} fill="#5C5C5C" />
+  <SvgIcon component="arrowDownFill" size={24} fill="var(--icon-primary)" />
 );
 
 const BlankIcon = () => (<Box height="24px" width="24px"></Box>)
@@ -85,7 +85,7 @@ const TreeView: React.FC<TreeViewProps> = ({ data, handleClick }) => {
   );
 
   return (
-    <div className="template-directory-tree-main-container">
+   
     <SimpleTreeView
       aria-label="directory tree"
       slots={{ expandIcon: ArrowRightIcon, collapseIcon: ArrowDownIcon, endIcon: BlankIcon }}
@@ -94,7 +94,7 @@ const TreeView: React.FC<TreeViewProps> = ({ data, handleClick }) => {
     >
       {data.map((tree) => renderTree(tree))}
     </SimpleTreeView>
-    </div>
+
   );
 };
 

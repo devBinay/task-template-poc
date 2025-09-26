@@ -27,9 +27,9 @@ const UserProfileInfoCard: React.FC<UserProfileInfoCardProps> = ({user}) => {
       <div>
         {
           isDropdownOpen ? (
-            <SvgIcon component="arrowUpFill" size={20} fill="#5C5C5C" />
+            <SvgIcon component="arrowUpFill" size={20} fill="var(--icon-secondary)" />
           ) : (
-            <SvgIcon component="arrowDownFill" size={20} fill="#5C5C5C" />
+            <SvgIcon component="arrowDownFill" size={20} fill="var(--icon-secondary)" />
           )
         }
           <Menu
@@ -55,70 +55,70 @@ const UserProfileInfoCard: React.FC<UserProfileInfoCardProps> = ({user}) => {
             <ListItemIcon>
               <SvgIcon component="user" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>Change Role</Typography>
+            <Typography className="menubar-heading">Change Role</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="focus" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>Set Focus</Typography>
+            <Typography className="menubar-heading">Set Focus</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="users" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>User Profile</Typography>
+            <Typography className="menubar-heading">User Profile</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="edit" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>Modify Dashboard</Typography>
+            <Typography className="menubar-heading">Modify Dashboard</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="userMinus" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>Reduce Role</Typography>
+            <Typography className="menubar-heading">Reduce Role</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="userSetting" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>User Management</Typography>
+            <Typography className="menubar-heading">User Management</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="userStar" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>Admin Mode</Typography>
+            <Typography className="menubar-heading">Admin Mode</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="theme" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>Theme</Typography>
+            <Typography className="menubar-heading">Theme</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="globe" size={18} />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>Language</Typography>
+            <Typography className="menubar-heading">Language</Typography>
           </MenuItem>
 
           <MenuItem onClick={handleClose} sx={{padding:'1rem 1.5rem'}}>
             <ListItemIcon>
               <SvgIcon component="signout" size={18} fill="#F44336" />
             </ListItemIcon>
-            <Typography className="menubar-heading" sx={{color: "#333333"}}>
+            <Typography className="menubar-heading">
               Logout
             </Typography>
           </MenuItem>

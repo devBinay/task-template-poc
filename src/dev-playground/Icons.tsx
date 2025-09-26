@@ -1,5 +1,5 @@
 import SvgIcon from '@/core/components/icon/Icon';
-import { icons } from '@/core/constants/Icons';
+import { icons } from '@/core/constants/icons';
 import type { IconName } from '@/core/types/icon.type';
 
 export const IconsDemo: React.FC = () => {

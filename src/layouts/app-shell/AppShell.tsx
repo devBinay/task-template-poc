@@ -2,11 +2,9 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import AppBar from '../app-bar/AppBar';
 import Sidebar from '../sidebar/Sidebar';
-import { defaultConstants } from '@/core/constants/app-constants';
 import './AppShell.style.scss'
 import { useEffect, useRef, useState } from 'react';
 import { useGetViewPortSize } from '@/utils/get-viewport-size';
-const topBarHeight = defaultConstants.topBarHeight;
 
 export default function AppShell() {
   const location = useLocation();
@@ -47,12 +45,12 @@ export default function AppShell() {
   }, [isDesktop]);
   
   return (
-    <div className='appShell__container'>
-      <AppBar drawerHeight={topBarHeight} handleToggleMenu={handleToggleMenu}/>
-      <div className='appShell__sideNavAndbody'>
+    <div className='app-shell'>
+      <AppBar  handleToggleMenu={handleToggleMenu}/>
+      <div className='app-shell__layout'>
             <Sidebar activePath={activePath} sidebarRef={sidebarRef}/>
       <main
-        className='appShell__body'
+        className='app-shell__content'
       >
         <Outlet />
       </main>

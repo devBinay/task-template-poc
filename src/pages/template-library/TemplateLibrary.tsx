@@ -22,12 +22,12 @@ import { folderTreeData } from './tableData';
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
-    fontWeight: "400",
+    fontWeight: "var(--weight-400)",
     "& fieldset": {
-      border: "1px solid lightgray",
+      border: "1px solid var(--border-secondary)",
     },
     "&:hover fieldset": {
-      border: "1px solid lightgray",
+      border: "1px solid var(--border-secondary)",
     },
     "&.Mui-focused fieldset": {
       border: "1px solid gray",
@@ -118,31 +118,35 @@ const TemplateLibrary: React.FC = () => {
     
 
     return <PageTemplate>
-        <PageTemplate.Header>
+        <PageTemplate.Header style={{
+          height:'5rem'
+        }}>
         <Stack direction={"row"} alignItems={'center'}>
           <IconButton variant="outline" disableHover={true} disableTouchRipple sx={{
                marginRight:'var(--space-lg)',
                backgroundColor:'var(--bg-container-1)',
                padding:'.8rem'
           }}>
-          <SvgIcon component={"chevronLeft"} fill='var(--icon-color-secondary)' size={18}/>
+          <SvgIcon component={"chevronLeft"} fill='var(--icon-secondary)' size={18}/>
           </IconButton>
-          <Typography variant='h2'>Template</Typography>
+          <Typography color="var(--text-primary)" variant='h2'>Template</Typography>
         </Stack>
         </PageTemplate.Header>
-      <PageTemplate.Content>
+      <PageTemplate.Content style={{
+        height:'calc(var(--app-content-height) - 5rem)'
+      }}>
       <Box className="template-library-container">
-         <Box display="flex"  alignItems="center" className='template-library__header'>
-            <Box width="19.2%" fontSize={'19px'} fontWeight={500}>Folder Tree</Box>
+         <Box display="flex"  alignItems="center" className='template-library-header'>
+            <Box width="19.2%" fontSize="var(--size-secondary-heading)" fontWeight={500}>Folder Tree</Box>
             { selectedTemplate.length > 0 ?
-              <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize={'19px'} fontWeight={500}>
+              <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize="var(--size-secondary-heading)" fontWeight={500}>
                 <Box display="flex" alignItems="center" gap="1rem">
                   <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}} >
                   <IconButton variant='primary' disableHover disableRipple disableTouchRipple sx={{padding:0, minWidth:0}} onClick={() => setSelectedTemplate([])}>
-                    <SvgIcon component="arrowUp" size={24} fill="#333333" />
+                    <SvgIcon component="arrowUp" size={24} fill="var(--icon-primary)" />
                   </IconButton>
                   </Box>
-                  <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="1px">
+                  <Box fontSize="var(--size-secondary-heading)" fontWeight={500} whiteSpace="nowrap" mr="1px">
                     {selectedTemplate.length} Selected
                   </Box>
                 </Box>  
@@ -156,7 +160,7 @@ const TemplateLibrary: React.FC = () => {
                 </Box>
               </Box> :
               <Box width="80%" height="36px" display="flex" alignItems="center" gap='12px' justifyContent={"space-between"} flexGrow={1}>
-                <Box fontSize={'19px'} fontWeight={500} whiteSpace="nowrap" mr="16px">
+                <Box fontSize="var(--size-secondary-heading)" fontWeight={500} whiteSpace="nowrap" mr="16px">
                     Template Library
                 </Box>
                 <Box sx={{
@@ -190,14 +194,16 @@ const TemplateLibrary: React.FC = () => {
         <Divider sx={{ borderBottomWidth: 1}} />
 
         <Box display="flex"  overflow={'auto'} >
-            <Box width={'20%'}>
+           
+          <div className="directory-tree__container">
+
               {/* {  TODO : TO BE REMOVED WHEN BE IS WORKING FINE
                 loading?.directory ? renderDirectorySkelton() :
                 <TreeView data={directoryData?.data || []} handleClick={handleDirectoryClick} />
               } */}
               <TreeView data={folderTreeData?.data || []} handleClick={handleDirectoryClick} />
-            </Box>
-            <Box width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
+            </div>
+            <Box width={"80%"} borderLeft={"1px solid var(--border-secondary)"}>
               {/* TODO : TO BE REMOVED WHEN BE IS WORKING FINE
               {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
                     <NoDataTemplate

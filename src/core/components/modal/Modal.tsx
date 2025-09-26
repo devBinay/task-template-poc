@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import SvgIcon from "@/core/components/icon/Icon";
 import IconButton from '@/core/components/button/IconButton';
-
+ 
 interface CommonModalProps {
   open: boolean;
   onClose: () => void;
@@ -14,7 +14,7 @@ interface CommonModalProps {
   confirmText?: string;
   cancelText?: string;
 }
-
+ 
 const style = {
   position: "absolute" as const,
   top: "50%",
@@ -24,11 +24,12 @@ const style = {
   boxShadow: 24,
   borderRadius: "8px",
   p: 2,
+  color: "var(--text-primary)",
   width: "750px",
   maxHeight: "80vh",
   overflowY: "auto",
 };
-
+ 
 const CommonModal: React.FC<CommonModalProps> = ({
   open,
   onClose,
@@ -47,14 +48,14 @@ const CommonModal: React.FC<CommonModalProps> = ({
           <Box display="flex" alignItems="center" justifyContent="space-between" mb={1} gap="2px">
             <Box width="95%">{title}</Box>
             <IconButton disableHover={true} onClick={onClose}>
-              <SvgIcon component="close" size={32} fill="#5C5C5C" />
+              <SvgIcon component="close" size={32} fill="var(--icon-secondary)" />
             </IconButton>
           </Box>
         )}
-
+ 
         {/* Body */}
-        <Box>{children}</Box>
-
+        <Box sx={{ fontSize: "var(--size-body)" }}>{children}</Box>
+ 
         {/* Actions */}
         {showActions && (
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
@@ -70,5 +71,5 @@ const CommonModal: React.FC<CommonModalProps> = ({
     </Modal>
   );
 };
-
+ 
 export default CommonModal;

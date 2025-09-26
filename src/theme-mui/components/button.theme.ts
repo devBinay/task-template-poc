@@ -1,13 +1,13 @@
 export const buttonConfig = () => ({
   primary: {
     fontSize: "15px",
-    fontWeight: "400",
+    fontWeight: "var(--weight-400)",
     color: "white",
     width: "150px",
     backgroundColor: "#0A68DB",
     borderRadius: "8px",
     padding: "4px 12px",
-    border: "1px solid lightgray",
+    // border: "1px solid lightgray",
     textTransform: "none" as const,
     "&:hover": {
       backgroundColor: "#0859c5",
