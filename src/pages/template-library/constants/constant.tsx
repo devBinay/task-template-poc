@@ -62,7 +62,30 @@ export const TEMPLATE_SORTING: Record<string, SortOption[]> = {
 
 }
 
-
 export const formatDate = (dateString: string): string => {
   return moment(dateString).format("DD/MM/YY");
+};
+
+export const truncateMiddleText = (
+  text: string,
+  keepEnd: number = 4,
+  maxLength: number = 35,
+): string => {
+  if (!text) return "";
+
+  // No truncation if text is short
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  const startLength = maxLength - keepEnd - 3; // 3 for "..."
+  if (startLength <= 0) {
+    // edge case: maxLength too small, just return ellipses + end
+    return "..." + text.slice(-keepEnd);
+  }
+
+  const start = text.slice(0, startLength);
+  const end = text.slice(-keepEnd);
+
+  return `${start}...${end}`;
 };

@@ -14,7 +14,7 @@ import { renderPreviewPopupRow, renderPreviewHeading } from "@/pages/template-li
 import { useGetViewPortSize } from "@/utils/get-viewport-size";
 import "./TemplateStyle.scss";
 import type { MRT_Cell, MRT_Column } from "material-react-table";
-import { formatDate } from "@/pages/template-library/constants/constant";
+import { formatDate, truncateMiddleText } from "@/pages/template-library/constants/constant";
 import type { IconName } from "@/core/types/icon.type";
 import { TEMPLATE_SORTING } from "./constants/constant";
 import type { SortOption } from "./types/template-constants.type";
@@ -392,7 +392,7 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
         return (
                <Box minWidth="300px" display="flex" alignItems="center" gap="10px">
                    <Box display="flex" flexDirection="column" gap="6px">
-                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{data?.templateName || data?.name || ""}</Box>
+                        <Box className="template-body-text cursor-pointer" onClick={()=>handlePreviewModalOpen(data)}>{truncateMiddleText(data?.templateName || data?.name || "")}</Box>
                           {!isDesktop ?
                           <Box display="flex" gap="24px">
                             <Box display="flex" gap="4px" className="template-body-text template-status"><span className="template-title-text">Type:</span>{data?.tagType || "Checklist"}</Box>
