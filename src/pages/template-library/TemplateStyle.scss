@@ -1,9 +1,103 @@
-.template-library-container {
-    & .template-library-header {
+.template-library {
+    & .template-library__header {
         display: flex;
         align-items: center;
         padding: var(--space-md) var(--space-xl);
         color: var(--text-primary);
+
+        .template-library__text {
+            width: 19.2%; 
+            font-size: var(--size-secondary-heading);
+            font-weight: 500;
+        }
+
+        .template-library__sub-text {
+            font-size: var(--size-secondary-heading);
+            font-weight: 500;
+            white-space: nowrap;
+            margin-right: 1px;
+        }
+
+        .template-library__selected {
+            width: 80%;
+            height: 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+            font-size: var(--size-secondary-heading);
+            font-weight: 500;
+        }
+
+        .template-library__label-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .template-library__inner-header {
+            width: 80%;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .template-library__inner-header-text {
+            font-size: var(--size-secondary-heading);
+            font-weight: 500;
+            white-space: nowrap;
+            margin-right: 16px;
+        }
+
+        .template-library__icon {
+            height: 24px; 
+            transform: rotate(-90deg); 
+            cursor: pointer; 
+        }
+
+        .template-library__icon-button {
+            padding: 0; 
+            min-width: 0;
+        }
+
+        .template-library__searchbar {
+            max-width: 50.5rem;
+            flex-grow: 1;
+        }
+
+        .template-library__border {
+            border-bottom-width: 1;
+        }
+    
+    }
+
+    .template-library__container {
+        display: flex;  
+        overflow: auto;
+    }
+
+    .template-library__folder-tree {
+        width: 20%;
+    }
+
+    .template-library__table-wrapper {
+        width: 80%; 
+        border-left: 1px solid var(--border-secondary);
+    }
+
+    .flex-box {
+        display: flex;
+        align-items: center;
+    }
+
+    .gap-12 {
+        gap: 12px;
+    }
+
+    .ws-nowrap {
+        white-space: nowrap;
     }
 
     .MuiOutlinedInput-root {
