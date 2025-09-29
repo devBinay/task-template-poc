@@ -11,7 +11,8 @@ interface SidebarProps {
   sidebarRef?: React.Ref<HTMLDivElement>;
 }
 
-const menuItems: {
+
+const imsNavLinks: {
   text: string;
   path:string;
   icon: keyof typeof icons
@@ -27,9 +28,25 @@ const menuItems: {
   { text: 'Labour Report', path: '/labourReport', icon: 'labourReport' },
   { text: 'Food Safety', path: '/foodSafety', icon: 'foodSafety' },
   { text: 'Queue Management', path: '/queueManagement', icon: 'queueManagement' },
- 
-]
 
+]
+const wfmNavLinks: {
+  text: string;
+  path:string;
+  icon: keyof typeof icons
+}[] = [
+  { text: 'Home', path: '/', icon: 'home' },
+  { text: 'Quick Links', path: '/quickLinks', icon: 'quickLink' },
+  { text: 'ESS', path: '/ess', icon: 'calendar' },
+  { text: 'Communication', path: '/communication', icon: 'communication' },
+ 
+  { text: 'Queue Management', path: '/queueManagement', icon: 'queueManagement' },
+
+]
+const navLinkOptions = {
+  'IMS':imsNavLinks,
+  'WFM':wfmNavLinks
+}
 const StyledListItemButton = styled(ListItemButton,{
   shouldForwardProp: (prop) => prop !== 'activePath',
 })<{activePath?: boolean, component?: React.ElementType, to?: string}>(({ theme,activePath }) => ({
@@ -42,10 +59,12 @@ const StyledListItemButton = styled(ListItemButton,{
   gap:".4rem",
   width:"100%",
   overflow:"hidden",
+  textOverflow:"ellipsis",
   whiteSpace:"normal",
   backgroundColor: activePath ? alpha(theme.palette.primary.main,0.1) : "transparent",
   color:activePath ? theme.palette.primary.main : "inherit",
-  
+  minHeight:'max-content',
+  maxHeight:'max-content',
   transition:"all .2s ease-in-out",
   "&:hover":{
     cursor:"pointer",
@@ -72,10 +91,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
   const handleSwitchAppName = ()=>{
     setAppSwitchValue(prev=> prev == 'IMS' ? 'WFM':'IMS')
   }
+  const navlistItems = navLinkOptions['IMS'];
   return (
  <Stack className='sidebar__container' ref={sidebarRef}>
   <div className='sidebar__switch'>
-    <ButtonBase  disableRipple disableTouchRipple onClick={handleSwitchAppName}>
+    <div  onClick={handleSwitchAppName}>
     <SvgIcon component='exchange' size={18} fill="var(--icon-state-information)"/>
     <Typography sx={()=>({
       textAlign:'center',
@@ -85,11 +105,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activePath, sidebarRef }) => {
       fontSize:"1.7rem",
       color: "var(--text-state-Navbar_active)"
     })}>{appSwitchValue}</Typography>
-    </ButtonBase>
     </div>
+  </div>
 
     <Stack className='sidebar__list'>
-      {menuItems.map((item) => {
+      {navlistItems.map((item) => {
         const isActive = activePath === item.path;  
         const isLargeView = viewportSize === 'xl';
           return <StyledListItemButton component={Link} to={item.path} activePath={isActive}>

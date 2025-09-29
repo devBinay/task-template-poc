@@ -17,7 +17,7 @@ export default function AppShell() {
   const handleMenuAnimation = (menuStatus:boolean) => {
      if (sidebarRef.current) {
         if(menuStatus) {
-          sidebarRef.current.style.width = "92px";
+          sidebarRef.current.style.width = "var(--sidebar-width)";
           sidebarRef.current.style.paddingRight = "var(--space-lg)";
           sidebarRef.current.style.transition = "width .3s";
         } else {

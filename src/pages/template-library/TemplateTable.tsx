@@ -606,7 +606,8 @@ const renderTemplateModifiedHeader = ({ column }: { column: MRT_Column<TemplateT
                 tableProps={templateTableProps}
                 isRowSelected={isRowSelected}
                 muiTableStyleProps={{
-                    height:'calc(var(--app-content-height) - 11rem)'
+                    height:'100%',
+                    scrollbarWidth: 'none'
                 }}
             />
 

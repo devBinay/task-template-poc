@@ -7,7 +7,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import LibraryTable from './TemplateTable';
-import PageTemplate from '../../layouts/PageTemplate';
+import PageTemplate from '../../layouts/pageTemplate/PageTemplate';
 import IconButton from '@/core/components/button/IconButton';
 import SvgIcon from '@/core/components/icon/Icon';
 import NoDataTemplate from '../../core/components/no-data-template/NoDataTemplate';
@@ -118,10 +118,10 @@ const TemplateLibrary: React.FC = () => {
     
 
     return <PageTemplate>
-        <PageTemplate.Header style={{
+      <PageTemplate.Header style={{
           height:'5rem'
         }}>
-        <Stack direction={"row"} alignItems={'center'}>
+      <Stack direction={"row"} alignItems={'center'}>
           <IconButton variant="outline" disableHover={true} disableTouchRipple sx={{
                marginRight:'var(--space-lg)',
                backgroundColor:'var(--bg-container-1)',
@@ -130,10 +130,10 @@ const TemplateLibrary: React.FC = () => {
           <SvgIcon component={"chevronLeft"} fill='var(--icon-secondary)' size={18}/>
           </IconButton>
           <Typography color="var(--text-primary)" variant='h2'>Template</Typography>
-        </Stack>
-        </PageTemplate.Header>
+      </Stack>
+      </PageTemplate.Header>
       <PageTemplate.Content style={{
-        height:'calc(var(--app-content-height) - 5rem)'
+        height:'calc(100% - 5.6rem)'
       }}>
       <Box className="template-library-container">
          <Box display="flex"  alignItems="center" className='template-library-header'>
@@ -193,7 +193,7 @@ const TemplateLibrary: React.FC = () => {
         </Box>
         <Divider sx={{ borderBottomWidth: 1}} />
 
-        <Box display="flex"  overflow={'auto'} >
+        <Box display="flex" flex={1}  overflow={'auto'} >
            
           <div className="directory-tree__container">
 
@@ -202,8 +202,8 @@ const TemplateLibrary: React.FC = () => {
                 <TreeView data={directoryData?.data || []} handleClick={handleDirectoryClick} />
               } */}
               <TreeView data={folderTreeData?.data || []} handleClick={handleDirectoryClick} />
-            </div>
-            <Box width={"80%"} borderLeft={"1px solid var(--border-secondary)"}>
+          </div>
+            <Box className="template-library__table" width={"80%"} borderLeft={"1px solid var(--gray-200)"}>
               {/* TODO : TO BE REMOVED WHEN BE IS WORKING FINE
               {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
                     <NoDataTemplate
@@ -231,7 +231,7 @@ const TemplateLibrary: React.FC = () => {
 
        </Box>
       </PageTemplate.Content>
-    </PageTemplate>
+      </PageTemplate>
     ;
 };
 

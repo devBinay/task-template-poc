@@ -1,5 +1,6 @@
 import React, { type ReactNode, type CSSProperties } from "react";
-
+import './PageTemplate.style.scss';
+import { useGetViewPortSize } from "@/utils/get-viewport-size";
 interface CommonContentActionBarProps {
   children: ReactNode;
   style?: CSSProperties;
@@ -13,16 +14,9 @@ interface SectionProps {
 const Header: React.FC<SectionProps> = ({ children, style }) => {
   return (
     <div
+    className="pagetemplate__header"
       style={{
-        position: "sticky",
-        top: 0,
-        backgroundColor: "var(--bg-base)",
-        height: "5rem",
-        width: "100%",
-        zIndex: 1000,
-        display: "flex",
-        alignItems: "center",
-        padding: "0 1rem",
+     
         ...style,
       }}
     >
@@ -34,11 +28,9 @@ const Header: React.FC<SectionProps> = ({ children, style }) => {
 const Content: React.FC<SectionProps> = ({ children, style }) => {
   return (
     <div
+    className="pagetemplate__content"
       style={{
-        backgroundColor: "var(--bg-container-1)",
-        flex: 1,
-        marginTop: "0.6rem",
-        borderStartStartRadius:"var(--radius-m)",
+     
         ...style,
       }}
     >
@@ -51,14 +43,14 @@ const CommonContentActionBar: React.FC<CommonContentActionBarProps> & {
   Header: typeof Header;
   Content: typeof Content;
 } = ({ children, style }) => {
+
+  const viewportSize = useGetViewPortSize();
+  const isDesktop = viewportSize === 'xl' || viewportSize === 'lg';
   return (
     <div
+    className={`pagetemplate__root ${isDesktop ? "desktop" : "tablet"}`}
       style={{
-        display: "flex",
-        flexDirection: "column",
-        height:'calc(100vh - var(--app-bar-height) - var(--pagetemplate-bottom-margin))',
-        width: "100%",
-        
+      
         ...style,
       }}
     >
