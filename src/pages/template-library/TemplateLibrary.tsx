@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Stack } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import TextField from "@mui/material/TextField";
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import InputAdornment from "@mui/material/InputAdornment";
-import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import LibraryTable from './TemplateTable';
 import PageTemplate from '../../layouts/PageTemplate';
@@ -12,12 +11,12 @@ import IconButton from '@/core/components/button/IconButton';
 import SvgIcon from '@/core/components/icon/Icon';
 import NoDataTemplate from '../../core/components/no-data-template/NoDataTemplate';
 import SearchDrawer from '@/pages/template-library/components/search-drawer/SearchDrawer';
-import "./TemplateStyle.scss";
 import { getAllDirectories, getReportsByReportType, getTemplatesByTagId } from './services/template-library.service';
 import type { DirectoryType, TemplateType } from './types/template-library.type';
 import { renderDirectorySkelton } from './components/skeleton/Skeleton';
 import TreeView from '@/core/components/tree-view/TreeView';
 import { folderTreeData } from './tableData';
+import "./TemplateStyle.scss";
 
 const SearchField = styled(TextField)(( ) => ({
   "& .MuiOutlinedInput-root": {
@@ -36,6 +35,7 @@ const SearchField = styled(TextField)(( ) => ({
 }));
 
 const PAGE_SIZE = 10;
+
 const TemplateLibrary: React.FC = () => {
 
     const [searchDrawer, setSearchDrawer] = useState({status: false, text: ""});
@@ -135,22 +135,23 @@ const TemplateLibrary: React.FC = () => {
       <PageTemplate.Content style={{
         height:'calc(var(--app-content-height) - 5rem)'
       }}>
-      <Box className="template-library-container">
-         <Box display="flex"  alignItems="center" className='template-library-header'>
-            <Box width="19.2%" fontSize="var(--size-secondary-heading)" fontWeight={500}>Folder Tree</Box>
+      <Box className="template-library">
+         <Box className='template-library__header'>
+            <Box className='template-library__text'>Folder Tree</Box>
             { selectedTemplate.length > 0 ?
-              <Box width="80%" height="36px" display="flex" justifyContent="space-between" alignItems="center" fontSize="var(--size-secondary-heading)" fontWeight={500}>
-                <Box display="flex" alignItems="center" gap="1rem">
-                  <Box height="24px" sx={{transform: 'rotate(-90deg)', cursor:'pointer'}} >
-                  <IconButton variant='primary' disableHover disableRipple disableTouchRipple sx={{padding:0, minWidth:0}} onClick={() => setSelectedTemplate([])}>
+              <Box className="template-library__selected">
+                <Box className="template-library__label-wrapper">
+                  <Box className="template-library__icon">
+                  <IconButton variant='primary' disableHover disableRipple disableTouchRipple 
+                    className='template-library__icon-button' onClick={() => setSelectedTemplate([])}>
                     <SvgIcon component="arrowUp" size={24} fill="var(--icon-primary)" />
                   </IconButton>
                   </Box>
-                  <Box fontSize="var(--size-secondary-heading)" fontWeight={500} whiteSpace="nowrap" mr="1px">
+                  <Box className='template-library__sub-text'>
                     {selectedTemplate.length} Selected
                   </Box>
                 </Box>  
-                <Box display="flex" alignItems="center" gap="12px">  
+                <Box className="flex-box gap-12">  
                   <IconButton variant='outline'>
                     <SvgIcon component="folderInput" size={22} fill="#0A68DB" />
                   </IconButton>
@@ -159,14 +160,9 @@ const TemplateLibrary: React.FC = () => {
                   </IconButton>
                 </Box>
               </Box> :
-              <Box width="80%" height="36px" display="flex" alignItems="center" gap='12px' justifyContent={"space-between"} flexGrow={1}>
-                <Box fontSize="var(--size-secondary-heading)" fontWeight={500} whiteSpace="nowrap" mr="16px">
-                    Template Library
-                </Box>
-                <Box sx={{
-                  maxWidth:"50.5rem",
-                  flexGrow:1,
-                }}>
+              <Box className="template-library__inner-header">
+                <Box className="template-library__inner-header-text">Template Library</Box>
+                <Box className="template-library__searchbar">
                     <SearchField
                         className="search-bar"
                         variant="outlined"
@@ -184,17 +180,17 @@ const TemplateLibrary: React.FC = () => {
                     />
                 </Box>
                 <Stack direction={"row"} alignItems="center" gap="12px">
-                <Box whiteSpace="nowrap"><Button variant="primary-filled">Create Template</Button></Box>
-                <IconButton variant='outline'><SvgIcon component="upload" size={20} /></IconButton>
-                <IconButton variant='outline'><SvgIcon component="moreOption" size={20} /></IconButton>
+                  <Box className="ws-nowrap"><Button variant="primary-filled">Create Template</Button></Box>
+                  <IconButton variant='outline'><SvgIcon component="upload" size={20} /></IconButton>
+                  <IconButton variant='outline'><SvgIcon component="moreOption" size={20} /></IconButton>
                 </Stack>
               </Box>
             }
         </Box>
-        <Divider sx={{ borderBottomWidth: 1}} />
+        <Divider className="template-library__border" />
 
-        <Box display="flex"  overflow={'auto'} >
-           
+        <Box className="template-library__container">
+
           <div className="directory-tree__container">
 
               {/* {  TODO : TO BE REMOVED WHEN BE IS WORKING FINE
@@ -203,7 +199,7 @@ const TemplateLibrary: React.FC = () => {
               } */}
               <TreeView data={folderTreeData?.data || []} handleClick={handleDirectoryClick} />
             </div>
-            <Box width={"80%"} borderLeft={"1px solid var(--border-secondary)"}>
+            <Box className="template-library__table-wrapper">
               {/* TODO : TO BE REMOVED WHEN BE IS WORKING FINE
               {!loading?.templates && !loading?.reports  && (!selectedDirectoryData || selectedDirectoryData?.length == 0) ?  
                     <NoDataTemplate
